@@ -16,43 +16,39 @@ import org.hibernate.SessionFactory;
 
 import com.google.gson.Gson;
 
-import joyou.Members.model.MembersBeanDao;
 import joyou.util.HibernateUtil;
 
-@WebServlet("/CheckDuplicateAccountServlet")
-public class CheckDuplicateAccountServlet extends HttpServlet {
+@WebServlet("/SendVerifiedMailServlet")
+public class SendVerifiedMailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Session session;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String memberAccount = request.getParameter("account");
+		String mailAddress = request.getParameter("mail");
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
 		Gson gson = new Gson();
 		Map<String, String> map = new HashMap<>();
-		if (memberAccount != null && memberAccount.trim().length() != 0) {
-			try {
 
-				SessionFactory factory = HibernateUtil.getSessionFactory();
+		try {
+			SessionFactory factory = HibernateUtil.getSessionFactory();
 
-				session = factory.openSession();
-				session.beginTransaction();
+			session = factory.openSession();
+			session.beginTransaction();
 
-				MembersBeanDao md1 = new MembersBeanDao(session);
-				Boolean result1 = new Boolean(md1.checkDuplicateAccount(memberAccount));
-				map.put("memberAccountisDuplicate", result1.toString());
+			map.put("verifiedCode", new TestMail().sendMail(mailAddress));
 
-				session.getTransaction().commit();
-				session.close();
+			session.getTransaction().commit();
+			session.close();
 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			out.println(gson.toJson(map));
+			out.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		out.println(gson.toJson(map));
-		out.close();
+
 	}
 
 }

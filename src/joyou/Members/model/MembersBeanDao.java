@@ -23,10 +23,33 @@ public class MembersBeanDao {
 		return null;
 	}
 
+	public MembersBean selectbyID(int id) {
+		String hqlStr = "from MembersBean where memberID=:userID";
+		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
+		query.setParameter("userID", id);
+		MembersBean resultAccount = query.uniqueResult();
+		if (resultAccount != null) {
+			return resultAccount;
+		}
+		return null;
+	}
+
 	public MembersBean selectbyAccount(String account) {
 		String hqlStr = "from MembersBean where memberAcc=:acc";
 		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
 		query.setParameter("acc", account);
+		MembersBean resultAccount = query.uniqueResult();
+		if (resultAccount != null) {
+			return resultAccount;
+		}
+		return null;
+	}
+
+	public MembersBean selectbyAccountPassword(String account, String password) {
+		String hqlStr = "from MembersBean where memberAcc=:acc and memberPwd=:pwd";
+		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
+		query.setParameter("acc", account);
+		query.setParameter("pwd", password);
 		MembersBean resultAccount = query.uniqueResult();
 		if (resultAccount != null) {
 			return resultAccount;
@@ -40,18 +63,10 @@ public class MembersBeanDao {
 		query.setParameter("mailbox", mail);
 		MembersBean resultAccount = query.uniqueResult();
 		if (resultAccount != null) {
+			System.out.println(resultAccount.getId());
 			return resultAccount;
 		}
 		return null;
-	}
-
-	public boolean checkCorrectAccPwd(String account, String password) {
-		MembersBean resultAccount = selectbyAccount(account);
-		if (resultAccount != null) {
-			return resultAccount.getPassword() == password;
-//			return resultAccount.getPassword()==md5(password);
-		}
-		return false;
 	}
 
 	public boolean checkDuplicateAccount(String account) {

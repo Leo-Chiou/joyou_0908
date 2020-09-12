@@ -43,9 +43,10 @@ public class CheckDuplicateMailServlet extends HttpServlet {
 				session.beginTransaction();
 
 				MembersBeanDao md1 = new MembersBeanDao(session);
-				Boolean result2 = new Boolean(md1.checkDuplicateAccount(memberMail));
+				Boolean result2 = new Boolean(md1.checkDuplicateMail(memberMail));
 				map.put("memberMailisDuplicate", result2.toString());
 
+				System.out.println("check mail:" + memberMail + "  " + result2);
 				session.getTransaction().commit();
 				session.close();
 
@@ -53,8 +54,11 @@ public class CheckDuplicateMailServlet extends HttpServlet {
 				ex.printStackTrace();
 			}
 		}
+		// System.out.println(57);
 		out.println(gson.toJson(map));
+		// System.out.println(59);
 		out.close();
+		// System.out.println(61);
 	}
 
 }
