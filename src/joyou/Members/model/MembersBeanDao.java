@@ -1,12 +1,16 @@
 package joyou.Members.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository("myMembersBeanDao")
 public class MembersBeanDao {
 	public Session session;
+	SessionFactory factory;
 
 	public MembersBeanDao() {
 	}
@@ -83,6 +87,42 @@ public class MembersBeanDao {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	//查足跡
+	public String selectUserFoot(int id) { 
+		
+		String hqlStr = "from MembersBean where memberID=:id";
+		String f1="";
+		MembersBean m = (MembersBean) session.createQuery(hqlStr).setParameter("id", id).getSingleResult();
+		f1 = m.getUserfoot();
+		
+		return f1;
+		
+	}
+	
+	//複寫足跡
+	public void setUserFoot(int id,String f1) {
+		String hql="update MembersBean m set m.memberUserfoot=:userfoot where m.memberID=:id";
+		Query<MembersBean> query = session.createQuery(hql, MembersBean.class);
+		
+		query.setParameter("userfoot",f1);
+
+		query.setParameter("id",id);
+
+		query.executeUpdate();
+	}
+	
+	
+	
+	//桑基圖
+	public List<String> findAllUserFeet() {
+		Session session = factory.getCurrentSession();
+		String hql = "select memberUserfoot FROM MembersBean";
+		Query query =session.createQuery(hql);
+		List<String> list = query.list();
+		return list;
 	}
 
 }

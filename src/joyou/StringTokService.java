@@ -78,7 +78,8 @@ public class StringTokService implements Serializable {
 
 
 	static {
-		
+		//最後 select 所有使用者
+		//String s2 =findAllUserFeet();
 		String s1 ="123.124.125.12689.1268.126.127.125689.124689.12468";
 		StringTokService tok = new StringTokService();
 		

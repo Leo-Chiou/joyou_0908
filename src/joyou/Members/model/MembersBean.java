@@ -18,6 +18,7 @@ public class MembersBean {
 
 	private String truename;
 	private String phone;
+	private String userfoot;
 
 //	private int gametypeid;
 
@@ -25,14 +26,15 @@ public class MembersBean {
 
 	}
 
-	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone) {
+	public MembersBean(String account, String password, String mail, String nickname,
+			String truename, String phone,String userfoot) {
 		this.account = account;
 		this.password = password;
 		this.mail = mail;
 		this.nickname = nickname;
 		this.truename = truename;
 		this.phone = phone;
-
+		this.userfoot=userfoot;
 //		this.gametypeid = gametypeid;
 	}
 
@@ -108,6 +110,17 @@ public class MembersBean {
 	public void setTruename(String truename) {
 		this.truename = truename;
 	}
+	
+	@Column(name = "memberUserfoot")
+	public String getUserfoot() {
+		return userfoot;
+	}
+
+	public void setUserfoot(String userfoot) {
+		this.userfoot = userfoot;
+	}
+	
+	
 
 //	@Column(name = "gametypeid")
 //	public int getGametypeid() {
