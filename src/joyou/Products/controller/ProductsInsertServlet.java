@@ -1,5 +1,6 @@
 package joyou.Products.controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import joyou.GameTypes.dao.GameTypesDao;
 import joyou.Products.dao.FileDao;
 import joyou.Products.dao.ProductsDao;
 import joyou.Products.model.ProductsBean;
@@ -23,7 +22,6 @@ import joyou.util.HibernateUtil;
 @javax.servlet.annotation.MultipartConfig
 public class ProductsInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int id;
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,6 +50,22 @@ public class ProductsInsertServlet extends HttpServlet {
 		String pricestr="";
 		String fileName="";
 		String gametypestr="";
+		
+		String suggestnum="";
+		String suggestStr="";
+		
+		String productcolor="";
+		String colorStr="";
+		
+		String paintingstyle="";
+		String paintingStr="";
+		
+		String productintro="";
+		String introStr="";
+		
+		
+		String sale="";
+		String saleStr="";
 		long sizeInBytes = 0;
 		InputStream is = null;
 
@@ -61,12 +75,10 @@ public class ProductsInsertServlet extends HttpServlet {
 				String fldName = p.getName();
 				String value = request.getParameter(fldName);
 				if (p.getContentType() == null) {
-//					System.out.println(58);
 					if (fldName.equals("name")) {    
 						namestr=value;
 						name=namestr;
 						request.setAttribute("name", name);
-//						System.out.println(62);
 					} else if (fldName.equals("stock")) {
 						stockstr=value;
 						stock = Integer.parseInt(stockstr);
@@ -86,10 +98,36 @@ public class ProductsInsertServlet extends HttpServlet {
 						gametypestr=value;
 						gametype=Integer.parseInt(gametypestr);
 						request.setAttribute("gametype", gametype);
+						
 					}else if(fldName.equals("lang")) {
 						langstr=value;
 						lang=langstr;
 						request.setAttribute("lang", lang);
+						
+					}else if(fldName.equals("productcolor")) {
+						colorStr=value;
+						productcolor=colorStr;
+						request.setAttribute("productcolor", productcolor);
+						
+					}else if(fldName.equals("paintingstyle")) {
+						paintingStr=value;
+						paintingstyle=paintingStr;
+						request.setAttribute("paintingstyle", paintingstyle);
+						
+					}else if(fldName.equals("productintro")) {
+						introStr=value;
+						productintro=introStr;
+						request.setAttribute("productintro", productintro);
+						
+					}else if(fldName.equals("suggestnum")) {
+						suggestStr=value;
+						suggestnum=suggestStr;
+						request.setAttribute("suggestnum", suggestnum);
+						
+					}else if(fldName.equals("sale")) {
+						saleStr=value;
+						sale=saleStr;
+						request.setAttribute("sale", sale);
 					}
 					
 				}else {
@@ -98,14 +136,32 @@ public class ProductsInsertServlet extends HttpServlet {
 					if (fileName != null && fileName.trim().length() > 0) {
 						sizeInBytes = p.getSize();
 						is = p.getInputStream();
+
+				
 					}
 				}
 			}
 		}
-		Blob fileBlob = FileDao.fileToBlob(is, sizeInBytes);
-		ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob);
+		
+		
+		Blob fileBlob = FileDao.fileToBlob(is, sizeInBytes);   
+		ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob,suggestnum,productcolor,paintingstyle,productintro,sale);
 		ProductsDao pDao = new ProductsDao(session);
-		pDao.insert(pBean);
+		ProductsBean bean = pDao.insert(pBean);   //存資料庫
+		
+		
+		
+		String imgName = bean.getImgName();     //存本地
+		Blob Img = bean.getProductImg();
+		InputStream isImg = Img.getBinaryStream();
+		byte[] bs = new byte[isImg.available()];
+		isImg.read(bs);
+		FileOutputStream fos=new FileOutputStream("C:\\WorkDataSource\\workspace\\JoYouProject\\WebContent\\img\\"+imgName+"");
+		fos.write(bs);
+		fos.close();
+		
+		
+		
 		request.setAttribute("InsertMsg", "Inert Sucess!");
 		request.getRequestDispatcher("ProductsInsert.jsp").forward(request, response);
 		session.getTransaction().commit();
@@ -116,6 +172,8 @@ public class ProductsInsertServlet extends HttpServlet {
 		request.getRequestDispatcher("ProductsInsert.jsp").forward(request, response);
 		session.getTransaction().rollback();;
 		}
+		
+		
 	}
 
 }

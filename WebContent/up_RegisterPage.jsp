@@ -256,6 +256,16 @@
             	document.getElementsByName("userNickName")[0].value="邱"+randInt+"豪";
             	document.getElementsByName("userTrueName")[0].value="邱"+randInt+"豪";
             	document.getElementsByName("userPhone")[0].value="0912345678";
+
+
+            	document.getElementsByName("userMail")[0].onchange();
+            	document.getElementsByName("userAcc")[0].onchange();
+            	document.getElementsByName("userPwd")[0].onchange();
+            	document.getElementsByName("userPwd2")[0].onchange();
+            	document.getElementsByName("userNickName")[0].onchange();
+            	document.getElementsByName("userTrueName")[0].onchange();
+            	document.getElementsByName("userPhone")[0].onchange();
+            	
             }
         </script>
     </head>

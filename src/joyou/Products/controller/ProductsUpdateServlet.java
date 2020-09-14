@@ -52,6 +52,22 @@ public class ProductsUpdateServlet extends HttpServlet {
 			String pricestr = "";
 			String gametypestr = "";
 			String fileName = "";
+			
+			String suggestnum="";
+			String suggestStr="";
+			
+			String productcolor="";
+			String colorStr="";
+			
+			String paintingstyle="";
+			String paintingStr="";
+			
+			String productintro="";
+			String introStr="";
+			
+			String sale="";
+			String saleStr="";
+			
 			long sizeInBytes = 0;
 			InputStream is = null;
 
@@ -91,7 +107,32 @@ public class ProductsUpdateServlet extends HttpServlet {
 							langstr = value;
 							lang = langstr;
 							request.setAttribute("lang", lang);
+						}else if(fldName.equals("productcolor")) {
+							colorStr=value;
+							productcolor=colorStr;
+							request.setAttribute("productcolor", productcolor);
+							
+						}else if(fldName.equals("paintingstyle")) {
+							paintingStr=value;
+							paintingstyle=paintingStr;
+							request.setAttribute("paintingstyle", paintingstyle);
+							
+						}else if(fldName.equals("productintro")) {
+							introStr=value;
+							productintro=introStr;
+							request.setAttribute("productintro", productintro);
+							
+						}else if(fldName.equals("suggestnum")) {
+							suggestStr=value;
+							suggestnum=suggestStr;
+							request.setAttribute("suggestnum", suggestnum);
+							
+						}else if(fldName.equals("sale")) {
+							saleStr=value;
+							sale=saleStr;
+							request.setAttribute("sale", sale);
 						}
+						
 
 					} else {
 						fileName = FileDao.getFileName(p);
@@ -104,11 +145,11 @@ public class ProductsUpdateServlet extends HttpServlet {
 				}
 			}
 			if (is == null) {   //假如沒有圖片資料
-				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang);
+				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,suggestnum,productcolor,paintingstyle,productintro);
 				pDao.insert(pBean);
 			} else {
 				Blob fileBlob = FileDao.fileToBlob(is, sizeInBytes);
-				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob);
+				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob,suggestnum,productcolor,paintingstyle,productintro,sale);
 				pDao = new ProductsDao(session);
 				pDao.insert(pBean);
 			}

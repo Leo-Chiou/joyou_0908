@@ -486,6 +486,7 @@ ol {
 .header__cart {
 	text-align: right;
 	padding: 24px 0;
+	margin-top:30px;
 }
 
 .header__cart ul {
@@ -630,7 +631,7 @@ ol {
 }
 
 .hero__search__form {
-	width: 610px;
+	width: 80%;
 	height: 50px;
 	border: 1px solid #ebebeb;
 	position: relative;
@@ -1250,12 +1251,12 @@ ol {
 }
 
 .product__discount {
-	padding-bottom: 50px;
+	padding-bottom: 10px;
 }
 
 .product__discount__title {
 	text-align: left;
-	margin-bottom: 65px;
+	margin-bottom: 10px;
 }
 
 .product__discount__title h2 {
@@ -1412,9 +1413,9 @@ ol {
 }
 
 .filter__item {
-	padding-top: 45px;
-	border-top: 1px solid #ebebeb;
-	padding-bottom: 20px;
+	
+	border-bottom: 4px solid #fbd604;
+	
 }
 
 .filter__sort {
@@ -2906,7 +2907,7 @@ ol {
 		margin-right: 45px;
 	}
 	.hero__search__form {
-		width: 490px;
+		width: 600px;
 	}
 	.hero__categories__all {
 		padding: 10px 25px 10px 20px;
@@ -3145,6 +3146,7 @@ ol {
 	.header__cart {
 		text-align: center;
 		padding: 10px 0 24px;
+	
 	}
 	.over_hid {
 		overflow: hidden;
@@ -3403,6 +3405,7 @@ ol {
 	.header__cart {
 		text-align: center;
 		padding: 10px 0 24px;
+		margin-top:30px;
 	}
 	.over_hid {
 		overflow: hidden;

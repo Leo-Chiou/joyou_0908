@@ -21,11 +21,17 @@ public class ProductsBean {
 	public String productLang;
 	public String imgName;
 	public Blob productImg; 
+	public String suggestNum; 
+	public String productColor; 
+	public String paintingStyle; 
+	public String productIntro; 
+	public String sale; 
+	
 	
 	public ProductsBean() {
 	}
 	public ProductsBean(String productName,Integer productStock,Integer productPrice,Integer gametypeId
-	,String productAge,String productLang,String imgName,Blob productImg) {
+	,String productAge,String productLang,String imgName,Blob productImg,String suggestNum,String productColor,String paintingStyle,String productIntro,String sale) {
 		this.productName=productName;
 		this.productStock=productStock;
 		this.productPrice=productPrice;
@@ -34,16 +40,25 @@ public class ProductsBean {
 		this.productLang=productLang;
 		this.imgName=imgName;
 		this.productImg=productImg; 
+		this.suggestNum=suggestNum;
+		this.productColor=productColor;
+		this.paintingStyle=paintingStyle;
+		this.productIntro=productIntro;
+		this.sale=sale;
 	}
 	
 	public ProductsBean(String productName,Integer productStock,Integer productPrice,Integer gametypeId
-	,String productAge,String productLang) {
+	,String productAge,String productLang,String suggestNum,String productColor,String paintingStyle,String productIntro) {
 		this.productName=productName;
 		this.productStock=productStock;
 		this.productPrice=productPrice;
 		this.gametypeId=gametypeId;
 		this.productAge=productAge;
 		this.productLang=productLang;
+		this.suggestNum=suggestNum;
+		this.productColor=productColor;
+		this.paintingStyle=paintingStyle;
+		this.productIntro=productIntro;
 	}
 	
 	@Id
@@ -127,6 +142,51 @@ public class ProductsBean {
 
 	public void setProductImg(Blob productImg) {
 		this.productImg = productImg;
+	}
+	
+	@Column(name="suggestnum")
+	public String getSuggestNum() {
+		return suggestNum;
+	}
+	
+	public void setSuggestNum(String suggestNum) {
+		this.suggestNum = suggestNum;
+	}
+	
+	@Column(name="productcolor")
+	public String getProductColor() {
+		return productColor;
+	}
+	
+	public void setProductColor(String productColor) {
+		this.productColor = productColor;
+	}
+	
+	@Column(name="paintingstyle")
+	public String getPaintingStyle() {
+		return paintingStyle;
+	}
+	
+	public void setPaintingStyle(String paintingStyle) {
+		this.paintingStyle = paintingStyle;
+	}
+	
+	@Column(name="productintro")
+	public String getProductIntro() {
+		return productIntro;
+	}
+	
+	public void setProductIntro(String productIntro) {
+		this.productIntro = productIntro;
+	}
+	
+	@Column(name="sale")
+	public String getSale() {
+		return sale;
+	}
+	
+	public void setSale(String sale) {
+		this.sale = sale;
 	}
 	
 	

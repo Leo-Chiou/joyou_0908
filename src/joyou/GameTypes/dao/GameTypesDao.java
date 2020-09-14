@@ -2,8 +2,11 @@ package joyou.GameTypes.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
+
 import joyou.GameTypes.model.GameTypesBean;
 
+@Repository("myGameTypesDao")
 public class GameTypesDao {
 
 	Session session;
@@ -15,15 +18,13 @@ public class GameTypesDao {
 	public GameTypesDao() {
 	}
 	
-	public int getGameTypeId(String name) {
-		String hqlStr = "from GameTypes where gametypeName=name";
+	public String getGameTypeId(int id) {
+		System.out.println(22);
+		String hqlStr = "from GameTypesBean where gametypeId=:typeid";
 		Query<GameTypesBean> query = session.createQuery(hqlStr, GameTypesBean.class);
-		
-		query.setParameter("name", name);
-		GameTypesBean result = query.uniqueResult();
-		if(result!=null) {
-		System.out.println("result id");
-		}return result.getGametypeId();
-		
+		query.setParameter("typeid", id);
+		GameTypesBean a = query.uniqueResult();
+		String name = a.getGametypeName();
+		return name;
 	}
 }

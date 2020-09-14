@@ -28,7 +28,7 @@ public class ProductsDeleteServlet extends HttpServlet {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		
-		String strId = request.getParameter("productsId");	
+		String strId = request.getParameter("productId");	
 		int pId = Integer.parseInt(strId);
 		
 		ProductsDao pDao = new ProductsDao();
@@ -39,6 +39,7 @@ public class ProductsDeleteServlet extends HttpServlet {
 		}else {
 			request.setAttribute("DeleteMsg", "Delete UnSuccess!");
 		}
+        session.getTransaction().commit();
 	}
 
 }

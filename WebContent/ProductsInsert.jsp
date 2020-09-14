@@ -107,13 +107,64 @@ function setFocus(fld) {
            </font>
        </td>
     </tr>
-    <tr height='36'>
+            <tr height='36'>
+       <td width="45" align="right" class="title_font">建議人數</td>
+       <td colspan="3"> 
+           <input name="suggestnum" class='InputClass' type="text" id="title" 
+              value="${requestScope.title}" size="50" />
+           <font color='red' size='-1'>
+              ${ErrMsg.errTitle}
+           </font>
+       </td>
+    </tr>
+            <tr height='36'>
+       <td width="45" align="right" class="title_font">顏色</td>
+       <td colspan="3"> 
+           <input name="productcolor" class='InputClass' type="text" id="title" 
+              value="${requestScope.title}" size="50" />
+           <font color='red' size='-1'>
+              ${ErrMsg.errTitle}
+           </font>
+       </td>
+    </tr>
+            <tr height='36'>
+       <td width="45" align="right" class="title_font">繪畫風格</td>
+       <td colspan="3"> 
+           <input name="paintingstyle" class='InputClass' type="text" id="title" 
+              value="${requestScope.title}" size="50" />
+           <font color='red' size='-1'>
+              ${ErrMsg.errTitle}
+           </font>
+       </td>
+    </tr>
+            <tr height='36'>
+       <td width="45" align="right" class="title_font">商品介紹</td>
+       <td colspan="3"> 
+           <input name="productintro" class='InputClass' type="text" id="title" 
+              value="${requestScope.title}" size="50" />
+           <font color='red' size='-1'>
+              ${ErrMsg.errTitle}
+           </font>
+       </td>
+                   <tr height='36'>
+       <td width="45" align="right" class="title_font">是否特價品</td>
+       <td colspan="3"> 
+           <input name="sale" class='InputClass' type="text" id="title" 
+              value="${requestScope.title}" size="50" />
+           <font color='red' size='-1'>
+              ${ErrMsg.errTitle}
+           </font>
+       </td>
+    </tr>
+        <tr height='36'>
         <td width="45" align="right" class="title_font">圖片</td>
         <td colspan="1">
             <input style="background:#FFFFFF" class='InputClass'  type="file" 
             name="uploadFile" size="40" /><br>
             <font color='red' size='-1'>${ErrMsg.errPicture}</font></td>
     </tr>
+    
+  
     
     <tr height="36" >
       <td height="61" colspan="6" align="center">
