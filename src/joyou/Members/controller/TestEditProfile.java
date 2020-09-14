@@ -17,8 +17,8 @@ import joyou.Members.model.MembersBean;
 import joyou.Members.model.MembersBeanDao;
 import joyou.util.HibernateUtil;
 
-@WebServlet("/MemberRegister")
-public class TestRegister extends HttpServlet {
+@WebServlet("/up_EditProfileServlet")
+public class TestEditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PrintWriter out;
 	private String userAcc;
@@ -48,10 +48,7 @@ public class TestRegister extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 
 			userAcc = request.getParameter("userAcc");
-			userPwd = request.getParameter("userPwd");
-			userMail = request.getParameter("userMail");
 			userNickName = request.getParameter("userNickName");
-
 			userTrueName = request.getParameter("userTrueName");
 			userPhone = request.getParameter("userPhone");
 
@@ -61,7 +58,7 @@ public class TestRegister extends HttpServlet {
 //			md5Acc = changeMD5(userAcc)
 //			md5Pwd = changeMD5(userPwd);
 
-			checkInsertData(request, response);
+			checkUpdateData(request, response);
 			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,26 +66,25 @@ public class TestRegister extends HttpServlet {
 		out.close();
 	}
 
-	private void checkInsertData(HttpServletRequest request, HttpServletResponse response) // 判斷帳號是否重複若無則寫入資料庫
+	private void checkUpdateData(HttpServletRequest request, HttpServletResponse response) // 判斷帳號是否重複若無則寫入資料庫
 			throws IOException, SQLException, ServletException {
 
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 
-		session = factory.openSession();
+		session = factory.getCurrentSession();
 		session.beginTransaction();
 
 		MembersBeanDao mDao = new MembersBeanDao(session);
 
-		int rand1000to9999 = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
 		MembersBean mBean = new MembersBean(userAcc, userPwd, userMail, userNickName, userTrueName, userPhone);
 		mDao.insert(mBean);
 //		TestMail mail = new TestMail();
 //		mail.sendMail(mBean);
 		session.getTransaction().commit();
 		session.close();
-		request.setAttribute("p", "註冊成功請登入");
+		request.setAttribute("p", "修改資料成功");
 //		request.getRequestDispatcher("<c:url value='up_LoginPage.jsp'/>").forward(request, response);
-		request.getRequestDispatcher("up_LoginPage.jsp").forward(request, response);
+		request.getRequestDispatcher("up_MemberProfilePage.jsp").forward(request, response);
 
 	}
 
