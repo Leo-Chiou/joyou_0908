@@ -15,7 +15,7 @@
 		<property name="current_session_context_class">thread</property>
 		
 		<mapping class="joyou.Members.model.MembersBean"/>
-		<mapping class="joyou.Products.model.ProductsBean"/>
+\
 
 		
     </session-factory>
