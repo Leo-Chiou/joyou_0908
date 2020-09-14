@@ -80,7 +80,7 @@ public class TestRegister extends HttpServlet {
 		MembersBeanDao mDao = new MembersBeanDao(session);
 
 		int rand1000to9999 = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
-		MembersBean mBean = new MembersBean(userAcc, userPwd, userMail, userNickName, userTrueName, userPhone);
+		MembersBean mBean = new MembersBean(userAcc, userPwd, userMail, userNickName, userTrueName, userPhone, null);
 		mDao.insert(mBean);
 //		TestMail mail = new TestMail();
 //		mail.sendMail(mBean);
