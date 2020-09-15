@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "memberTest1")
 public class MembersBean {
-	private int id;
+	private Integer id;
 	private String account;
 	private String password;
 	private String mail;
@@ -19,6 +19,9 @@ public class MembersBean {
 	private String truename;
 	private String phone;
 
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Taipei")
+//	Date birthday;
+
 //	private int gametypeid;
 
 	public MembersBean() {
@@ -26,6 +29,7 @@ public class MembersBean {
 	}
 
 	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone) {
+		super();
 		this.account = account;
 		this.password = password;
 		this.mail = mail;
@@ -55,7 +59,7 @@ public class MembersBean {
 		this.id = id;
 	}
 
-	@Column(name = "memberAcc")
+	@Column(name = "memberAccount")
 	public String getAccount() {
 		return account;
 	}
@@ -64,7 +68,7 @@ public class MembersBean {
 		this.account = acount;
 	}
 
-	@Column(name = "memberPwd")
+	@Column(name = "memberPassword")
 	public String getPassword() {
 		return password;
 	}
@@ -117,5 +121,24 @@ public class MembersBean {
 //	public void setGametypeid(int gametypeid) {
 //		this.gametypeid = gametypeid;
 //	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Member [id=");
+		builder.append(id);
+		builder.append(", account=");
+		builder.append(account);
+		builder.append(", mail=");
+		builder.append(mail);
+		builder.append(", nickname=");
+		builder.append(nickname);
+		builder.append(", truename=");
+		builder.append(truename);
+		builder.append(", phone=");
+		builder.append(phone);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }
