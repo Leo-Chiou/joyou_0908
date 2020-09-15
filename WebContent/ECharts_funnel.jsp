@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   <jsp:useBean id="qwer" class="joyou.StringTok" scope="page"/>
+   <jsp:useBean id="qwer" class="joyou.StringTokService" scope="page"/>
 
    
 <!DOCTYPE html>
@@ -102,9 +102,9 @@
             data: [
                 {value: ${qwer.footff[0]}, name: '進入首頁'},
                 {value: ${qwer.footff[1]}, name: '註冊'},
-                {value: ${qwer.footff[5]}, name: '瀏覽商品頁面'},
+                {value: ${qwer.footff[5]} , name: '瀏覽商品頁面'},
                 {value: ${qwer.footff[7]} , name: '放入購物車'},
-                {value: ${qwer.footff[8]} , name: '完成交易'},
+                {value: ${qwer.footff[8]}, name: '完成交易'},
             ]
         }
     ]

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   <jsp:useBean id="qwer" class="joyou.StringTok" scope="page"/>
+   <jsp:useBean id="qwer" class="joyou.StringTokService" scope="page"/>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,54 +28,64 @@
         layout: 'none',
         focusNodeAdjacency: 'allEdges',
         data: [{
-            name: '0'
-        },{
-            name: 'a'
-        }, {
             name: '1'
-        }, {
+        },{
             name: '2'
         }, {
             name: '3'
         }, {
             name: '4'
         }, {
-            name: 'b'
+            name: '5'
+        }, {
+            name: '6'
+        }, {
+            name: '7'
         },{
-            name: 'c'
+            name: '8'
+        },{
+            name: '9'
         }],
         links: [{
-            source: '0',
-            target: 'a',
-            value: 100
-        },{
-            source: 'a',
-            target: '1',
-            value: 50
-        }, {
-            source: 'a',
-            target: '2',
-            value: 10
-        }, {
-            source: 'a',
-            target: '3',
-            value: 10
-        }, {
-            source: 'a',
-            target: '4',
-            value: 30
-        }, {
             source: '1',
-            target: 'b',
-            value: 30
+            target: '2',
+            value: ${qwer.treee[0]}
+        },{
+            source: '2',
+            target: '3',
+            value: ${qwer.treee[1]}
         }, {
-            source: '3',
-            target: 'b',
-            value: 8
+            source: '2',
+            target: '4',
+            value: ${qwer.treee[2]}
+        }, {
+            source: '2',
+            target: '5',
+            value: ${qwer.treee[3]}
+        }, {
+            source: '2',
+            target: '6',
+            value: ${qwer.treee[4]}
+        }, {
+            source: '2',
+            target: '7',
+            value: ${qwer.treee[5]}
         }, {
             source: '4',
-            target: 'c',
-            value: 20
+            target: '6',
+            value: ${qwer.treee[6]}
+        }, {
+            source: '5',
+            target: '6',
+            value: ${qwer.treee[7]}
+        }, {
+            source: '6',
+            target: '8',
+            value: ${qwer.treee[8]}
+        }, {
+            source: '8',
+            target: '9',
+            value: ${qwer.treee[9]}
         }]
     }
 };
