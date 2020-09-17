@@ -16,6 +16,10 @@ public class OrderItemDao {
 	public OrderItemDao() {
 	}
 	
+	public OrderItemDao(Session session) {
+		this.session=session;
+	}
+	
 	public OrderItemBean insert(OrderItemBean oBean) { // 新增
 		if (oBean != null) {
 			session.save(oBean);

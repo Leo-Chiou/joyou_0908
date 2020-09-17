@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="JOYOU BOARD GAMES">
@@ -25,6 +28,107 @@
    <!-- login Begin--> 
 
     <!-- login End--> 
+
+
+    <script>
+        var clickCount = 0;
+        var verifiedMailAddress = 0;
+        var verifiedCode = 0;
+        var randInt=Math.floor(Math.random()*9000)+1; 
+
+        function sendMail() {
+                console.log("count begin");
+                let wait = 60;
+                function time(o) {
+                    if (wait == 0) {
+                        o.removeAttribute("disabled");
+                        o.value = "重新發送驗證碼";
+                        wait = 60;
+                    } else {
+                        o.setAttribute("disabled", "");
+                        o.value = wait + "秒後可以重新發送";
+                        wait--;
+                        setTimeout(function () {
+                            time(o);
+                        }, 1000);
+                    }
+                }
+
+                time(document.getElementById("btnSendMail"));
+
+                console.log("count end");
+
+                let Obj = document.getElementsByName("userMail")[0];
+                let VerifyObj = document.getElementById("checkMail");
+
+               
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "c:url value='/SendVerifiedMailServlet'", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("mail=" + Obj.value);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        let result = JSON.parse(xhr.responseText);
+                        verifiedCode = result.verifiedCode;
+                        let message = "驗證信已寄出";
+                        VerifyObj.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
+                    }
+                };
+            }
+
+            function checkConsistency() {
+                let Obj = document.getElementsByName("verified")[0];
+                let VerifyObj = document.getElementById("checkMailCode");
+                let message = "";
+                if (Obj.value == verifiedCode) {
+                    message = "驗證碼正確";
+                } else {
+                    message = "驗證碼錯誤";
+                }
+                VerifyObj.innerHTML = message;
+            }
+
+
+        function checkPassword() {
+            let Obj = document.getElementsByName("userPassword")[0];
+            let ObjVal = Obj.value;
+            let ObjValLen = ObjVal.length;
+            let VerifyObj = document.getElementById("checkPassword");
+
+            if (ObjVal.search(/\s/g) != -1) {
+                VerifyObj.innerHTML = "&nbsp; &nbsp; 不能有空白";
+            } else if (ObjValLen < 2 || ObjValLen > 15) {
+                VerifyObj.innerHTML = "&nbsp; &nbsp; 限制長度為6-15字";
+            } else {
+                if (/^[a-zA-z0-9]{2,15}$/.test(ObjVal)) {
+                    VerifyObj.innerHTML = "&nbsp; &nbsp; 格式正確";
+                } else {
+                    VerifyObj.innerHTML = "&nbsp; &nbsp; 必須全為字母數字";
+                }
+            }
+            checkPassword2();
+        }
+
+        function checkPassword2() {
+            let Obj = document.getElementsByName("userPassword")[0];
+            let ObjVal = Obj.value;
+            let Obj2 = document.getElementsByName("userPassword2")[0];
+            let ObjVal2 = Obj2.value;
+            let VerifyObj = document.getElementById("checkPassword");
+            let VerifyObj2 = document.getElementById("checkPassword2");
+            if (ObjVal2.search(/\s/g) != -1) {
+                VerifyObj2.innerHTML = "&nbsp; &nbsp; 不能有空白";
+            } else if (VerifyObj.innerHTML == "&nbsp; &nbsp; 格式正確" && ObjVal == ObjVal2) {
+                VerifyObj2.innerHTML = "&nbsp; &nbsp; 密碼相符";
+            } else {
+                VerifyObj2.innerHTML = "&nbsp; &nbsp; 密碼不符";
+            }
+        }
+
+        
+
+
+    </script>
 </head>
 
 <body>
@@ -209,74 +313,112 @@
                     </div>
 
 
-                       <!-- login Begin--> 
-        <div class="FOR_MAIN">               
-        <div class="clearfix Member_LoginPage newmember_box">
-          <!-- 官網－會員登入(一般) -->
-          <div class="AF_Member_LoginPage_left newmember_lbox">
-            <div class="AF_Member_LoginTitle_left jooshop_step_color doras_none">
-              <span>Member Login</span>&nbsp; 會員登入
-            </div><!-- -->
-            <div class="AF_Member_LoginTitle_left jooshop_step_color doras_style" style="display: none;">
-              購物會員登入
-            </div><!-- -->
-            <div class="AF_Member_LoginContent_left">
-              <form action="https://www.realpower.com.tw/realnature/index.php?action=index&amp;r_byeurl=realnature" id="it20_formA" method="post" name="it20_formA">
+<!-- member-into End--> 
+        <div class="FOR_MAIN">   
+         <div class="SB_MemberContent_login">
+              <span>Edit Password</span>&nbsp; 修改密碼
+            </div><!-- -->            
+<div class="SB_MemberContent">
+    <!-- 步驟 -->
 
-                <!-- 上區塊 -->
-                <ul class="AF_Member_LoginBox_left AF_Member_LoginlBox clearfix">
+    <form action="<c:url value='/up_MemberEditPasswordServlet'/>" method="POST">
+        <div class="SB_MemberData">
+            <table width="660" border="0" cellpadding="0" cellspacing="0" class="SB_MemberData_write SB_tablemarginB30">
 
-                  <li><input accesskey="F" class="AF_Member_Input100" id="login_account" name="login_account" onblur="SaveAcc();" placeholder=" &nbsp; 會員帳號" tabindex="1" type="text">
-                  </li>
+                <!---->
+                <tbody>
+            
+                
+                <!---->
 
-                  <li><input autocomplete="off" class="AF_Member_Input100" id="login_password" name="login_password" placeholder=" &nbsp; 會員密碼" tabindex="2" type="password">
-                  </li>
+                <!---->
+                <tr>
+                    <td align="right">
+                        <label for="meow"><span class="SB_tableWstyle03">*</span>帳號</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" >
+                    </td>
+                    <td class="SB_tableWstyle05" id="checkAccount">
+                        &nbsp; &nbsp;
+                    </td>
+                </tr>
 
-                  <li class="AF_attest_number">
-                    <input class="AF_Member_Input90" id="login_authimg_str" name="login_authimg_str" placeholder=" &nbsp; 認證碼" tabindex="3" type="text">
-                    &nbsp; 
-                    <img align="absmiddle" alt="確認代碼" border="0" id="login_authimg_img" src="img/91923.png" title="確認代碼">
-                    <a href="javascript:void(0)" onclick="_reloadAuthimgImg(&#39;login_authimg_img&#39;);"> 換另一張</a>
-                  </li>
+               
+                <tr id="block_mem_email" style="">
+                    <td align="right">
+                        <label for="mem_email"><span class="SB_tableWstyle03" id="mem_email_necessary_abbr">*</span>會員 E-mail</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="userMail" id="mem_email" type="text" class="SB_tableInput01" value=""  >
+                    </td>
+                    <td class="SB_tableWstyle05" >
+                        &nbsp; &nbsp;<!---->
+                    </td>
+                </tr>
+                <tr  style="">
+                    <td align="right">
+                        <label for=""><span class="SB_tableWstyle03" id="mem_email_necessary_abbr">*</span>驗證碼</label><!---->
+                        <input type="button" id="btnSendMail" onclick="sendMail()" value="發送驗證信" >
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="verified" id="" type="text" class="SB_tableInput01" value="" onChange="checkConsistency()"  >
+                    </td>
+                    <td class="SB_tableWstyle05" id="checkMailCode">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <label for="mem_password"><span class="SB_tableWstyle03">*</span>密碼設定</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="userPassword" id="mem_password" type="password" class="SB_tableInput01" value=""  onChange="checkPassword()" required>
+                    </td>
+                    <td class="SB_tableWstyle05" id="checkPassword">
+                        &nbsp; &nbsp;請輸入 6 碼以上英數字
+                    </td>
+                </tr>
+                
+                <!---->
 
-                  <li><label><input id="ck_remember" name="ck_remember" onchange="SaveAcc();" type="checkbox"> 記住我</label>
-                  </li>
+                <!---->
+                <tr>
+                    <td align="right">
+                        <label for="mem_password_check"><span class="SB_tableWstyle03">*</span>密碼確認</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="userPassword2" id="mem_password_check" type="password" class="SB_tableInput01" value="" onChange="checkPassword2()" required>
+                    </td>
+                    <td class="SB_tableWstyle05" id="checkPassword2">
+                        &nbsp; &nbsp;請再輸入一次您的密碼做確認<!---->
+                    </td>
+                </tr>
 
-                </ul>
+                
+                <!---->
 
-                <div class="AF_Member_Login_R_left jooshop_btn_login jooshop_btn_color">
-                  <input id="btn_login" name="btn_login" type="button" value="登 入">
-                </div>
-                <!-- -->
+                <!---->
+       
+                <!---->
 
-                <div class="AF_Member_Login_bt">
-                  <ul>
-                    <li>
-                      <a href="＃">忘記密碼</a>
-                    </li>
-                    <li>
-                      <a href="./member-into-1.html">我要註冊</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="it17_phone" id="sub_type_telcellphone" style="display: none;">
-                  <div class="it17_phone_in">
-                    <h5>簡訊驗證</h5>
-                    <ul class="clearfix">
-                      <li id="send_phone_code_inform"></li>
-                      <li>請輸入正確的驗證碼 <input id="mem_login_2step_code" name="mem_login_2step_code" type="text" value=""><input id="btn_submit_check_code" name="btn_submit_check_code" type="button" value="確認"><!---->
-                       <!-- <a href="javascript:void(0)">重新取得驗證碼</a> --></li>
-                    </ul>
-                  </div>
-                </div><!-- light box end-->
-                <!-- light box end-->
-                <input name="nti_JUE5JUFBJTdGJUI2JTdGJUI1eSVCOSVCMiVCOHolQjklQkR5JTgwJUFDJUJCJTgxJTdEJUFEJUJCJTgxJUI3JTdGJTdCJTdC" type="hidden" value="MTU5OTc1NDk1MEpoZjk3VGlLaExaaWFDWDVaSDJLaTljT2M1OFZWQmVi"><input name="nti_JUE5JUFBJTdGJUI2JTdGJUI1eSVCOSVCMiVCOHolQjklQkR5JTgwJUFDJUJCJTgxJTdEJUFEJUJCJTgxJUI3JTdGJTdCJTdC" type="hidden" value="MTU5OTc1NDk1MEpoZjk3VGlLaExaaWFDWDVaSDJLaTljT2M1OFZWQmVi">
-              </form>
+            </tbody></table>
+           
+            
+            <div class="SB_MemberClause_btn jooshop_btn_color">
+                <input name="btn_submit" id="submit" value="確定修改" type="submit"><!---->
             </div>
-          </div><!-- 官網－會員登入(一般)播end -->
+        </div>
+    </form>
+</div>      
+</div>
+<!---->
+<!---->
+
+</div>            <!---->
         </div>
         </div>
-            <!-- login end--> 
+            <!-- member-into End--> 
 
 
                 </div>
@@ -327,6 +469,7 @@
                     <div class="footer__widget">
                         <h6>Join Our Newsletter Now</h6>
                         <p>Get E-mail updates about our latest shop and special offers.</p>
+                        
                         <form action="#">
                             <input type="text" placeholder="Enter your mail">
                             <button type="submit" class="site-btn">Subscribe</button>
@@ -364,6 +507,25 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
+    <script>
+
+        <%
+
+        String userAccountStr =(String) session.getAttribute("memberAccount");
+        String userMailStr =(String) session.getAttribute("memberMail");
+
+        %>
+        
+        var userAccount="<%=userAccountStr%>";
+        var userMail="<%=userMailStr%>";
+
+
+        document.getElementsByName("userAccount")[0].value= userAccount ;
+        document.getElementsByName("userMail")[0].value= userMail ;
+
+        document.getElementsByName("userAccount")[0].setAttribute("readonly","readonly");
+        document.getElementsByName("userMail")[0].setAttribute("readonly","readonly");
+    </script>
 
 </body>
 

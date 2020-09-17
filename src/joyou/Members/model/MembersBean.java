@@ -18,18 +18,21 @@ public class MembersBean {
 
 	private String truename;
 	private String phone;
+	private String gender;
 	private String userfoot;
 
-//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Taipei")
-//	Date birthday;
+	// @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone
+	// = "Asia/Taipei")
+	// Date birthday;
 
-//	private int gametypeid;
+	// private int gametypeid;
 
 	public MembersBean() {
 
 	}
 
-	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone, String userfoot) {
+	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone,
+			String gender, String userfoot) {
 		super();
 		this.account = account;
 		this.password = password;
@@ -37,22 +40,24 @@ public class MembersBean {
 		this.nickname = nickname;
 		this.truename = truename;
 		this.phone = phone;
+		this.gender = gender;
 		this.userfoot = userfoot;
-//		this.gametypeid = gametypeid;
+		// this.gametypeid = gametypeid;
 	}
 
-//	public MembersBean(int id, String account, String password, String mail, int verified) {
-//		this.id = id;
-//		this.account = account;
-//		this.password = password;
-//		this.mail = mail;
-//		this.verified = verified;
-//	}
+	// public MembersBean(int id, String account, String password, String mail, int
+	// verified) {
+	// this.id = id;
+	// this.account = account;
+	// this.password = password;
+	// this.mail = mail;
+	// this.verified = verified;
+	// }
 
 	@Id
 	@Column(name = "memberID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -65,8 +70,8 @@ public class MembersBean {
 		return account;
 	}
 
-	public void setAccount(String acount) {
-		this.account = acount;
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	@Column(name = "memberPassword")
@@ -97,21 +102,30 @@ public class MembersBean {
 	}
 
 	@Column(name = "memberNickName")
-	public String getNickname() {
+	public String getNickName() {
 		return nickname;
 	}
 
-	public void setNickname(String nickname) {
+	public void setNickName(String nickname) {
 		this.nickname = nickname;
 	}
 
 	@Column(name = "memberTrueName")
-	public String getTruename() {
+	public String getTrueName() {
 		return truename;
 	}
 
-	public void setTruename(String truename) {
+	public void setTrueName(String truename) {
 		this.truename = truename;
+	}
+
+	@Column(name = "memberGender")
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	@Column(name = "memberUserfoot")
@@ -123,19 +137,19 @@ public class MembersBean {
 		this.userfoot = userfoot;
 	}
 
-//	@Column(name = "gametypeid")
-//	public int getGametypeid() {
-//		return gametypeid;
-//	}
-//
-//	public void setGametypeid(int gametypeid) {
-//		this.gametypeid = gametypeid;
-//	}
+	// @Column(name = "gametypeid")
+	// public int getGametypeid() {
+	// return gametypeid;
+	// }
+	//
+	// public void setGametypeid(int gametypeid) {
+	// this.gametypeid = gametypeid;
+	// }
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Member [id=");
+		builder.append("{id=");
 		builder.append(id);
 		builder.append(", account=");
 		builder.append(account);
@@ -147,7 +161,7 @@ public class MembersBean {
 		builder.append(truename);
 		builder.append(", phone=");
 		builder.append(phone);
-		builder.append("]");
+		builder.append("}");
 		return builder.toString();
 	}
 

@@ -7,18 +7,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="OrderItem")
 public class OrderItemBean {
+	@Id
+	@Column(name="orderitemid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer orderitemId;
+//	Integer orderId;
 	Integer productId;
 	String productName;
 	Integer productPrice;
 	String productLang;
 	Integer orderitemQty;
 	Integer totalPrice;
+	
+
+	@ManyToOne
+	@JoinColumn(name = "orderId")
+	OrdersBean ordersBean;
 	
 	public OrderItemBean(Integer productId,String productName,Integer productPrice,String productLang,
 	Integer orderitemQty,Integer totalPrice) {
@@ -31,9 +42,7 @@ public class OrderItemBean {
 	}
 	
 
-	@Id
-	@Column(name="orderitemid")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	public Integer getOrderitemId() {
 		return orderitemId;
 	}
@@ -42,7 +51,7 @@ public class OrderItemBean {
 		this.orderitemId = orderitemId;
 	}
 	
-	@Column(name="productid")
+	
 	public Integer getProductId() {
 		return productId;
 	}
@@ -51,7 +60,7 @@ public class OrderItemBean {
 		this.productId = productId;
 	}
 	
-	@Column(name="productname")
+	
 	public String getProductName() {
 		return productName;
 	}
@@ -60,7 +69,7 @@ public class OrderItemBean {
 		this.productName = productName;
 	}
 	
-	@Column(name="productprice")
+	
 	public Integer getProductPrice() {
 		return productPrice;
 	}
@@ -68,7 +77,7 @@ public class OrderItemBean {
 		this.productPrice = productPrice;
 	}
 	
-	@Column(name="productlang")
+	
 	public String getProductLang() {
 		return productLang;
 	}
@@ -77,7 +86,7 @@ public class OrderItemBean {
 		this.productLang = productLang;
 	}
 	
-	@Column(name="orderitemqty")
+	
 	public Integer getOrderitemQty() {
 		return orderitemQty;
 	}
@@ -86,13 +95,23 @@ public class OrderItemBean {
 		this.orderitemQty = orderitemQty;
 	}
 	
-	@Column(name="totalPrice")
+	
 	public Integer getTotalPrice() {
 		return totalPrice;
 	}
 	
 	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+
+	public OrdersBean getOrdersBean() {
+		return ordersBean;
+	}
+
+
+	public void setOrdersBean(OrdersBean ordersBean) {
+		this.ordersBean = ordersBean;
 	}
 	
 	

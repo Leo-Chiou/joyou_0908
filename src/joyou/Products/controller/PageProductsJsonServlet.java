@@ -74,7 +74,6 @@ public class PageProductsJsonServlet extends HttpServlet {
 	    		
 	    	}else if(type.equals("desc")) {  
 	    		pPt=pDao.selectPriceDesc(pageNo);
-	    		System.out.println("66666666666666666666");
 	    		
 	    	}else if(type.equals("asc")) {
 	    		pPt=pDao.selectPriceAsc(pageNo);

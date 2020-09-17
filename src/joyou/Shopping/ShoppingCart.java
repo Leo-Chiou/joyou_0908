@@ -3,11 +3,13 @@ import java.util.*;
 import joyou.Orders.model.OrderItemBean;
 
 
-public class ShoppingCartDao {
+public class ShoppingCart {
   
 	private Map<Integer, OrderItemBean> cart = new LinkedHashMap< >();
 	
-	public ShoppingCartDao() {
+
+	
+	public ShoppingCart() {
 	}
 	
 	public Map<Integer, OrderItemBean>  getContent() { // ${ShoppingCart.content}
@@ -24,7 +26,6 @@ public class ShoppingCartDao {
 			OrderItemBean oib = cart.get(productId);		
 			oib.setOrderitemQty(oi.getOrderitemQty() + oib.getOrderitemQty());
 			oib.setTotalPrice(oib.getOrderitemQty()*oib.getProductPrice());
-			System.out.println("哈"+oib.getOrderitemQty()*oib.getProductPrice());
 		}
 	}
 
@@ -40,6 +41,9 @@ public class ShoppingCartDao {
 		   return false;
 		}
 	}
+	
+	
+	
 	// 刪除某項商品
 	public int deleteBook(int productId) {
 		if ( cart.get(productId) != null ) {
@@ -55,7 +59,7 @@ public class ShoppingCartDao {
 	
 	//計算購物車內所有商品的合計金額(每項商品的單價*數量的總和)
 	public Integer getSubtotal(){
-		Integer subTotal = 0 ;
+		int subTotal=0;
 		Set<Integer> set = cart.keySet();
 		for(int n : set){
 			Integer price    = cart.get(n).getProductPrice();
@@ -64,6 +68,16 @@ public class ShoppingCartDao {
 		}
 		return subTotal;
 	}
+	
+	
+	public Integer getNewSubtotal(int Total,int Amount) {
+		
+		int newsubTotal = Total-Amount;
+		return newsubTotal;
+		
+	}
+	
+	
 	public void listCart() {
 		Set<Integer> set = cart.keySet();
 		for(Integer k : set){

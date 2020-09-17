@@ -15,7 +15,7 @@ public class ProductsDao {
 	DataSource ds = null;
 	public static final int RECORDS_PER_PAGE = 9;
 	private int totalPages;
-	private Query<ProductsBean> query;
+	
 
 	public ProductsDao(Session session) {
 		this.session = session;
@@ -43,6 +43,7 @@ public class ProductsDao {
 		return query.list();
 	}
 
+	
 	public ProductsBean updatenoImg(Integer productId, String productName, // 依ID修改商品不含照片。
 			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,String suggestNum,String productColor,String paintingStyle,String productIntro) {
 		ProductsBean pBean = session.get(ProductsBean.class, productId);
@@ -93,37 +94,11 @@ public class ProductsDao {
 		return false;
 	}
 
-	public List<ProductsBean> selectByPage(int page) {       //選擇各頁資料(每頁9筆)
-//		List<ProductsBean> list = new ArrayList<ProductsBean>();
-//		int first = 1+10*(page-1);
-//		int last=9+10*(page-1);
-//		try {
-//		String sqlstr="SELECT * FROM Products WHERE productId BETWEEN '"+first+"' AND '"+last+"'";
-//		Connection connection = ds.getConnection("@sa", "P@ssw0rd"); 
-//		System.out.println(98);
-//		PreparedStatement ps = connection.prepareStatement(sqlstr);
-//		ResultSet rs = ps.executeQuery();
-//		while (rs.next()) {
-//			ProductsBean pBean = new ProductsBean();
-//			pBean.setProductId(rs.getInt("ProductId"));
-//			pBean.setProductName(rs.getString("productName"));
-//			pBean.setProductStock(rs.getInt("ProductStock"));
-//			pBean.setProductPrice(rs.getInt("ProductPrice"));
-//			pBean.setGametypeId(rs.getInt("GametypeId"));
-//			pBean.setProductAge(rs.getString("ProductAge"));
-//			pBean.setProductLang(rs.getString("ProductLang"));
-//			pBean.setProductImg(rs.getBlob("ProductImg"));
-//
-//			list.add(pBean);
-//		}
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}return list;
-		
+	public List<ProductsBean> selectByPage(int page) {
 		int first = 1+9*(page-1);
 		int last=9+9*(page-1);
 		String sqlstr="FROM ProductsBean WHERE productId BETWEEN '"+first+"' AND '"+last+"'";
-		query = session.createQuery(sqlstr, ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery(sqlstr, ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
 		return beanList;
 
@@ -136,7 +111,7 @@ public class ProductsDao {
 
 	public long getRecordCounts() {   //計算商品數量
 		long count = 0;
-		query = session.createQuery("from ProductsBean", ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean", ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
 		for (ProductsBean pBean : beanList) {
 			count++;
@@ -146,7 +121,7 @@ public class ProductsDao {
 	}
 	
 	public List<ProductsBean> selectPriceDesc(int page) {   //價錢由高至低
-		query = session.createQuery("from ProductsBean order by productPrice desc ", ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean order by productPrice desc ", ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
 		List<ProductsBean> newlist = new ArrayList<>();
 		for(int i=9*(page-1);i<=8+9*(page-1)&&i<beanList.size();i++) {
@@ -157,7 +132,7 @@ public class ProductsDao {
 	}
 	
 	public List<ProductsBean> selectPriceAsc(int page) {   //價錢由低至高
-		query = session.createQuery("from ProductsBean order by productPrice asc", ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean order by productPrice asc", ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
 		List<ProductsBean> newlist = new ArrayList<>();
 		for(int i=9*(page-1);i<8+9*(page-1)+1&&i<beanList.size();i++) {
@@ -170,7 +145,7 @@ public class ProductsDao {
 	
 	public List<ProductsBean> selectNewProduct(){         //選擇最後三筆
 		String sql="select top 3 * from ProductsBean order by productId desc";
-		query = session.createQuery(sql, ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery(sql, ProductsBean.class);
 		List<ProductsBean> list = query.list();
 		return list;
 		
@@ -179,7 +154,7 @@ public class ProductsDao {
 	
 	public List<ProductsBean> selectSaleProduct(){         //選擇特價品
 		
-		query = session.createQuery("from ProductsBean where sale=1", ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where sale=1", ProductsBean.class);
 		List<ProductsBean> list = query.list();
 		return list;
 		

@@ -13,43 +13,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
-import joyou.Members.model.MembersBeanDao;
+import joyou.Members.model.MembersBeanService;
 import joyou.util.HibernateUtil;
 
 @WebServlet("/CheckDuplicateAccountServlet")
 public class CheckDuplicateAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Session session;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		String memberAccount = request.getParameter("account");
+
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
 		Gson gson = new Gson();
 		Map<String, String> map = new HashMap<>();
-		if (memberAccount != null && memberAccount.trim().length() != 0) {
-			try {
 
-				SessionFactory factory = HibernateUtil.getSessionFactory();
+		if (memberAccount != null && memberAccount.length() != 0) {
 
-				session = factory.openSession();
-				session.beginTransaction();
+			SessionFactory factory = HibernateUtil.getSessionFactory();
+			Session session = factory.getCurrentSession();
+			Transaction tx = session.beginTransaction();
 
-				MembersBeanDao md1 = new MembersBeanDao(session);
-				Boolean result1 = new Boolean(md1.checkDuplicateAccount(memberAccount));
-				map.put("memberAccountisDuplicate", result1.toString());
+			MembersBeanService mService = new MembersBeanService(session);
+			boolean result1 = mService.checkMemberExistByAccount(memberAccount);
+			map.put("memberAccountisDuplicate", Boolean.toString(result1));
 
-				session.getTransaction().commit();
-				session.close();
+			tx.commit();
 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
 		}
 		out.println(gson.toJson(map));
 		out.close();

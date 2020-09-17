@@ -1,10 +1,8 @@
 package joyou.Orders.dao;
 
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import joyou.Orders.model.OrdersBean;
@@ -13,6 +11,7 @@ import joyou.Orders.model.OrdersBean;
 @Repository("myOrdersDao")
 public class OrdersDao {
 	Session session;
+	SessionFactory factory;
 
 	public OrdersDao() {
 	}

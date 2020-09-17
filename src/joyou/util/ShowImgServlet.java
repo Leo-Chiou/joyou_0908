@@ -1,5 +1,6 @@
 package joyou.util;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -37,12 +38,7 @@ public class ShowImgServlet extends HttpServlet {
 		session.beginTransaction();
 		
 		try {
-		System.out.println(35);
-		String strid = request.getParameter("id");
-		System.out.println(strid);
-		String type = request.getParameter("type");
-		System.out.println(type);
-		if(type.equals("Product")) {
+		String strid = request.getParameter("no");
 			int id = Integer.parseInt(strid);
 			ProductsDao pDao = new ProductsDao(session);
 			ProductsBean pBean = pDao.selectbyId(id);
@@ -52,14 +48,13 @@ public class ShowImgServlet extends HttpServlet {
 				imgName=pBean.getImgName();
 			}
 			
-		}
 		newName=getServletContext().getMimeType(imgName);
 		response.setContentType(newName);
 		outSream=response.getOutputStream();
-		System.out.println(isImg);
 		int len = 0;
 		byte[] bytes = new byte[8192];
-		while ((len = isImg.read(bytes)) != -1) {
+		while ((len = isImg.read(bytes)) >0) {
+			outSream.flush();
 			outSream.write(bytes, 0, len);
 		}
 		
@@ -73,6 +68,8 @@ public class ShowImgServlet extends HttpServlet {
 			outSream.close();
 		}
 	}
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
+	}
 	
 }

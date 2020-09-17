@@ -8,10 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import joyou.Orders.model.OrderItemBean;
-import joyou.Shopping.ShoppingCartDao;
+import joyou.Shopping.ShoppingCart;
+import joyou.util.HibernateUtil;
 
+
+//加入購物車
 @WebServlet("/BuyProductsServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class BuyProductsServlet  extends HttpServlet{
@@ -37,16 +41,18 @@ public class BuyProductsServlet  extends HttpServlet{
 
 
 	private void processAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession(); 
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
 		
-		ShoppingCartDao cart = (ShoppingCartDao)session.getAttribute("ShoppingCart");
+		ShoppingCart cart = (ShoppingCart)request.getSession().getAttribute("ShoppingCart");
 		
 		if (cart == null) {
-			cart = new ShoppingCartDao();
-			session.setAttribute("ShoppingCart", cart);   
+			cart = new ShoppingCart();
+			request.getSession().setAttribute("ShoppingCart", cart);   
 		}
-		
 		
 		String productIdStr = request.getParameter("productId");
 		String productName = request.getParameter("productName");
@@ -57,7 +63,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		
 		if (pageNo == null || pageNo.trim().length() == 0){
-			pageNo = (String) session.getAttribute("pageNo") ;
+			pageNo = (String) request.getSession().getAttribute("pageNo") ;
 			if (pageNo == null){
 			   pageNo = "1";
 			}
@@ -85,6 +91,9 @@ public class BuyProductsServlet  extends HttpServlet{
 				counts,totalPrice);
 		
 		cart.addToCart(productId, oiBean);
+		
+		session.getTransaction().commit();
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/ProductsGetServlet.do?pageNo=" + pageNo);
 		rd.forward(request, response);
 		

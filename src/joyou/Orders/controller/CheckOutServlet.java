@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import joyou.Shopping.ShoppingCartDao;
+import joyou.Shopping.ShoppingCart;
+import joyou.util.HibernateUtil;
 
 
 @WebServlet("/CheckOutServlet.do")
@@ -23,10 +25,13 @@ public class CheckOutServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession(); 
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
 		
-		ShoppingCartDao sc = (ShoppingCartDao)session.getAttribute("ShoppingCart");
+		ShoppingCart sc = (ShoppingCart)request.getSession().getAttribute("ShoppingCart");
 		if (sc == null) {
 			// 如果找不到購物車(通常是Session逾時)，沒有必要往下執行
 			// 導向首頁

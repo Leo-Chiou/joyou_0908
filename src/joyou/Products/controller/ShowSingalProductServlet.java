@@ -25,7 +25,6 @@ public class ShowSingalProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-
 		session = factory.openSession();
 		session.beginTransaction();
 		

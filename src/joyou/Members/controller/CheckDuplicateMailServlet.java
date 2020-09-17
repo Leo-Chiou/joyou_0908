@@ -13,52 +13,53 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
-import joyou.Members.model.MembersBeanDao;
+import joyou.Members.model.MembersBeanService;
 import joyou.util.HibernateUtil;
 
 @WebServlet("/CheckDuplicateMailServlet")
 public class CheckDuplicateMailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Session session;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//	@RequestMapping(value = "/CheckDuplicateMail", method = RequestMethod.POST)
+//	public @ResponseBody Map<String, String> CheckDuplicateMail(@RequestParam(value = "mail") String memberMail) {
+//		System.out.println("==============");
+//		System.out.println("mail=" + memberMail);
+//		Map<String, String> map = new HashMap<>();
+//		MembersBeanService mService = new MembersBeanService();
+//		boolean result2 = mService.checkMemberExistByMail(memberMail);
+//		map.put("memberMailisDuplicate", Boolean.toString(result2));
+//		return map;
+//	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		String memberMail = request.getParameter("mail");
+
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		// String id = "";
+
 		Gson gson = new Gson();
 		Map<String, String> map = new HashMap<>();
-		if (memberMail != null && memberMail.trim().length() != 0) {
-			try {
-				// MemberService service = new MemberServiceImpl();
-				// id = service.checkMemberId(memberId);
-				// map.put("id", id);
-				SessionFactory factory = HibernateUtil.getSessionFactory();
+		if (memberMail != null && memberMail.length() != 0) {
 
-				session = factory.openSession();
-				session.beginTransaction();
+			SessionFactory factory = HibernateUtil.getSessionFactory();
+			Session session = factory.getCurrentSession();
+			Transaction tx = session.beginTransaction();
 
-				MembersBeanDao md1 = new MembersBeanDao(session);
-				Boolean result2 = new Boolean(md1.checkDuplicateMail(memberMail));
-				map.put("memberMailisDuplicate", result2.toString());
+			MembersBeanService mService = new MembersBeanService(session);
+			boolean result2 = mService.checkMemberExistByMail(memberMail);
+			map.put("memberMailisDuplicate", Boolean.toString(result2));
 
-				System.out.println("check mail:" + memberMail + "  " + result2);
-				session.getTransaction().commit();
-				session.close();
+			tx.commit();
 
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
 		}
-		// System.out.println(57);
 		out.println(gson.toJson(map));
-		// System.out.println(59);
 		out.close();
-		// System.out.println(61);
 	}
 
 }

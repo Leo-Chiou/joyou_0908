@@ -25,7 +25,7 @@ public class UpdateShoppingCartServlet extends HttpServlet implements Servlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		session = request.getSession();
-		ShoppingCartDao sc= (ShoppingCartDao)session.getAttribute("ShoppingCart");
+		ShoppingCart sc= (ShoppingCart)session.getAttribute("ShoppingCart");
 		if (sc == null) {
 			response.sendRedirect(getServletContext().getContextPath() + "/ShoppingPage.jsp"  );
 			return;

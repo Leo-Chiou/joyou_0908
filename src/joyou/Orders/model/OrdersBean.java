@@ -3,16 +3,22 @@ package joyou.Orders.model;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Orders")
 public class OrdersBean {
+	@Id
+	@Column(name="orderId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer orderId;
 	Integer memberId;
 	String receiver;
@@ -21,6 +27,8 @@ public class OrdersBean {
 	Integer orderAmount;
 	Date  orderDate;
 	String payMethod;
+	
+	@OneToMany(mappedBy="ordersBean", cascade=CascadeType.ALL)
 	Set<OrderItemBean> items = new LinkedHashSet<>();
 	String remarks;
 	
@@ -30,7 +38,7 @@ public class OrdersBean {
 	}
 
 	public OrdersBean(Integer orderId, Integer memberId, String receiver, String receiverPhone,
-			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod,Set<OrderItemBean> items, String remarks) {
+			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks,Set<OrderItemBean> items) {
 
 		this.orderId=orderId;
 		this.memberId=memberId;
@@ -45,9 +53,22 @@ public class OrdersBean {
 
 	}
 	
-	@Id
-	@Column(name="orderId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public OrdersBean(Integer memberId, String receiver, String receiverPhone,
+			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks) {
+
+
+		this.memberId=memberId;
+		this.receiver=receiver;
+		this.receiverPhone=receiverPhone;
+		this.shippingAddress=shippingAddress;
+		this.orderAmount=orderAmount;
+		this.orderDate=orderDate;
+		this.payMethod=payMethod;
+		this.remarks=remarks;
+
+	}
+	
+
 	public Integer getOrderId() {
 		return orderId;
 	}
@@ -56,7 +77,7 @@ public class OrdersBean {
 		this.orderId = orderId;
 	}
 
-	@Column(name="memberId")
+	
 	public Integer getMemberId() {
 		return memberId;
 	}
@@ -65,7 +86,7 @@ public class OrdersBean {
 		this.memberId = memberId;
 	}
 
-	@Column(name="receiver")
+
 	public String getReceiver() {
 		return receiver;
 	}
@@ -74,7 +95,8 @@ public class OrdersBean {
 		this.receiver = receiver;
 	}
 
-	@Column(name="receiverphone")
+
+
 	public String getReceiverPhone() {
 		return receiverPhone;
 	}
@@ -83,7 +105,7 @@ public class OrdersBean {
 		this.receiverPhone = receiverPhone;
 	}
 
-	@Column(name="shippingAddress")
+
 	public String getShippingAddress() {
 		return shippingAddress;
 	}
@@ -92,7 +114,7 @@ public class OrdersBean {
 		this.shippingAddress = shippingAddress;
 	}
 
-	@Column(name="orderamount")
+
 	public Integer getOrderAmount() {
 		return orderAmount;
 	}
@@ -101,7 +123,7 @@ public class OrdersBean {
 		this.orderAmount = orderAmount;
 	}
 
-	@Column(name="orderdate")
+
 	public Date getOrderDate() {
 		return orderDate;
 	}
@@ -110,7 +132,7 @@ public class OrdersBean {
 		this.orderDate = orderDate;
 	}
 
-	@Column(name="paymethod")
+
 	public String getPayMethod() {
 		return payMethod;
 	}
@@ -119,15 +141,15 @@ public class OrdersBean {
 		this.payMethod = payMethod;
 	}
 
-//	public Set<OrderItemBean> getItems() {
-//		return items;
-//	}
-//
-//	public void setItems(Set<OrderItemBean> items) {
-//		this.items = items;
-//	}
+	
+	public Set<OrderItemBean> getItems() {
+		return items;
+	}
 
-	@Column(name="remarks")
+	public void setItems(Set<OrderItemBean> items) {
+		this.items = items;
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}

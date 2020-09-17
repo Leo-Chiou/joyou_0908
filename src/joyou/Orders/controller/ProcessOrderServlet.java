@@ -2,84 +2,91 @@ package joyou.Orders.controller;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import joyou.Orders.dao.OrdersDao;
 import joyou.Orders.model.OrderItemBean;
 import joyou.Orders.model.OrdersBean;
-import joyou.Shopping.ShoppingCartDao;
+import joyou.Shopping.ShoppingCart;
+import joyou.util.HibernateUtil;
 
 
+//執行結帳頁面
 @WebServlet("/ProcessOrderServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class ProcessOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Session session;
-	private ShoppingCartDao sc;
-
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession(); 
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
 		
-		String finalDecision = request.getParameter("finalDecision");	
 		
-		if (session == null) {   //超過時間回到首頁
-			response.sendRedirect(getServletContext().getContextPath() + "/index.jsp"  );
-			return;
-		}
+//		String responseCode=request.getParameter("ResponseCode");
 		
-		sc = (ShoppingCartDao)session.getAttribute("ShoppingCart");
+//		if(!responseCode.equals("00")) {
+//			response.sendRedirect(response.encodeRedirectURL ("ShoppingPage.jsp"));
+//		}
 		
-		if  (finalDecision.equals("CANCEL")){
-			session.removeAttribute("ShoppingCart");
-			response.sendRedirect(response.encodeRedirectURL (request.getContextPath()));
-			return;
-		}
+		ShoppingCart sc = (ShoppingCart) request.getSession().getAttribute("ShoppingCart");
 		
 		Integer total = sc.getSubtotal();
-		int mId=(int) request.getSession().getAttribute("memberID");
-		String recievename = request.getParameter("recievename");
-		String recievephone = request.getParameter("recievephone");
-		String address = request.getParameter("address");
-		String remarks = request.getParameter("remarks");
-		String card = request.getParameter("card");
-		Date today = new Date();
 		
-		Set<OrderItemBean> items = new HashSet<OrderItemBean>();
+			
+		
+//		int mId=(int) request.getSession().getAttribute("memberID");
+		int mId =1000; 
+		String recievename = (String) request.getSession().getAttribute("recievename");
+		String recievephone = (String) request.getSession().getAttribute("recievephone");
+		String address = (String) request.getSession().getAttribute("address");
+		
+		Date today = new Date();
+		String card = "信用卡付款"; //專案只演示信卡付款。
+		String remarks = (String) request.getSession().getAttribute("remarks");	
+		
+		
+		
+		OrdersBean oBean = new OrdersBean(null,mId, recievename, recievephone,
+				address,total,today ,card, remarks,null);
+		
 		Map<Integer, OrderItemBean> cart = sc.getContent();
+		
+		Set<OrderItemBean> items = new LinkedHashSet<>();
 		Set<Integer> set = cart.keySet();
-		for (Integer k : set) {
-			OrderItemBean oi = cart.get(k); 
-			OrderItemBean oib = new OrderItemBean(oi.getProductId(), oi.getProductName(), oi.getProductPrice(), oi.getProductLang(), oi.getOrderitemQty(), oi.getTotalPrice());
+		for(Integer i : set) {
+			OrderItemBean oib = cart.get(i);
+			oib.setOrdersBean(oBean);
 			items.add(oib);
 		}
 		
-		OrdersBean oBean = new OrdersBean(null, mId, recievename, recievephone,
-				address,total ,today,card,items, remarks);
-		
-		OrdersDao oDao = new OrdersDao();
+		oBean.setItems(items); 
+		OrdersDao oDao = new OrdersDao(session);
 		oDao.insert(oBean);
-		session.removeAttribute("ShoppingCart");
+		
+		System.out.println(oBean.getReceiver());
+		session.getTransaction().commit();
+		
+		request.getSession().removeAttribute("ShoppingCart");
 		response.sendRedirect(response.encodeRedirectURL ("OrderFinish.jsp"));
 		
 		
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doGet(request, response);
-	}
 
 }

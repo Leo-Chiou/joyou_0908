@@ -16,6 +16,7 @@ import joyou.Products.dao.ProductsDao;
 import joyou.Products.model.ProductsBean;
 import joyou.util.HibernateUtil;
 
+//按加入購物車後執行
 @WebServlet("/ProductsGetServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class ProductsGetServlet extends HttpServlet {
@@ -30,6 +31,7 @@ public class ProductsGetServlet extends HttpServlet {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		
+		
 		try {
 		String pageStr = request.getParameter("pageNo");
 		if(pageStr==null) {
@@ -39,9 +41,8 @@ public class ProductsGetServlet extends HttpServlet {
 		}
 		
 		ProductsDao pDao = new ProductsDao(session);
-		List<ProductsBean> pageBean = pDao.selectByPage(pageNo); //常規商品
-																 //特價商品
-																//最新商品
+		List<ProductsBean> pageBean = pDao.selectByPage(pageNo); 
+		
 		int totalNo = pDao.getTotalPages();
 		request.setAttribute("products_DPP", pageBean);    
 		request.setAttribute("pageNo", pageNo);

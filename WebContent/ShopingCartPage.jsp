@@ -106,7 +106,6 @@ function Abort() {
 
 <c:choose>
    <c:when test="${ShoppingCart.subtotal > 0}">
-      <c:set var="subtotalMessage" value="金額小計:${ShoppingCart.subtotal} 元"/>
       <c:set var="subtotal" value="${ShoppingCart.subtotal}"/>  
    </c:when>
    <c:otherwise>
@@ -357,23 +356,17 @@ function Abort() {
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>優惠卷</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">輸入</button>
-                            </form>
-                        </div>
+
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>本次訂單總金額</h5>
                         <ul>
-                            <li>折扣前<span>NT.<fmt:formatNumber value="${subtotal + VAT }" pattern="#,###,###" /></span></li>
-                            <li>折扣後<span>NT.<fmt:formatNumber value="${subtotal + VAT }" pattern="#,###,###" /></span></li>
+                            <li>折扣前<span>NT.<fmt:formatNumber value="${subtotal}" pattern="#,###,###" /></span></li>
                         </ul>
-                        <a id="order" href="${pageContext.request.contextPath}/CheckOutServlet.do" class="primary-btn">結帳去</a>
+                        <a id="order" href="ShoppingCheckOut.jsp" class="primary-btn">結帳去</a>
+                       <!-- <a id="order" href="${pageContext.request.contextPath}/DiscountServlet.do" class="primary-btn">結帳去</a> --> 
                     </div>
                 </div>
             </div>
