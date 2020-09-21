@@ -19,6 +19,7 @@ public class MembersBean {
 	private String truename;
 	private String phone;
 	private String gender;
+	//private String picturepath;
 	private String userfoot;
 
 	// @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone
@@ -32,7 +33,8 @@ public class MembersBean {
 	}
 
 	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone,
-			String gender, String userfoot) {
+			String gender,//String picturepath, 
+			String userfoot) {
 		super();
 		this.account = account;
 		this.password = password;
@@ -41,6 +43,7 @@ public class MembersBean {
 		this.truename = truename;
 		this.phone = phone;
 		this.gender = gender;
+		//this.picturepath = picturepath;
 		this.userfoot = userfoot;
 		// this.gametypeid = gametypeid;
 	}
@@ -127,6 +130,15 @@ public class MembersBean {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+//	@Column(name = "memberPicturePath")
+//	public String getPicturepath() {
+//		return picturepath;
+//	}
+//
+//	public void setPicturepath(String picturepath) {
+//		this.picturepath = picturepath;
+//	}
 
 	@Column(name = "memberUserfoot")
 	public String getUserfoot() {

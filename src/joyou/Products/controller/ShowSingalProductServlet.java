@@ -56,7 +56,7 @@ public class ShowSingalProductServlet extends HttpServlet {
 		request.setAttribute("productStock", productStock);
 		request.setAttribute("imgName", imgName);
 		
-		
+		session.getTransaction().commit();
 		request.getRequestDispatcher("ProductsDetail.jsp").forward(request, response);
 	}
 

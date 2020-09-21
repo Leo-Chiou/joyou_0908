@@ -43,5 +43,11 @@ public class OrdersDao {
 		return false;
 	}
 	
+	public OrdersBean selectbyId(Integer orderId) { // 依ID查詢商品
+		OrdersBean oBean = session.get(OrdersBean.class, orderId);
+		return oBean;
+	}
+
+	
 	
 }

@@ -11,34 +11,50 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="OrderItem")
 public class OrderItemBean {
 	@Id
 	@Column(name="orderitemid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	Integer orderitemId;
 //	Integer orderId;
+	@Expose
 	Integer productId;
+	@Expose
 	String productName;
+	@Expose
 	Integer productPrice;
+	@Expose
 	String productLang;
+	@Expose
 	Integer orderitemQty;
+	@Expose
 	Integer totalPrice;
+	@Expose
+	String imgName;
 	
 
 	@ManyToOne
 	@JoinColumn(name = "orderId")
 	OrdersBean ordersBean;
 	
+	
+	public OrderItemBean() {
+	}
+	
 	public OrderItemBean(Integer productId,String productName,Integer productPrice,String productLang,
-	Integer orderitemQty,Integer totalPrice) {
+	Integer orderitemQty,Integer totalPrice,String imgName) {
 		this.productId=productId;
 		this.productName=productName;
 		this.productPrice=productPrice;
 		this.productLang=productLang;
 		this.orderitemQty=orderitemQty;
 		this.totalPrice=totalPrice;
+		this.imgName=imgName;
 	}
 	
 
@@ -113,6 +129,15 @@ public class OrderItemBean {
 	public void setOrdersBean(OrdersBean ordersBean) {
 		this.ordersBean = ordersBean;
 	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+	
 	
 	
 }

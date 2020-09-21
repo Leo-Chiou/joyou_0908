@@ -4,23 +4,24 @@
 response.setContentType("text/html; charset=UTF-8");
 request.setCharacterEncoding("UTF-8");
 
-String amount = request.getParameter("amountTotal");
+String amountTotal = request.getParameter("amountTotal");
+
 int amount_final = 0;
-if(amount.indexOf(".")> -1){
-	amount = amount.substring(0, amount.indexOf("."));
-	amount_final = Integer.parseInt(amount);
+if(request.getSession().getAttribute("discode")!=null){
+	amount_final = Integer.parseInt(amountTotal)-(int)request.getSession().getAttribute("discode");
+	
+}else{
+	amount_final = Integer.parseInt(amountTotal);
 }
-amount_final = Integer.parseInt(amount);
 
-
-request.getSession().setAttribute("recievename", request.getParameter("recievename"));
-request.getSession().setAttribute("recievephone", request.getParameter("recievephone"));
+request.getSession().setAttribute("discode", request.getSession().getAttribute("discode"));
+request.getSession().setAttribute("receivername", request.getParameter("receivername"));
+request.getSession().setAttribute("receiverphone", request.getParameter("receiverphone"));
 request.getSession().setAttribute("address", request.getParameter("address"));
 request.getSession().setAttribute("remarks", request.getParameter("remarks"));
-
-
-
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,159 +81,7 @@ function setConf(){
 <body onload="document.HPP.submit();">
 
 
-	<!-- Humberger Begin -->
-	<div class="humberger__menu__overlay"></div>
-	<div class="humberger__menu__wrapper">
-		<div class="humberger__menu__logo">
-			<a href="#"><img src="img/logo.png" alt=""></a>
-		</div>
-		<div class="humberger__menu__cart">			
-		</div>
-		<div class="humberger__menu__widget">
-		
-			<div class="header__top__right__auth">
-				<a href="#"><i class="fa fa-user"></i> Login</a>
-			</div>
-		</div>
-		<nav class="humberger__menu__nav mobile-menu">
-			<ul>
-				<li><a href="./shop-grid.html">Shop</a></li>
-				<li><a href="#">Pages</a>
-					<ul class="header__menu__dropdown">
-						<li><a href="./shop-details.html">Shop Details</a></li>
-						<li><a href="./shoping-cart.html">Shoping Cart</a></li>
-						<li><a href="./checkout.html">Check Out</a></li>
-						<li><a href="./blog-details.html">Blog Details</a></li>
-					</ul></li>
-				<li><a href="./blog.html">Blog</a></li>
-				<li><a href="./contact.html">Contact</a></li>
-			</ul>
-		</nav>
-		<div id="mobile-menu-wrap"></div>
-		<div class="header__top__right__social">
-			<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-				class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>
-			<a href="#"><i class="fa fa-pinterest-p"></i></a>
-		</div>
-		<div class="humberger__menu__contact">
-			<ul>
-				<li><i class="fa fa-envelope"></i> JoYo@gmail.com</li>
-				<li>買千送百活動開跑中</li>
-			</ul>
-		</div>
-	</div>
-	<!-- Humberger End -->
-
-	<!-- Header Section Begin -->
-	
-		<div class="header__top">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6">
-						<div class="header__top__left">
-							<ul>
-								<li><i class="fa fa-envelope"></i> JoYo@gmail.com</li>
-								<li>買千送百活動開跑中</li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="header__top__right">
-							<div class="header__top__right__social">
-								<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-									class="fa fa-twitter"></i></a> <a href="#"><i
-									class="fa fa-linkedin"></i></a> <a href="#"><i
-									class="fa fa-pinterest-p"></i></a>
-							</div>
-							
-							<div class="header__top__right__auth">
-								<a href="#"><i class="fa fa-user"></i> Login</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="header__logo">
-						<a href="./index.html"><img src="img/logo.png" alt=""></a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">關於我們</a></li>
-
-                            <li><a href="./shop-grid.html">桌遊百科</a>
-                            </li>
-                            <!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
-                            <li><a href="ProductsGetServlet.do">揪遊商城</a>
-                            </li>
-                            <li><a href="./blog.html">揪遊團</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">討論區</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./contact.html">聯繫我們</a></li>
-                        </ul>
-                    </nav>
-				</div>
-				<div class="col-lg-3">
-					<div class="header__cart">
-					</div>
-				</div>
-			</div>
-			<div class="humberger__open">
-				<i class="fa fa-bars"></i>
-			</div>
-		</div>
-	<!-- Header Section End -->
-
-	<!-- Hero Section Begin -->
-	<section class="hero hero-normal">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-						
-						<ul>
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
-								</div>
-								<input type="text" placeholder="What do yo u need?">
-								<button type="submit" class="site-btn">SEARCH</button>
-							</form>
-						</div>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>02-28825252</h5>
-								<span>24Hr客服專線</span>
-							</div>
-						</div>
-					</div>
+	<jsp:include page="header.jsp" />	
 
 
 

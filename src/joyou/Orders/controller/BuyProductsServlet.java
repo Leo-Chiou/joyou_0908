@@ -60,6 +60,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		String productLang = request.getParameter("productLang");
 		String pageNo = request.getParameter("pageNo");
 		String countsStr = request.getParameter("counts");
+		String imgName = request.getParameter("imgName");
 		
 		
 		if (pageNo == null || pageNo.trim().length() == 0){
@@ -88,7 +89,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		
 		OrderItemBean oiBean = new OrderItemBean(productId,productName,productPrice,productLang,
-				counts,totalPrice);
+				counts,totalPrice,imgName);
 		
 		cart.addToCart(productId, oiBean);
 		

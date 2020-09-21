@@ -47,7 +47,7 @@
 
 .add-to-cart {
 	background-color: white;
-	color: #000079; 
+	color: #000079;
 	text-transform: uppercase;
 	font-weight: bold;
 	cursor: pointer;
@@ -63,213 +63,420 @@
 </style>
 
 <script type="text/javascript">
-window.onload = function() {
-	
-var selectElement = document.getElementById('price');
-var colorElement = document.getElementById('white');
-var pageNo = 0;
-var totalPage  = 0;
-var xhr = new XMLHttpRequest();
-var xhr2 = new XMLHttpRequest();
-var xhr3 = new XMLHttpRequest();
-xhr.open("GET", "<c:url value='/PageProductsJsonServlet.do?type=all'/>", true);  //設定執行的servlet
-xhr.send();
+	var pageNo = 0;
+	var totalPage = 0;
 
-xhr3.open("GET", "<c:url value='/SaleProductsJsonServlet.do'/>", true);
-xhr3.send();
+	window.onload = function() {
 
-
-xhr.onreadystatechange = function(){
-	if (xhr.readyState == 4 ) {
-		if (xhr.status == 200){
-			var responseData1 = xhr.responseText;
-			displayPageProducts(responseData1); 
-		} else {
-		}
-	}
-}
-
-
-xhr3.onreadystatechange = function(){
-	if (xhr3.readyState == 4 ) {
-		if (xhr3.status == 200){
-			var responseData2 = xhr3.responseText;
-			displaySaleProducts(responseData2)
-		} else {
-		}
-	}
-}
-
-
-
-
-selectElement.onchange = function(){
-	xhr2.onreadystatechange = function() {
-		if (xhr2.readyState == 4 && xhr2.status == 200) {
-			displayPageProducts(xhr2.responseText);
-		}
-	}
-	xhr2.open("GET", "<c:url value='/PageProductsJsonServlet.do' />" + "?type=" + selectElement.value, true);
-	xhr2.send();
-	asynRequest(id);
-}
-
-colorElement.onclick = function(){
-window.alert(1);
-	
-}
-
-function asynRequest(id) {
-	var xhr = new XMLHttpRequest();
-	var no = 0;
-    var queryString = "";     		
-	    if (id == "first") {		
-	    	no = 1;
-	    } else if (id == "prev") {
-	    	no = pageNo - 1;
-	    } else if (id == "next") {
-	    	no = pageNo + 1;
-	    } else if (id == "last") {
-	    	no = totalPage;	    	
-	    }
-	    queryString = "?pageNo=" + no + "&totalPage=" + totalPage +"&type=" +selectElement.value;
-
-		xhr.open("GET", "<c:url value='/GetPageNumberServlet.do'/>" + queryString , true);
+		var selectElement = document.getElementById('pricepick');
+		var gametype = document.getElementById('gametype');
+		var inputValue = document.getElementById('SearchInputTxt');
+		var type = gametype.getElementsByTagName('li');
+		var xhr = new XMLHttpRequest();
+		var xhr2 = new XMLHttpRequest();
+		var xhr3 = new XMLHttpRequest();
+		var searchxhr = new XMLHttpRequest();
+		xhr.open("GET",
+				"<c:url value='/PageProductsJsonServlet.do?type=all'/>", true); //頁面預設商品
 		xhr.send();
+
+		xhr3.open("GET", "<c:url value='/SaleProductsJsonServlet.do'/>", true); //特價商品
+		xhr3.send();
+
 		xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			var responseData1 = xhr.responseText;
-			displayPageProducts(responseData1);
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					var responseData1 = xhr.responseText;
+					displayPageProducts(responseData1);
+				} else {
+				}
+			}
 		}
-	}
-}
 
-function displaySaleProducts(responseData2){
+		xhr3.onreadystatechange = function() {
+			if (xhr3.readyState == 4) {
+				if (xhr3.status == 200) {
+					var responseData2 = xhr3.responseText;
+					displaySaleProducts(responseData2)
+				} else {
+				}
+			}
+		}
 
-	var content ="<div></div>";
-	var data = responseData2.split("&&&");
-	var products = JSON.parse(data[0]);		// 陣列
-	var mapData = JSON.parse(data[1]);		// JavaScript物件
-	
-	for(var i=0; i < products.length; i++){ 
+		selectElement.onchange = function() {
+			xhr2.onreadystatechange = function() {
+				if (xhr2.readyState == 4 && xhr2.status == 200) {
+					displayPageProducts(xhr2.responseText);
+				}
+			}
+			xhr2.open("GET", "<c:url value='/PageProductsJsonServlet.do' />"
+					+ "?type=" + selectElement.value, true);
+			xhr2.send();
+			asynRequest(id);
+		}
 
-		content +="<div class='items'>" ;
-		content += "<div class='item'>" ;
-		content +="<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-			+ "imgName="+products[i].imgName
-			+ "&productId="+products[i].productId
-			+ "&productName="+products[i].productName
-			+ "&productPrice="+products[i].productPrice
-			+ "&productIntro="+products[i].productIntro
-			+ "&gameType="+products[i].gametypeId
-			+ "&productAge="+products[i].productAge
-			+ "&suggestNum="+products[i].suggestNum
-			+ "&productLang="+products[i].productLang
-			+ "&productStock="+products[i].productStock
-			+ "'>"
-		content +="<img src='img\\" + products[i].imgName +"' width='300' /></a>" ;
-		content +="<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："+products[i].productName+"</p>" ;
-		content += "<p style='margin:0 0 10px 0;color:red;font-weight:bold;'> 庫存"+products[i].productStock + " 　特價$"+products[i].productPrice+"</p>" ;
-		content +="<a class='add-to-cart' href='${pageContext.request.contextPath}/BuyProductsServlet.do?pageNo="+pageNo
-			+ "&productId="+products[i].productId
-			+ "&productName="+products[i].productName
-			+ "&productPrice="+products[i].productPrice
-			+ "&counts=1' class='primary-btn'>ADD TO CARD</a>";
-		content +="</div></div>" ;
-		
-	}
+		inputValue.onchange = function() {
+			searchxhr.onreadystatechange = function() {
+				if (searchxhr.readyState == 4 && searchxhr.status == 200) {
+					displaySearchProducts(searchxhr.responseText);
+				}
+			}
+			searchxhr.open("GET", "<c:url value='/ProductsSearchServlet.do' />"
+					+ "?SearchInputTxt=" + inputValue.value, true);
+			searchxhr.send();
+			//		asynRequest(id);
+		}
+
+		function asynRequest(id) {
+			var xhr = new XMLHttpRequest();
+			var no = 0;
+			var queryString = "";
+			if (id == "first") {
+				no = 1;
+			} else if (id == "prev") {
+				no = pageNo - 1;
+			} else if (id == "next") {
+				no = pageNo + 1;
+			} else if (id == "last") {
+				no = totalPage;
+			}
+			queryString = "?pageNo=" + no + "&totalPage=" + totalPage
+					+ "&type=" + selectElement.value;
+
+			xhr.open("GET", "<c:url value='/GetPageNumberServlet.do'/>"
+					+ queryString, true);
+			xhr.send();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var responseData1 = xhr.responseText;
+					displayPageProducts(responseData1);
+				}
+			}
+		}
+
+		function displaySaleProducts(responseData2) {
+
+			var content = "<div></div>";
+			var data = responseData2.split("&&&");
+			var products = JSON.parse(data[0]); // 陣列
+			var mapData = JSON.parse(data[1]); // JavaScript物件
+
+			for (var i = 0; i < products.length; i++) {
+
+				content += "<div class='items'>";
+				content += "<div class='item'>";
+				content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+						+ "imgName="
+						+ products[i].imgName
+						+ "&productId="
+						+ products[i].productId
+						+ "&productName="
+						+ products[i].productName
+						+ "&productPrice="
+						+ products[i].productPrice
+						+ "&productIntro="
+						+ products[i].productIntro
+						+ "&gameType="
+						+ products[i].gametypeId
+						+ "&productAge="
+						+ products[i].productAge
+						+ "&suggestNum="
+						+ products[i].suggestNum
+						+ "&productLang="
+						+ products[i].productLang
+						+ "&productStock="
+						+ products[i].productStock + "'>"
+				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+				content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
+						+ products[i].productName + "</p>";
+				content += "<p style='margin:0 0 10px 0;color:red;font-weight:bold;'> 庫存"
+						+ products[i].productStock
+						+ " 　特價$"
+						+ products[i].productPrice + "</p>";
+				content += "<a class='primary-btn' href='javascript:addtoCart("
+						+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+				content += "</div></div>";
+
+			}
 			document.getElementById("saleProduct").innerHTML = content;
-}
+		}
 
+		function displayPageProducts(responseData1) {
+			var content = "<div class='wrapper'><div class='clear'></div>";
+			var data = responseData1.split("&&&");
+			var products = JSON.parse(data[0]); // 陣列
+			var mapData = JSON.parse(data[1]); // JavaScript物件
 
-function displayPageProducts(responseData1){
-	var content ="<div class='wrapper'><div class='clear'></div>";
-	var data = responseData1.split("&&&");
-	var products = JSON.parse(data[0]);		// 陣列
-	var mapData = JSON.parse(data[1]);		// JavaScript物件
-	
-	for(var i=0; i < products.length; i++){ 
+			for (var i = 0; i < products.length; i++) {
 
-		content +="<div class='items'>" ;
-		content += "<div class='item'>" ;
-		content +="<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-			+ "imgName="+products[i].imgName
-			+ "&productId="+products[i].productId
-			+ "&productName="+products[i].productName
-			+ "&productPrice="+products[i].productPrice
-			+ "&productIntro="+products[i].productIntro
-			+ "&gameType="+products[i].gametypeId
-			+ "&productAge="+products[i].productAge
-			+ "&suggestNum="+products[i].suggestNum
-			+ "&productLang="+products[i].productLang
-			+ "&productStock="+products[i].productStock
-			+ "'>"
-		content +="<img src='img\\" + products[i].imgName +"' width='300' /></a>" ;
-		content +="<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："+products[i].productName+"</p>" ;
-		content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"+products[i].productStock + " 　售價$"+products[i].productPrice+"</p>" ;
-		content +="<a class='add-to-cart' href='${pageContext.request.contextPath}/BuyProductsServlet.do?pageNo="+pageNo
-			+ "&productId="+products[i].productId
-			+ "&productName="+products[i].productName
-			+ "&productPrice="+products[i].productPrice
-			+ "&productLang="+products[i].productLang
-			+ "&counts=1' class='primary-btn'>ADD TO CARD</a>";
-		content +="</div>" ;
-		
-	}
+				content += "<div class='items'>";
+				content += "<div class='item'>";
+				content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+						+ "imgName="
+						+ products[i].imgName
+						+ "&productId="
+						+ products[i].productId
+						+ "&productName="
+						+ products[i].productName
+						+ "&productPrice="
+						+ products[i].productPrice
+						+ "&productIntro="
+						+ products[i].productIntro
+						+ "&gameType="
+						+ products[i].gametypeId
+						+ "&productAge="
+						+ products[i].productAge
+						+ "&suggestNum="
+						+ products[i].suggestNum
+						+ "&imgName="
+						+ products[i].imgName
+						+ "&productLang="
+						+ products[i].productLang
+						+ "&productStock="
+						+ products[i].productStock + "'>"
+				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+				content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
+						+ products[i].productName + "</p>";
+				content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
+						+ products[i].productStock
+						+ " 　售價$"
+						+ products[i].productPrice + "</p>";
+				content += "<a class='primary-btn' href='javascript:addtoCart("
+						+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+				content += "</div></div>";
+
+			}
 			document.getElementById("pageProduct").innerHTML = content;
 			pageNo = mapData.currPage;
-			totalPage  = mapData.totalPage;
+			totalPage = mapData.totalPage;
 
-			var navContent = "<table><tr height='36'>" ;
-			if (pageNo != 1){
+			var navContent = "<table><tr height='36'>";
+			if (pageNo != 1) {
 				navContent += "<td width='40' align='center'><input id='first' type='button' value='|<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
 				navContent += "<td width='40' align='center'><input id='prev' type='button' value='<<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-			}  else {
+			} else {
 				navContent += "<td width='40' align='center'>&nbsp;</td>";
 				navContent += "<td width='40' align='center'>&nbsp;</td>";
 			}
-			navContent += "<td width='100' align='center'>" + pageNo + " / " + totalPage + "頁</td>";
-			if (pageNo != totalPage){
+			navContent += "<td width='100' align='center'>" + pageNo + " / "
+					+ totalPage + "頁</td>";
+			if (pageNo != totalPage) {
 				navContent += "<td width='40' align='center'><input id='next' type='button' value='>>' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
 				navContent += "<td width='40' align='center'><input id='last' type='button' value='>|' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-			}  else {
-				navContent += "<td width='40' align='center'>&nbsp;</td>";
+			} else {
+				navContent += "<td width='40' align=scs'center'>&nbsp;</td>";
 				navContent += "<td width='40' align='center'>&nbsp;</td>";
 			}
 			document.getElementById("navigation").innerHTML = navContent;
+
 			var firstBtn = document.getElementById("first");
-			var prevBtn  = document.getElementById("prev");
-			var nextBtn  = document.getElementById("next");
-			var lastBtn  = document.getElementById("last");
+			var prevBtn = document.getElementById("prev");
+			var nextBtn = document.getElementById("next");
+			var lastBtn = document.getElementById("last");
 			if (firstBtn != null) {
-				firstBtn.onclick=function(){
+				firstBtn.onclick = function() {
 					asynRequest(this.id);
 				}
 			}
-			
+
 			if (prevBtn != null) {
-				prevBtn.onclick=function(){
+				prevBtn.onclick = function() {
 					asynRequest(this.id);
 				}
 			}
-			
+
 			if (nextBtn != null) {
-				nextBtn.onclick=function(){
+				nextBtn.onclick = function() {
 					asynRequest(this.id);
 				}
 			}
-			
+
 			if (lastBtn != null) {
-				lastBtn.onclick=function(){
-					asynRequest(this.id);				
+				lastBtn.onclick = function() {
+					asynRequest(this.id);
 				}
-			}	
+			}
 
-}
+		}
 
-}
+	}
 
+	function addtoCart(pId) {
+		window.alert("成功加入購物車");
+		var bagcounts = document.getElementById("bagcounts");
+		var carttotal = document.getElementById("carttotal");
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "<c:url value='/BuyProductsJsonServlet.do?' />"
+				+ "productId=" + pId + "&counts=1", true);
+		xhr.send();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				let result = JSON.parse(xhr.responseText);
+				bagcounts.innerHTML = result.num;
+				carttotal.innerHTML = "購物金額 $" + result.total;
 
+			}
+		}
+	}
+
+	function gametypeChose(type) {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				displaySpecailProducts(xhr.responseText);
+			}
+		}
+		xhr.open("POST", "<c:url value='/GetSepcailProductsServlet.do' />"
+				+ "?gmaeType=" + type, true);
+		xhr.send();
+	}
+
+	function priceRange() {
+		var minamount = document.getElementById("minamount");
+		var maxamount = document.getElementById("maxamount");
+		var minvalue = minamount.value;
+		var maxvalue = maxamount.value;
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				displaySpecailProducts(xhr.responseText);
+			}
+		}
+		xhr.open("POST", "<c:url value='/GetSepcailProductsServlet.do' />"
+				+ "?min=" + minvalue + "&max=" + maxvalue, true);
+		xhr.send();
+	}
+
+	function colorChose(color) {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				displaySpecailProducts(xhr.responseText);
+			}
+		}
+		xhr.open("POST", "<c:url value='/GetSepcailProductsServlet.do' />"
+				+ "?color=" + color.value, true);
+		xhr.send();
+	}
+
+	function paintingChose(paint) {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				displaySpecailProducts(xhr.responseText);
+			}
+		}
+		xhr.open("POST", "<c:url value='/GetSepcailProductsServlet.do' />"
+				+ "?painting=" + paint.value, true);
+		xhr.send();
+	}
+
+	function displaySpecailProducts(responseData) {
+		var content = "<div class='wrapper'><div class='clear'></div>";
+		var data = responseData.split("&&&");
+		var products = JSON.parse(data[0]);
+		var mapData = JSON.parse(data[1]);
+
+		for (var i = 0; i < products.length; i++) {
+
+			content += "<div class='items'>";
+			content += "<div class='item'>";
+			content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+					+ "imgName="
+					+ products[i].imgName
+					+ "&productId="
+					+ products[i].productId
+					+ "&productName="
+					+ products[i].productName
+					+ "&productPrice="
+					+ products[i].productPrice
+					+ "&productIntro="
+					+ products[i].productIntro
+					+ "&gameType="
+					+ products[i].gametypeId
+					+ "&productAge="
+					+ products[i].productAge
+					+ "&suggestNum="
+					+ products[i].suggestNum
+					+ "&productLang="
+					+ products[i].productLang
+					+ "&productStock="
+					+ products[i].productStock + "'>"
+			content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+			content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
+					+ products[i].productName + "</p>";
+			content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
+					+ products[i].productStock
+					+ " 　售價$"
+					+ products[i].productPrice + "</p>";
+			content += "<a class='primary-btn' href='javascript:addtoCart("
+					+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+			content += "</div></div>";
+
+		}
+		document.getElementById("pageProduct").innerHTML = content;
+		pageNo = mapData.currPage;
+		totalPage = mapData.totalPage;
+
+		var navContent = "<div></div>";
+		document.getElementById("navigation").innerHTML = navContent;
+
+	}
+
+	function displaySearchProducts(searchresponseData) {
+		console.log(searchresponseData);
+		var content = "<div class='wrapper'><div class='clear'></div>";
+		var otherContent = "";
+		var data = searchresponseData.split("&&&");
+		var products = JSON.parse(data[0]); 
+
+		for (var i = 0; i < products.length; i++) {
+
+			content += "<div class='items'>";
+			content += "<div class='item'>";
+			content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+					+ "imgName="
+					+ products[i].imgName
+					+ "&productId="
+					+ products[i].productId
+					+ "&productName="
+					+ products[i].productName
+					+ "&productPrice="
+					+ products[i].productPrice
+					+ "&productIntro="
+					+ products[i].productIntro
+					+ "&gameType="
+					+ products[i].gametypeId
+					+ "&productAge="
+					+ products[i].productAge
+					+ "&suggestNum="
+					+ products[i].suggestNum
+					+ "&productLang="
+					+ products[i].productLang
+					+ "&productStock="
+					+ products[i].productStock + "'>"
+			content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+			content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
+					+ products[i].productName + "</p>";
+			content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
+					+ products[i].productStock
+					+ " 　售價$"
+					+ products[i].productPrice + "</p>";
+			content += "<a class='add-to-cart' href='${pageContext.request.contextPath}/BuyProductsServlet.do?pageNo="
+					+ pageNo
+					+ "&productId="
+					+ products[i].productId
+					+ "&productName="
+					+ products[i].productName
+					+ "&productPrice="
+					+ products[i].productPrice
+					+ "&counts=1' class='primary-btn'>ADD TO CART</a>";
+			content += "</div>";
+
+		}
+		document.getElementById("pageProduct").innerHTML = content;
+		document.getElementById("navigation").innerHTML = otherContent;
+	}
 </script>
 
 
@@ -301,19 +508,8 @@ function displayPageProducts(responseData1){
 		<div class="humberger__menu__logo">
 			<a href="#"><img src="img/logo.png" alt=""></a>
 		</div>
-		<div class="humberger__menu__cart">
-			<ul>
-				<li><a
-					href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp"><i
-						class="fa fa-shopping-bag"></i> <span>${ShoppingCart.itemNumber}</span></a></li>
-			</ul>
-			<div class="header__cart__price">
-				<FONT color='Black' size='-1'> <c:out
-						value="購物金額:NT.${ShoppingCart.subtotal}" default="0" /></FONT>
-			</div>
-		</div>
 		<div class="humberger__menu__widget">
-		
+
 			<div class="header__top__right__auth">
 				<a href="#"><i class="fa fa-user"></i> Login</a>
 			</div>
@@ -368,7 +564,7 @@ function displayPageProducts(responseData1){
 									class="fa fa-linkedin"></i></a> <a href="#"><i
 									class="fa fa-pinterest-p"></i></a>
 							</div>
-							
+
 							<div class="header__top__right__auth">
 								<a href="#"><i class="fa fa-user"></i> Login</a>
 							</div>
@@ -386,34 +582,29 @@ function displayPageProducts(responseData1){
 				</div>
 				<div class="col-lg-6">
 					<nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.jsp">關於我們</a></li>
+						<ul>
+							<li><a href="login.jsp">會員專區</a></li>
 
-                            <li><a href="./shop-grid.html">桌遊百科</a>
-                            </li>
-                            <!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
-                            <li><a href="ProductsGetServlet.do">揪遊商城</a>
-                            </li>
-                            <li><a href="./blog.html">揪遊團</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">討論區</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./contact.html">聯繫我們</a></li>
-                        </ul>
-                    </nav>
+							<li><a href="ProductsGetServlet.do">揪遊商城</a></li>
+							<!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
+							<li><a href="ProductsGetServlet.do">討論區</a></li>
+							<li><a href="./blog.html">揪遊團</a></li>
+							<li><a href="./contact.html">聯繫我們</a></li>
+						</ul>
+					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
 							<li><a
-								href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp"><i
-									class="fa fa-shopping-bag"></i><span>${ShoppingCart.itemNumber}</span></a></li>
+								href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp">
+									<i class="fa fa-shopping-bag"></i> <span id="bagcounts">${ShoppingCart.itemNumber}</span>
+							</a></li>
 						</ul>
 						<div class="header__cart__price">
 
-							<span>購物金額 $<c:out value="${ShoppingCart.subtotal}"
-									default="0" /></span>
+							<span id="carttotal">購物金額 $<c:out
+									value="${ShoppingCart.subtotal}" default="0" /></span>
 						</div>
 					</div>
 				</div>
@@ -431,7 +622,7 @@ function displayPageProducts(responseData1){
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="hero__categories">
-						
+
 						<ul>
 							<li><a href="#">Fresh Meat</a></li>
 							<li><a href="#">Vegetables</a></li>
@@ -454,7 +645,8 @@ function displayPageProducts(responseData1){
 								<div class="hero__search__categories">
 									All Categories <span class="arrow_carrot-down"></span>
 								</div>
-								<input type="text" placeholder="What do yo u need?">
+								<input type="text" id="SearchInputTxt" name="SearchInputTxt"
+									placeholder="What do yo u need?">
 								<button type="submit" class="site-btn">SEARCH</button>
 							</form>
 						</div>
@@ -500,23 +692,32 @@ function displayPageProducts(responseData1){
 					<div class="sidebar">
 						<div class="sidebar__item">
 							<h4>桌遊類型</h4>
-							<ul id="gamtype">
-								<li><a href="#">Party Games</a></li>  <!-- 執行篩選 -->
-								<li><a href="#">Strategy Games</a></li>
-								<li><a href="#">Themetic Games</a></li>
-								<li><a href="#">War Games </a></li>
-								<li><a href="#">Abstract Games </a></li>
-								<li><a href="#">Customizable Games </a></li>
-								<li><a href="#">Children Games </a></li>
-								<li><a href="#">Family Games</a></li>
+							<ul id="gametype">
+								<li><a href="javascript:gametypeChose(5001)">Party
+										Games</a></li>
+								<li><a href="javascript:gametypeChose(5002)">Strategy
+										Games</a></li>
+								<li><a href="javascript:gametypeChose(5003)">Themetic
+										Games</a></li>
+								<li><a href="javascript:gametypeChose(5004)">War Games
+								</a></li>
+								<li><a href="javascript:gametypeChose(5005)">Abstract
+										Games </a></li>
+								<li><a href="javascript:gametypeChose(5006)">Customizable
+										Games </a></li>
+								<li><a href="javascript:gametypeChose(5007)">Children
+										Games </a></li>
+								<li><a href="javascript:gametypeChose(5008)">Family
+										Games</a></li>
 							</ul>
 						</div>
 						<div class="sidebar__item">
 							<h4>商品售價</h4>
-							<div class="price-range-wrap">
-									<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-									data-min="10" data-max="800">
-									
+							<div onmouseup="priceRange()" class="price-range-wrap">
+								<div
+									class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+									data-min="200" data-max="700">
+
 									<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
 									<span tabindex="0"
 										class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -531,115 +732,66 @@ function displayPageProducts(responseData1){
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="sidebar__item sidebar__item__color--option">
 							<h4>顏色分類</h4>
 							<div class="sidebar__item__color sidebar__item__color--white">
-								<label for="white"> White <input type="radio" id="white" ></label>
+								<label> White <input value="white"
+									onclick="colorChose(this)"></label>
 							</div>
 							<div class="sidebar__item__color sidebar__item__color--gray">
-								<label for="gray"> Gray <input type="radio" id="gray">
+								<label> Yellow <input value="yellow"
+									onclick="colorChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__color sidebar__item__color--red">
-								<label for="red"> Red <input type="radio" id="red">
+								<label> Red <input value="red"
+									onclick="colorChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__color sidebar__item__color--black">
-								<label for="black"> Black <input type="radio" id="black">
+								<label> Black <input value="black"
+									onclick="colorChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__color sidebar__item__color--blue">
-								<label for="blue"> Blue <input type="radio" id="blue">
+								<label> Blue <input value="blue"
+									onclick="colorChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__color sidebar__item__color--green">
-								<label for="green"> Green <input type="radio" id="green">
+								<label> Green <input value="green"
+									onclick="colorChose(this)">
 								</label>
 							</div>
 						</div>
 						<div class="sidebar__item">
 							<h4>繪畫風格</h4>
 							<div class="sidebar__item__size">
-								<label for="large"> Large <input type="radio" id="large">
+								<label> 插畫 <input value="插畫"
+									onclick="paintingChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__size">
-								<label for="medium"> Medium <input type="radio"
-									id="medium">
+								<label> 可愛 <input value="可愛"
+									onclick="paintingChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__size">
-								<label for="small"> Small <input type="radio" id="small">
+								<label> 寫實 <input value="寫實"
+									onclick="paintingChose(this)">
 								</label>
 							</div>
 							<div class="sidebar__item__size">
-								<label for="tiny"> Tiny <input type="radio" id="tiny">
+								<label> 抽象 <input value="抽象"
+									onclick="paintingChose(this)">
 								</label>
 							</div>
-						</div>
-						<div class="sidebar__item">
-						<!-- 
-							<div class="latest-product__text">
-								<h4>最新商品</h4>
-								<div class="latest-product__slider owl-carousel">
-									<div class="latest-prdouct__slider__item">
-										<a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-1.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a> <a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-2.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a> <a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-3.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a>
-									</div>
-									<div class="latest-prdouct__slider__item">
-										<a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-1.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a> <a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-2.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a> <a href="#" class="latest-product__item">
-											<div class="latest-product__item__pic">
-												<img src="img/latest-product/lp-3.jpg" alt="">
-											</div>
-											<div class="latest-product__item__text">
-												<h6>Crab Pool Security</h6>
-												<span>$30.00</span>
-											</div>
-										</a>
-									</div>
-								</div>
+							<div class="sidebar__item__size">
+								<label> 實體 <input value="實體"
+									onclick="paintingChose(this)">
+								</label>
 							</div>
-							 -->
 						</div>
 					</div>
 				</div>
@@ -648,33 +800,20 @@ function displayPageProducts(responseData1){
 						<div class="section-title product__discount__title">
 							<h2>ON SALE</h2>
 						</div>
-						
-								<div id='saleProduct'></div>
-								<!-- 特價區 -->
-						
+
+						<div id='saleProduct'></div>
+						<!-- 特價區 -->
+
 					</div>
 					<div class="filter__item">
 						<div class="row">
 							<div class="col-lg-4 col-md-5">
 								<div class="filter__sort">
-									<span>價格排序</span> 
-									<select id="price">
+									<span>價格排序</span> <select id="pricepick">
 										<option value="all">預設</option>
 										<option value="desc">由高到低</option>
 										<option value="asc">由低到高</option>
 									</select>
-								</div>
-							</div>
-							<div class="col-lg-4 col-md-4">
-								<div class="filter__found">
-									<h6>
-										<span>16</span> 搜尋結果
-									</h6>
-								</div>
-							</div>
-							<div class="col-lg-4 col-md-3">
-								<div class="filter__option">
-									<span class="icon_grid-2x2"></span> <span class="icon_ul"></span>
 								</div>
 							</div>
 						</div>

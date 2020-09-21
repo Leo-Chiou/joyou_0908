@@ -95,12 +95,13 @@ public class ProductsDao {
 	}
 
 	public List<ProductsBean> selectByPage(int page) {
-		int first = 1+9*(page-1);
-		int last=9+9*(page-1);
-		String sqlstr="FROM ProductsBean WHERE productId BETWEEN '"+first+"' AND '"+last+"'";
-		Query<ProductsBean> query = session.createQuery(sqlstr, ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean", ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
-		return beanList;
+		List<ProductsBean> newlist = new ArrayList<>();
+		for(int i=9*(page-1);i<=8+9*(page-1)&&i<beanList.size();i++) {
+			newlist.add(beanList.get(i));
+		}
+		return newlist;
 
 	}
   
@@ -159,5 +160,41 @@ public class ProductsDao {
 		return list;
 		
 	}
+	
+	public List<ProductsBean> selectGameType(int gametype){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where gametypeId=:type", ProductsBean.class);
+		query.setParameter("type", gametype);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	
+	public List<ProductsBean> selectColor(String color){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where productColor=:type", ProductsBean.class);
+		query.setParameter("type", color);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	public List<ProductsBean> selectPriceColor(int min,int max){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where productPrice between :min and :max", ProductsBean.class);
+		query.setParameter("min", min);
+		query.setParameter("max", max);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	
+	public List<ProductsBean> selectPainting(String painting){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where paintingStyle=:painting", ProductsBean.class);
+		query.setParameter("painting", painting);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
 	
 }

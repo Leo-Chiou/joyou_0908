@@ -21,6 +21,8 @@ import joyou.Discounts.model.DiscountsDao;
 import joyou.Shopping.ShoppingCart;
 import joyou.util.HibernateUtil;
 
+
+//輸入折扣碼後執行
 @WebServlet("/DiscountServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class DiscountServlet extends HttpServlet {
@@ -66,19 +68,22 @@ public class DiscountServlet extends HttpServlet {
 
 			try {
 				int cdn = Integer.parseInt(dBean.getCondition());
-				if (a != false && subtotal > cdn) {
-					int amount = 0;
-					amount = Integer.parseInt(dBean.getAmount());
-					Integer newtotal = sc.getNewSubtotal(subtotal, amount);
-					request.getSession().setAttribute("newsubtotal", newtotal);
-					System.out.println("74:"+newtotal);
-
-					String amountStr = Integer.toString(amount);
+				if (a != false && subtotal > cdn) {   //判斷消費金額是否符合
+					int discode = 0;
+					discode = Integer.parseInt(dBean.getAmount());  //取得折扣的金額
+					
+					
+					Integer newtotal = sc.getNewSubtotal(subtotal, discode);  
+					request.getSession().setAttribute("newsubtotal", newtotal);  
+					request.getSession().setAttribute("discode", discode);
+					
+					
+					String discodeStr = Integer.toString(discode);
 					String newtotalStr = Integer.toString(newtotal);
 					
 					map.put("newTotal", newtotalStr);
 					map.put("codeMsg", "折抵成功");
-					map.put("amount", amountStr);
+					map.put("amount", discodeStr);
 
 				} else {
 					map.put("codeMsg", "消費金額不足");

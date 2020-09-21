@@ -13,12 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "Orders")
 public class OrdersBean {
 	@Id
 	@Column(name="orderId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnoreProperties("leader")
 	Integer orderId;
 	Integer memberId;
 	String receiver;
@@ -68,7 +72,7 @@ public class OrdersBean {
 
 	}
 	
-
+	
 	public Integer getOrderId() {
 		return orderId;
 	}

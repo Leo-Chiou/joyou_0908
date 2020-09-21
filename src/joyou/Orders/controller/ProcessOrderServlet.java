@@ -3,6 +3,7 @@ package joyou.Orders.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletException;
@@ -19,18 +20,14 @@ import joyou.Shopping.ShoppingCart;
 import joyou.util.HibernateUtil;
 
 
-//執行結帳頁面
+//若刷卡成功進行結帳
 @WebServlet("/ProcessOrderServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class ProcessOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
-	
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -45,21 +42,25 @@ public class ProcessOrderServlet extends HttpServlet {
 //		}
 		
 		ShoppingCart sc = (ShoppingCart) request.getSession().getAttribute("ShoppingCart");
-		
 		Integer total = sc.getSubtotal();
 		
 			
 		
-//		int mId=(int) request.getSession().getAttribute("memberID");
-		int mId =1000; 
-		String recievename = (String) request.getSession().getAttribute("recievename");
-		String recievephone = (String) request.getSession().getAttribute("recievephone");
+		int mId=(int) request.getSession().getAttribute("memberID");
+		String recievename = (String) request.getSession().getAttribute("receivername");
+		String recievephone = (String) request.getSession().getAttribute("receiverphone");
 		String address = (String) request.getSession().getAttribute("address");
 		
 		Date today = new Date();
 		String card = "信用卡付款"; //專案只演示信卡付款。
 		String remarks = (String) request.getSession().getAttribute("remarks");	
 		
+		
+		
+		if(request.getSession().getAttribute("discode")!=null) {
+			int amount = (int)request.getSession().getAttribute("discode");
+			total=total-amount;
+		}
 		
 		
 		OrdersBean oBean = new OrdersBean(null,mId, recievename, recievephone,
@@ -79,7 +80,9 @@ public class ProcessOrderServlet extends HttpServlet {
 		OrdersDao oDao = new OrdersDao(session);
 		oDao.insert(oBean);
 		
-		System.out.println(oBean.getReceiver());
+		List<OrdersBean> allOrder = oDao.selectAll();
+		request.getSession().setAttribute("OrderNum", allOrder.get(allOrder.size()-1).getOrderId());
+		
 		session.getTransaction().commit();
 		
 		request.getSession().removeAttribute("ShoppingCart");

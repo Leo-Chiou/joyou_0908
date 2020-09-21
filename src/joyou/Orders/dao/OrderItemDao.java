@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import joyou.Orders.model.OrderItemBean;
+import joyou.Products.model.ProductsBean;
 
 
 @Repository("myOrderItemDao")
@@ -41,5 +42,14 @@ public class OrderItemDao {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public List<OrderItemBean> selectByOrderId(int orderId){  //依訂單ID查詢
+		Query<OrderItemBean> query = session.createQuery("from OrderItemBean where orderId=:id", OrderItemBean.class);
+		query.setParameter("id", orderId);	
+		List<OrderItemBean> list = query.list();
+		return list;
+		
 	}
 }

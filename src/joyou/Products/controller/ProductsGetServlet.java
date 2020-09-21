@@ -16,7 +16,7 @@ import joyou.Products.dao.ProductsDao;
 import joyou.Products.model.ProductsBean;
 import joyou.util.HibernateUtil;
 
-//按加入購物車後執行
+//進入購物頁面準備商品資料
 @WebServlet("/ProductsGetServlet.do")
 @javax.servlet.annotation.MultipartConfig
 public class ProductsGetServlet extends HttpServlet {
@@ -53,7 +53,6 @@ public class ProductsGetServlet extends HttpServlet {
 			session.getTransaction().rollback();
 		}finally {
 			session.getTransaction().commit();
-			session.close();
 		}
 	}
 

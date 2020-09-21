@@ -103,7 +103,7 @@ function setFocus(fld) {
 		<option value="5008">FamilyGames</option>
 	</select>
            <font color='red' size='-1'>
-              ${ErrMsg.errTitle}
+              ${ErrMsg.errTitle}InsertMsg
            </font>
        </td>
     </tr>

@@ -129,7 +129,7 @@ function Abort() {
 			<ul>
 				<li><a
 					href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp"><i
-						class="fa fa-shopping-bag"></i> <span>${ShoppingCart.itemNumber}</span></a></li>
+						class="fa fa-shopping-bag"></i> <span id="bagcounts">0</span></a></li>
 			</ul>
 			<div class="header__cart__price">
 				<FONT color='Black' size='-1'> <c:out
@@ -211,18 +211,14 @@ function Abort() {
 				<div class="col-lg-6">
 					<nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.jsp">關於我們</a></li>
+                            <li><a href="login.jsp">會員專區</a></li>
 
-                            <li><a href="./shop-grid.html">桌遊百科</a>
+                             <li><a href="ProductsGetServlet.do">揪遊商城</a>
                             </li>
                             <!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
-                            <li><a href="ProductsGetServlet.do">揪遊商城</a>
+                            <li><a href="ProductsGetServlet.do">討論區</a>
                             </li>
-                            <li><a href="./blog.html">揪遊團</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">討論區</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="./blog.html">揪遊團</a></li>
                             <li><a href="./contact.html">聯繫我們</a></li>
                         </ul>
                     </nav>
@@ -249,38 +245,53 @@ function Abort() {
 	</header>
 	<!-- Header Section End -->
 
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+	<!-- Hero Section Begin -->
+	<section class="hero hero-normal">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="hero__categories">
+						
+						<ul>
+							<li><a href="#">Fresh Meat</a></li>
+							<li><a href="#">Vegetables</a></li>
+							<li><a href="#">Fruit & Nut Gifts</a></li>
+							<li><a href="#">Fresh Berries</a></li>
+							<li><a href="#">Ocean Foods</a></li>
+							<li><a href="#">Butter & Eggs</a></li>
+							<li><a href="#">Fastfood</a></li>
+							<li><a href="#">Fresh Onion</a></li>
+							<li><a href="#">Papayaya & Crisps</a></li>
+							<li><a href="#">Oatmeal</a></li>
+							<li><a href="#">Fresh Bananas</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="hero__search">
+						<div class="hero__search__form">
+							<form action="#">
+								<div class="hero__search__categories">
+									All Categories <span class="arrow_carrot-down"></span>
+								</div>
+								<input type="text" placeholder="What do yo u need?">
+								<button type="submit" class="site-btn">SEARCH</button>
+							</form>
+						</div>
+						<div class="hero__search__phone">
+							<div class="hero__search__phone__icon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<div class="hero__search__phone__text">
+								<h5>02-28825252</h5>
+								<span>24Hr客服專線</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
