@@ -38,6 +38,10 @@ public class ProductsUpdateServlet extends HttpServlet {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 
+		
+		int pId = (int)request.getSession().getAttribute("upId");
+		
+		
 		try {
 			String name = "";
 			String namestr = "";
@@ -144,18 +148,19 @@ public class ProductsUpdateServlet extends HttpServlet {
 					}
 				}
 			}
+			pDao=new ProductsDao(session);
 			if (is == null) {   //假如沒有圖片資料
-				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,suggestnum,productcolor,paintingstyle,productintro);
-				pDao.insert(pBean);
+				pDao.updatenoImg(pId, name, stock, price, gametype, age,  lang, suggestnum, productcolor,paintingstyle,sale, productintro);
 			} else {
 				Blob fileBlob = FileDao.fileToBlob(is, sizeInBytes);
-				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob,suggestnum,productcolor,paintingstyle,productintro,sale);
-				pDao = new ProductsDao(session);
-				pDao.insert(pBean);
+				pDao.update(pId, name, stock, price, gametype, age, lang, fileName, fileBlob, suggestnum, productcolor, paintingstyle,sale, productintro);
+				
 			}
 			
 			session.getTransaction().commit();
-			request.setAttribute("p", "Update Success!");		
+			request.setAttribute("p", "Update Success!");	
+			request.getRequestDispatcher("WebMaintain/Products_Update.jsp").forward(request, response);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("p", "Update UnSuccess!");

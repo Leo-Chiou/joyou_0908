@@ -11,23 +11,34 @@ import javax.persistence.Table;
 @Table(name = "memberTest1")
 public class MembersBean {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "memberID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column(name = "memberAccount")
 	private String account;
+	
 	@Column(name = "memberPassword")
 	private String password;
+	
 	@Column(name = "memberMail")
 	private String mail;
-	@Column(name = "memberNickName")
-	private String nickname;
-	@Column(name = "memberTrueName")
-	private String truename;
+	
 	@Column(name = "memberPhone")
 	private String phone;
+	
+	@Column(name = "memberNickName")
+	private String nickname;
+
+	@Column(name = "memberTrueName")
+	private String truename;
+
 	@Column(name = "memberGender")
 	private String gender;
+	
+	@Column(name = "memberPreferGameType")
+	private Integer preferGameType;
+	
 	@Column(name = "memberUserfoot")
 	private String userfoot;
 
@@ -35,14 +46,13 @@ public class MembersBean {
 	// = "Asia/Taipei")
 	// Date birthday;
 
-	// private int gametypeid;
-
 	public MembersBean() {
 
 	}
 
 	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone,
-			String gender, String userfoot) {
+			String gender,//String picturepath, 
+			String userfoot) {
 		super();
 		this.account = account;
 		this.password = password;
@@ -51,6 +61,7 @@ public class MembersBean {
 		this.truename = truename;
 		this.phone = phone;
 		this.gender = gender;
+		//this.picturepath = picturepath;
 		this.userfoot = userfoot;
 		// this.gametypeid = gametypeid;
 	}
@@ -109,7 +120,7 @@ public class MembersBean {
 		this.phone = phone;
 	}
 
-	
+
 	public String getNickName() {
 		return nickname;
 	}
@@ -127,13 +138,22 @@ public class MembersBean {
 		this.truename = truename;
 	}
 
-	
+
 	public String getGender() {
 		return gender;
 	}
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	
+	public Integer getPreferGameType() {
+		return preferGameType;
+	}
+
+	public void setPreferGameType(Integer preferGameType) {
+		this.preferGameType = preferGameType;
 	}
 
 	

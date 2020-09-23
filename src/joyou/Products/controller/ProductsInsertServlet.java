@@ -161,16 +161,15 @@ public class ProductsInsertServlet extends HttpServlet {
 		fos.close();
 		
 		
-		
 		request.setAttribute("InsertMsg", "Inert Sucess!");
-		request.getRequestDispatcher("ProductsInsert.jsp").forward(request, response);
+		request.getRequestDispatcher("WebMaintain/Products_Add.jsp").forward(request, response);
 		session.getTransaction().commit();
 		
 		}catch(Exception e) {
 			e.printStackTrace();
 		request.setAttribute("InsertMsg", "Inert UnSucess!");
-		request.getRequestDispatcher("ProductsInsert.jsp").forward(request, response);
-		session.getTransaction().rollback();;
+		request.getRequestDispatcher("WebMaintain/Products_Add.jsp").forward(request, response);
+		session.getTransaction().rollback();
 		}
 		
 		

@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import joyou.Orders.model.OrderItemBean;
+
 import joyou.util.HibernateUtil;
+
+import joyou.Products.model.ProductsBean;
 
 
 
@@ -58,5 +61,14 @@ public class OrderItemDao {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	public List<OrderItemBean> selectByOrderId(int orderId){  //依訂單ID查詢
+		Query<OrderItemBean> query = session.createQuery("from OrderItemBean where orderId=:id", OrderItemBean.class);
+		query.setParameter("id", orderId);	
+		List<OrderItemBean> list = query.list();
+		return list;
+		
 	}
 }

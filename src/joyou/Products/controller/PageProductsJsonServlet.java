@@ -67,6 +67,8 @@ public class PageProductsJsonServlet extends HttpServlet {
 	    } else {
 	    	totalPage = pDao.getTotalPages();
 	    }
+	    
+	    
 	    try(PrintWriter out = response.getWriter()){
 	    	
 	    	if(type.equals("all")) {
@@ -77,7 +79,10 @@ public class PageProductsJsonServlet extends HttpServlet {
 	    		
 	    	}else if(type.equals("asc")) {
 	    		pPt=pDao.selectPriceAsc(pageNo);
+	    		
 	    	}
+	    	
+	    	
 	    	
 	    	
 			Gson gs = new Gson();

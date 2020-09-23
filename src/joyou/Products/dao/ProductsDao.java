@@ -45,7 +45,7 @@ public class ProductsDao {
 
 	
 	public ProductsBean updatenoImg(Integer productId, String productName, // 依ID修改商品不含照片。
-			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,String suggestNum,String productColor,String paintingStyle,String productIntro) {
+			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,String suggestNum,String productColor,String paintingStyle,String sale,String productIntro) {
 		ProductsBean pBean = session.get(ProductsBean.class, productId);
 		if (pBean != null) {
 			pBean.setProductName(productName);
@@ -57,6 +57,7 @@ public class ProductsDao {
 			pBean.setSuggestNum(suggestNum);
 			pBean.setProductColor(productColor);
 			pBean.setPaintingStyle(paintingStyle);
+			pBean.setSale(sale);
 			pBean.setProductIntro(productIntro);
 
 		}
@@ -65,7 +66,7 @@ public class ProductsDao {
 
 	public ProductsBean update(Integer productId, String productName, // 依ID修改商品含照片。
 			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,
-			String imgName, Blob productImg,String suggestNum,String productColor,String paintingStyle,String productIntro) {
+			String imgName, Blob productImg,String suggestNum,String productColor,String paintingStyle,String sale,String productIntro) {
 
 		ProductsBean pBean = session.get(ProductsBean.class, productId);
 		if (pBean != null) {
@@ -80,6 +81,7 @@ public class ProductsDao {
 			pBean.setSuggestNum(suggestNum);
 			pBean.setProductColor(productColor);
 			pBean.setPaintingStyle(paintingStyle);
+			pBean.setSale(sale);
 			pBean.setProductIntro(productIntro);
 		}
 		return pBean;
@@ -95,12 +97,13 @@ public class ProductsDao {
 	}
 
 	public List<ProductsBean> selectByPage(int page) {
-		int first = 1+9*(page-1);
-		int last=9+9*(page-1);
-		String sqlstr="FROM ProductsBean WHERE productId BETWEEN '"+first+"' AND '"+last+"'";
-		Query<ProductsBean> query = session.createQuery(sqlstr, ProductsBean.class);
+		Query<ProductsBean> query = session.createQuery("from ProductsBean", ProductsBean.class);
 		List<ProductsBean> beanList = query.list();
-		return beanList;
+		List<ProductsBean> newlist = new ArrayList<>();
+		for(int i=9*(page-1);i<=8+9*(page-1)&&i<beanList.size();i++) {
+			newlist.add(beanList.get(i));
+		}
+		return newlist;
 
 	}
   
@@ -159,5 +162,41 @@ public class ProductsDao {
 		return list;
 		
 	}
+	
+	public List<ProductsBean> selectGameType(int gametype){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where gametypeId=:type", ProductsBean.class);
+		query.setParameter("type", gametype);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	
+	public List<ProductsBean> selectColor(String color){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where productColor=:type", ProductsBean.class);
+		query.setParameter("type", color);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	public List<ProductsBean> selectPriceColor(int min,int max){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where productPrice between :min and :max", ProductsBean.class);
+		query.setParameter("min", min);
+		query.setParameter("max", max);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
+	
+	public List<ProductsBean> selectPainting(String painting){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where paintingStyle=:painting", ProductsBean.class);
+		query.setParameter("painting", painting);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
 	
 }

@@ -59,8 +59,13 @@ public class MembersBeanService {
 		return null;
 	}
 	
-	public List<MembersBean> getAllMember() {	
-		return memberDao.getAllMember();
+
+	public List<MembersBean> getAllMembers() {
+		return memberDao.getAllMembers();
+	}
+
+	public List<MembersBean> getMembersByPreferGameType(Integer gameTypeID) {
+		return memberDao.getMembersByPreferGameType(gameTypeID);
 	}
 
 	public boolean insert(MembersBean bean) {

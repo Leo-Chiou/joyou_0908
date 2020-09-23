@@ -51,7 +51,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		if (cart == null) {
 			cart = new ShoppingCart();
-			request.getSession().setAttribute("ShoppingCart", cart);   
+			request.getSession(false).setAttribute("ShoppingCart", cart);   
 		}
 		
 		String productIdStr = request.getParameter("productId");
@@ -60,6 +60,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		String productLang = request.getParameter("productLang");
 		String pageNo = request.getParameter("pageNo");
 		String countsStr = request.getParameter("counts");
+		String imgName = request.getParameter("imgName");
 		
 		
 		if (pageNo == null || pageNo.trim().length() == 0){
@@ -88,7 +89,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		
 		OrderItemBean oiBean = new OrderItemBean(productId,productName,productPrice,productLang,
-				counts,totalPrice);
+				counts,totalPrice,imgName);
 		
 		cart.addToCart(productId, oiBean);
 		
@@ -96,6 +97,8 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/ProductsGetServlet.do?pageNo=" + pageNo);
 		rd.forward(request, response);
+		
+		
 		
 	}
 }

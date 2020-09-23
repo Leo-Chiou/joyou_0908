@@ -109,7 +109,7 @@ try{
 </table>
 
 <!-- 自動跳轉回訂單成立頁面 -->
-<meta http-equiv="refresh" content ="3;url=ProcessOrderServlet.do?ResponseCode="+<%=ResponseCode %>>
+<meta http-equiv="refresh" content ="2;url=ProcessOrderServlet.do?ResponseCode="+<%=ResponseCode %>>;
 
 </body>
 </html>

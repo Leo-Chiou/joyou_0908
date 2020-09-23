@@ -31,7 +31,7 @@ public class CheckOutServlet extends HttpServlet {
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
 		
-		ShoppingCart sc = (ShoppingCart)request.getSession().getAttribute("ShoppingCart");
+		ShoppingCart sc = (ShoppingCart)request.getSession(false).getAttribute("ShoppingCart");
 		if (sc == null) {
 			// 如果找不到購物車(通常是Session逾時)，沒有必要往下執行
 			// 導向首頁
@@ -42,7 +42,7 @@ public class CheckOutServlet extends HttpServlet {
 		// 結帳
 		RequestDispatcher rd = request.getRequestDispatcher("ShoppingCheckOut.jsp");
 		rd.forward(request, response);
-		return;
+		
 	}
 
 }

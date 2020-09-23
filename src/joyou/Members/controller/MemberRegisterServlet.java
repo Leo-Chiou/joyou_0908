@@ -1,13 +1,18 @@
 package joyou.Members.controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +22,7 @@ import joyou.Members.model.MembersBean;
 import joyou.Members.model.MembersBeanService;
 import joyou.util.HibernateUtil;
 
+@MultipartConfig
 @WebServlet("/up_MemberRegisterServlet")
 public class MemberRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +36,7 @@ public class MemberRegisterServlet extends HttpServlet {
 	private String userPhone;
 
 	private String userGender;
+	// private
 	// private String userBirth;
 	// private String gameType;
 	// private String md5Acc;
@@ -51,30 +58,49 @@ public class MemberRegisterServlet extends HttpServlet {
 		userTrueName = request.getParameter("userTrueName");
 		userPhone = request.getParameter("userPhone");
 
-		// userGender = request.getParameter("userGender");
-		// userBirth = request.getParameter("userBirth");
-		// gameType = request.getParameter("gameType");
-		// md5Acc = changeMD5(userAcc)
-		// md5Pwd = changeMD5(userPwd);
+		userGender = request.getParameter("userGender");
 
-		// 有時間在補上驗證輸入資料
+		// 感覺後端需要再次驗證資料,但我懶得補
+		System.out.println("userAccount= " + userAccount);
+		System.out.println("userMail= " + userMail);
+		System.out.println("userGender= " + userGender);
+
+
+		// imgName是空的就表示沒有存檔
+		Part imgPart = request.getPart("userPicture");
+		String imgName = imgPart.getSubmittedFileName();
+		if (!imgName.isEmpty()) {
+			try (InputStream in = imgPart.getInputStream();
+					OutputStream out = new FileOutputStream(
+							"C:\\WorkDataSource\\workspace\\JoYouProject\\WebContent\\up_NoUsed\\" + userAccount
+									+ imgName.substring(imgName.lastIndexOf("."), imgName.length()))) {
+				byte[] buffer = new byte[1024];
+				int length = -1;
+				while ((length = in.read(buffer)) != -1) {
+					out.write(buffer, 0, length);
+				}
+			}
+		}
+
+
+
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		Session session = factory.openSession();
 		Transaction tx = session.beginTransaction();
 
 		MembersBeanService mService = new MembersBeanService(session);
 		mService.insert(new MembersBean(userAccount, userPassword, userMail, userNickName, userTrueName, userPhone,
-				userGender, null));
+				userGender,null));
 
 		tx.commit();
 		session.close();
 
-		String randInt = new TestMail().sendMail(userMail);
+		// String randInt = new TestMail().sendMail(userMail);
 
 		request.getSession().setAttribute("registerSuccess", "註冊成功請登入");
 		request.getSession().setAttribute("memberNickName", userNickName);
 		request.getSession().setAttribute("memberMail", userMail);
-		request.getSession().setAttribute("VerifiedCode", randInt);
+		// request.getSession().setAttribute("VerifiedCode", randInt);
 		// request.getRequestDispatcher("up_LoginPage.jsp").forward(request, response);
 		request.getRequestDispatcher("member-into-3.jsp").forward(request, response);
 

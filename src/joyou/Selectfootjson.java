@@ -39,7 +39,7 @@ public class Selectfootjson extends HttpServlet{
 			
 			
 			MembersBeanService dao = new  MembersBeanService(session);
-				 List<MembersBean> mbean = dao.getAllMember(); 
+				 List<MembersBean> mbean = dao.getAllMembers(); 
 				
 				 
 

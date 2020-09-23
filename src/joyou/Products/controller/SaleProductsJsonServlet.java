@@ -56,7 +56,6 @@ public class SaleProductsJsonServlet extends HttpServlet {
             Map<String, Integer>  map = new HashMap<>();
             out.write(gs.toJson(map));
             session.getTransaction().commit();
-            out.close();
 	    }
 
 	    
