@@ -36,7 +36,7 @@ public class MemberEditPasswordServlet extends HttpServlet {
 		Transaction tx = session.beginTransaction();
 
 		boolean UpdateSuccess = new MembersBeanService(session)
-				.update(new MembersBean(userAccount, userPassword, null, null, null, null, null, null));
+				.update(new MembersBean(userAccount, userPassword, null, null, null, null, null, null, null));
 
 		tx.commit();
 

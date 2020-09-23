@@ -360,6 +360,27 @@
                     </td>
                 </tr>
                 
+                   <tr>
+                    <td align="right">
+                        <label for="meow5"><span class="SB_tableWstyle03">*</span>偏好遊戲類型</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <select class="select" name="userPreferGameType" >
+                            <option value="5001">PartyGames</option>
+                            <option value="5002">StrategyGames</option>
+                            <option value="5003">ThemeticGames</option>
+                            <option value="5004">WarGames</option>
+                            <option value="5005">AbstractGames</option>
+                            <option value="5006">CustomizableGames</option>
+                            <option value="5007">ChildrenGames</option>
+                            <option value="5008">FamilyGames</option>
+                        </select>
+                    </td>
+                    <td class="SB_tableWstyle05" id="">
+                        &nbsp; &nbsp;<!---->
+                    </td>
+                </tr>
+                
                 <!---->
 
                 <!---->

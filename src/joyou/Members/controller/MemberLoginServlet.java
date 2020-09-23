@@ -49,6 +49,7 @@ public class MemberLoginServlet extends HttpServlet {
 			request.getSession().setAttribute("memberTrueName", mBean.getTrueName());
 			request.getSession().setAttribute("memberNickName", mBean.getNickName());
 			request.getSession().setAttribute("memberGender", mBean.getGender());
+			request.getSession().setAttribute("memberPreferGameType", mBean.getPreferGameType());
 
 //			request.getRequestDispatcher("up_MemberProfilePage.jsp").forward(request,response);
 			request.getRequestDispatcher("member-profile.jsp").forward(request, response);

@@ -51,7 +51,8 @@ public class MembersBean {
 	}
 
 	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone,
-			String gender,//String picturepath, 
+			String gender,
+			Integer gameType,
 			String userfoot) {
 		super();
 		this.account = account;
@@ -61,19 +62,13 @@ public class MembersBean {
 		this.truename = truename;
 		this.phone = phone;
 		this.gender = gender;
-		//this.picturepath = picturepath;
+		this.preferGameType = gameType;
+
 		this.userfoot = userfoot;
-		// this.gametypeid = gametypeid;
+
 	}
 
-	// public MembersBean(int id, String account, String password, String mail, int
-	// verified) {
-	// this.id = id;
-	// this.account = account;
-	// this.password = password;
-	// this.mail = mail;
-	// this.verified = verified;
-	// }
+
 
 	
 	public Integer getId() {
@@ -165,32 +160,5 @@ public class MembersBean {
 		this.userfoot = userfoot;
 	}
 
-	// @Column(name = "gametypeid")
-	// public int getGametypeid() {
-	// return gametypeid;
-	// }
-	//
-	// public void setGametypeid(int gametypeid) {
-	// this.gametypeid = gametypeid;
-	// }
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("{id=");
-		builder.append(id);
-		builder.append(", account=");
-		builder.append(account);
-		builder.append(", mail=");
-		builder.append(mail);
-		builder.append(", nickname=");
-		builder.append(nickname);
-		builder.append(", truename=");
-		builder.append(truename);
-		builder.append(", phone=");
-		builder.append(phone);
-		builder.append("}");
-		return builder.toString();
-	}
 
 }

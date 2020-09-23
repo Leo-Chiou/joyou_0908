@@ -31,6 +31,7 @@ public class MemberEditProfileServlet extends HttpServlet {
 		String userTrueName = request.getParameter("userTrueName");
 		String userPhone = request.getParameter("userPhone");
 		String userGender = request.getParameter("userGender");
+		Integer userPreferGameType = Integer.valueOf(request.getParameter("userPreferGameType"));
 
 		System.out.println("account= " + userAccount);
 		System.out.println("nickname= " + userNickName);
@@ -39,7 +40,8 @@ public class MemberEditProfileServlet extends HttpServlet {
 		Transaction tx = session.beginTransaction();
 
 		boolean UpdateSuccess = new MembersBeanService(session).update(
-				new MembersBean(userAccount, null, null, userNickName, userTrueName, userPhone, userGender, null));
+				new MembersBean(userAccount, null, null, userNickName, userTrueName, userPhone, userGender,
+						userPreferGameType, null));
 
 		tx.commit();
 

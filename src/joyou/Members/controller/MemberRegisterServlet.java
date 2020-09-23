@@ -36,11 +36,7 @@ public class MemberRegisterServlet extends HttpServlet {
 	private String userPhone;
 
 	private String userGender;
-	// private
-	// private String userBirth;
-	// private String gameType;
-	// private String md5Acc;
-	// private String md5Pwd;
+	private Integer userPreferGameType;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -59,6 +55,7 @@ public class MemberRegisterServlet extends HttpServlet {
 		userPhone = request.getParameter("userPhone");
 
 		userGender = request.getParameter("userGender");
+		userPreferGameType = Integer.valueOf(request.getParameter("userPreferGameType"));
 
 		// 感覺後端需要再次驗證資料,但我懶得補
 		System.out.println("userAccount= " + userAccount);
@@ -90,17 +87,17 @@ public class MemberRegisterServlet extends HttpServlet {
 
 		MembersBeanService mService = new MembersBeanService(session);
 		mService.insert(new MembersBean(userAccount, userPassword, userMail, userNickName, userTrueName, userPhone,
-				userGender,null));
+				userGender, userPreferGameType, null));
 
 		tx.commit();
 		session.close();
 
-		// String randInt = new TestMail().sendMail(userMail);
+		String randInt = new TestMail().sendMail(userMail);
 
 		request.getSession().setAttribute("registerSuccess", "註冊成功請登入");
 		request.getSession().setAttribute("memberNickName", userNickName);
 		request.getSession().setAttribute("memberMail", userMail);
-		// request.getSession().setAttribute("VerifiedCode", randInt);
+		request.getSession().setAttribute("VerifiedCode", randInt);
 		// request.getRequestDispatcher("up_LoginPage.jsp").forward(request, response);
 		request.getRequestDispatcher("member-into-3.jsp").forward(request, response);
 
