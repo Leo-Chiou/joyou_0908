@@ -58,6 +58,7 @@ public class MembersBeanService {
 		}
 		return null;
 	}
+	
 
 	public List<MembersBean> getAllMembers() {
 		return memberDao.getAllMembers();

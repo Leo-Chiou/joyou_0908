@@ -10,16 +10,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "memberTest1")
 public class MembersBean {
+	@Id
+	@Column(name = "memberID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "memberAccount")
 	private String account;
+	
+	@Column(name = "memberPassword")
 	private String password;
+	
+	@Column(name = "memberMail")
 	private String mail;
+	
+	@Column(name = "memberPhone")
+	private String phone;
+	
+	@Column(name = "memberNickName")
 	private String nickname;
 
+	@Column(name = "memberTrueName")
 	private String truename;
-	private String phone;
+
+	@Column(name = "memberGender")
 	private String gender;
+	
+	@Column(name = "memberPreferGameType")
 	private Integer preferGameType;
+	
+	@Column(name = "memberUserfoot")
 	private String userfoot;
 
 	// @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone
@@ -55,9 +75,7 @@ public class MembersBean {
 	// this.verified = verified;
 	// }
 
-	@Id
-	@Column(name = "memberID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	public Integer getId() {
 		return id;
 	}
@@ -66,7 +84,7 @@ public class MembersBean {
 		this.id = id;
 	}
 
-	@Column(name = "memberAccount")
+	
 	public String getAccount() {
 		return account;
 	}
@@ -75,7 +93,7 @@ public class MembersBean {
 		this.account = account;
 	}
 
-	@Column(name = "memberPassword")
+	
 	public String getPassword() {
 		return password;
 	}
@@ -84,7 +102,7 @@ public class MembersBean {
 		this.password = password;
 	}
 
-	@Column(name = "memberMail")
+	
 	public String getMail() {
 		return mail;
 	}
@@ -93,7 +111,7 @@ public class MembersBean {
 		this.mail = mail;
 	}
 
-	@Column(name = "memberPhone")
+
 	public String getPhone() {
 		return phone;
 	}
@@ -102,7 +120,7 @@ public class MembersBean {
 		this.phone = phone;
 	}
 
-	@Column(name = "memberNickName")
+
 	public String getNickName() {
 		return nickname;
 	}
@@ -111,7 +129,7 @@ public class MembersBean {
 		this.nickname = nickname;
 	}
 
-	@Column(name = "memberTrueName")
+	
 	public String getTrueName() {
 		return truename;
 	}
@@ -120,7 +138,7 @@ public class MembersBean {
 		this.truename = truename;
 	}
 
-	@Column(name = "memberGender")
+
 	public String getGender() {
 		return gender;
 	}
@@ -129,7 +147,7 @@ public class MembersBean {
 		this.gender = gender;
 	}
 
-	@Column(name = "memberPreferGameType")
+	
 	public Integer getPreferGameType() {
 		return preferGameType;
 	}
@@ -138,7 +156,7 @@ public class MembersBean {
 		this.preferGameType = preferGameType;
 	}
 
-	@Column(name = "memberUserfoot")
+	
 	public String getUserfoot() {
 		return userfoot;
 	}

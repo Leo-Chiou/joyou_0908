@@ -75,7 +75,35 @@
 	<script src="js/slideshow.js"></script>
 
 
+<script>
+var xhr = new XMLHttpRequest();
 
+xhr.open("GET", "<c:url value='/orderlist.json'/>",
+		true);
+xhr.send();
+xhr.onreadystatechange = function() {
+	if (xhr.readyState == 4 && xhr.status == 200) {
+
+		eight = JSON.parse(xhr.responseText);
+
+	}
+}
+
+var xhr1 = new XMLHttpRequest();
+
+xhr1.open("GET",
+		"<c:url value='/memberlist.json'/>", true);
+xhr1.send();
+xhr1.onreadystatechange = function() {
+	if (xhr1.readyState == 4 && xhr1.status == 200) {
+
+		gender = JSON.parse(xhr1.responseText);
+		
+	}
+
+
+}
+</script>
 </body>
 
 </html>

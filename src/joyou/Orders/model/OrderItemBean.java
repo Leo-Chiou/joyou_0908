@@ -42,8 +42,9 @@ public class OrderItemBean {
 	@JoinColumn(name = "orderId")
 	OrdersBean ordersBean;
 	
-	
+
 	public OrderItemBean() {
+		
 	}
 	
 	public OrderItemBean(Integer productId,String productName,Integer productPrice,String productLang,
