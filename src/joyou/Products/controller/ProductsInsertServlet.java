@@ -169,7 +169,7 @@ public class ProductsInsertServlet extends HttpServlet {
 			e.printStackTrace();
 		request.setAttribute("InsertMsg", "Inert UnSucess!");
 		request.getRequestDispatcher("WebMaintain/Products_Add.jsp").forward(request, response);
-		session.getTransaction().rollback();;
+		session.getTransaction().rollback();
 		}
 		
 		

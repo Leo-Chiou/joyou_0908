@@ -19,14 +19,12 @@ public class MembersBean {
 	private String truename;
 	private String phone;
 	private String gender;
-	//private String picturepath;
+	private Integer preferGameType;
 	private String userfoot;
 
 	// @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone
 	// = "Asia/Taipei")
 	// Date birthday;
-
-	// private int gametypeid;
 
 	public MembersBean() {
 
@@ -131,14 +129,14 @@ public class MembersBean {
 		this.gender = gender;
 	}
 
-//	@Column(name = "memberPicturePath")
-//	public String getPicturepath() {
-//		return picturepath;
-//	}
-//
-//	public void setPicturepath(String picturepath) {
-//		this.picturepath = picturepath;
-//	}
+	@Column(name = "memberPreferGameType")
+	public Integer getPreferGameType() {
+		return preferGameType;
+	}
+
+	public void setPreferGameType(Integer preferGameType) {
+		this.preferGameType = preferGameType;
+	}
 
 	@Column(name = "memberUserfoot")
 	public String getUserfoot() {

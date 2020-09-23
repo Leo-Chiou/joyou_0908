@@ -16,7 +16,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- favicon
 		============================================ -->
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/WebMaintain/img/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="${pageContext.request.contextPath}/WebMaintain/img/favicon.ico" />
 <!-- Google Fonts
 		============================================ -->
 <link
@@ -24,54 +25,72 @@
 	rel="stylesheet" />
 <!-- Bootstrap CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/bootstrap.min.css" />
 <!-- Bootstrap CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/font-awesome.min.css" />
 <!-- nalika Icon CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/nalika-icon.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/nalika-icon.css" />
 <!-- owl.carousel CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/owl.carousel.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/owl.theme.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/owl.transitions.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/owl.carousel.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/owl.theme.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/owl.transitions.css" />
 <!-- animate CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
 <!-- normalize CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/normalize.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/normalize.css" />
 <!-- meanmenu icon CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/meanmenu.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/meanmenu.min.css" />
 <!-- main CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/main.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/main.css" />
 <!-- morrisjs CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/morrisjs/morris.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/morrisjs/morris.css" />
 <!-- mCustomScrollbar CSS
 		============================================ -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/WebMaintain/css/scrollbar/jquery.mCustomScrollbar.min.css" />
 <!-- metisMenu CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/metisMenu/metisMenu.min.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/metisMenu/metisMenu-vertical.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/metisMenu/metisMenu.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/metisMenu/metisMenu-vertical.css" />
 <!-- calendar CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/calendar/fullcalendar.min.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/calendar/fullcalendar.print.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/calendar/fullcalendar.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/calendar/fullcalendar.print.min.css" />
 <!-- style CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/style.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/style.css" />
 <!-- responsive CSS
 		============================================ -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/WebMaintain/css/responsive.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/WebMaintain/css/responsive.css" />
 <!-- modernizr JS
 		============================================ -->
-<script src="${pageContext.request.contextPath}/WebMaintain/js/vendor/modernizr-2.8.3.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/WebMaintain/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
@@ -88,12 +107,15 @@
 			<!-- Logo圖片更換位置 -->
 			<div class="sidebar-header">
 				<a href="Index_Maintain.jsp"><img class="main-logo"
-					src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png" alt="" /></a> <strong><img
-					src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png" alt="" /></strong>
+					src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png"
+					alt="" /></a> <strong><img
+					src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png"
+					alt="" /></strong>
 			</div>
 			<div class="nalika-profile">
 				<div class="profile-dtl">
-					<a href="Index_Maintain.jsp"><img src="${pageContext.request.contextPath}/WebMaintain/img/logo/joyou-210.png"
+					<a href="Index_Maintain.jsp"><img
+						src="${pageContext.request.contextPath}/WebMaintain/img/logo/joyou-210.png"
 						alt="" /></a>
 					<h2>
 						管理員 <span class="min-dtn">您好</span>
@@ -103,39 +125,7 @@
 					<ul class="dtl-social"></ul>
 				</div>
 			</div>
-			<div class="left-custom-menu-adp-wrap comment-scrollbar">
-				<nav class="sidebar-nav left-sidebar-menu-pro">
-					<ul class="metismenu" id="menu1">
-						<li><a href="Index_Maintain.jsp"> <span
-								class="mini-click-non">首頁</span></a></li>
-						<li><a href="Orders_Maintain.jsp"> <span
-								class="mini-click-non">訂單管理</span></a></li>
-						<!-- <li>
-                <a class="has-arrow" href="mailbox.html" aria-expanded="false">
-                  <span class="mini-click-non">訂單管理</span></a
-                >
-                <ul class="submenu-angle" aria-expanded="false"></ul>
-              </li> -->
-						<li><a class="has-arrow" href="" aria-expanded="false"> <span
-								class="mini-click-non">商品管理</span></a>
-							<ul class="submenu-angle" aria-expanded="false">
-								<li><a title="Product Edit" href="Products_Add.jsp"><span
-										class="mini-sub-pro">新增商品</span></a></li>
-								<li><a title="Product List" href="Products_Maintain.jsp"><span
-										class="mini-sub-pro">商品清單</span></a></li>
-							</ul></li>
-						<li><a class="has-arrow" href="mailbox.html"
-							aria-expanded="false"> <span class="mini-click-non">內容管理</span></a>
-							<ul class="submenu-angle" aria-expanded="false">
-								<li><a title="Product Edit" href="SlideEdit.html"><span
-										class="mini-sub-pro">編輯輪播畫面</span></a></li>
-							</ul></li>
-						<li><a href="Members.html"> <span class="mini-click-non">會員管理</span></a>
-						</li>
-
-					</ul>
-				</nav>
-			</div>
+			<jsp:include page="banner.jsp" />
 		</nav>
 	</div>
 	<!-- Start Welcome area -->
@@ -145,7 +135,8 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="logo-pro">
 						<a href="Index_Maintain.jsp"><img class="main-logo"
-							src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png" alt="" /></a>
+							src="${pageContext.request.contextPath}/WebMaintain/img/logo/JOYOU_logo-3.png"
+							alt="" /></a>
 					</div>
 				</div>
 			</div>
@@ -214,19 +205,19 @@
 										<div class="row">
 											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 												<div class="review-content-section">
-													<form action="../ProductsInsert.do" method="post"
+													<form action="ProductsUpdateServlet.do" method="post"
 														enctype="multipart/form-data">
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品名稱：</span> <input type="text" name="name"
-																class="form-control" />
+																class="form-control" placeholder="${upName}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品庫存：</span> <input type="text" name="stock"
-																class="form-control" />
+																class="form-control" placeholder="${upStock}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品價格：</span> <input type="text" name="price"
-																class="form-control" />
+																class="form-control" placeholder="${upPrice}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span>是否特價：</span><br /> <select class="select"
@@ -236,16 +227,29 @@
 															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
-															<span> 商品適齡：</span> <input type="text" name="age"
-																class="form-control" />
+															<span>商品適齡：</span><br /> <select class="select"
+																name="age">
+																<option value="6+">6+</option>
+																<option value="10+">10+</option>
+																<option value="14+">14+</option>
+																<option value="18+">18+</option>
+															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
-															<span> 遊戲語言：</span> <input type="text" name="lang"
-																class="form-control" />
+															<span>遊戲語言：</span><br /> <select class="select"
+																name="lang">
+																<option value="中文">中文</option>
+																<option value="英文">英文</option>
+															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
-															<span> 遊戲人數：</span> <input type="text" name="suggestnum"
-																class="form-control" />
+															<span>遊戲人數：</span><br /> <select class="select"
+																name="suggestnum">
+																<option value="3人以上">3人以上</option>
+																<option value="6人以上">6人以上</option>
+																<option value="7人以上">7人以上</option>
+																<option value="10人以上">10人以上</option>
+															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span>顏色分類： </span><br /> <select class="select"
@@ -287,8 +291,9 @@
 																size="40" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
-															<span> 商品介紹：</span> <input type="text"
-																name="productintro" class="form-control" />
+															<span> 商品介紹：</span><br />
+															<textarea name="productintro" placeholder="${upIntro}"
+																style="width: 300px; height: 100px;"></textarea>
 														</div>
 														<br /> <br />
 														<div class="row">
@@ -296,7 +301,9 @@
 																<div class="text-center custom-pro-edt-ds">
 																	<button type="submit" name="Submit"
 																		class="btn btn-ctl-bt waves-effect waves-light m-r-10">送出</button>
-																	<p><span>${InsertMsg}</span></p>
+																	<p>
+																		<span>${p}</span>
+																	</p>
 																</div>
 															</div>
 														</div>
@@ -323,51 +330,69 @@
 
 	<!-- jquery
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/vendor/jquery-1.12.4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/vendor/jquery-1.12.4.min.js"></script>
 	<!-- bootstrap JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/bootstrap.min.js"></script>
 	<!-- wow JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/wow.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/wow.min.js"></script>
 	<!-- price-slider JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/jquery-price-slider.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/jquery-price-slider.js"></script>
 	<!-- meanmenu JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/jquery.meanmenu.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/jquery.meanmenu.js"></script>
 	<!-- owl.carousel JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/owl.carousel.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/owl.carousel.min.js"></script>
 	<!-- sticky JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/jquery.sticky.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/jquery.sticky.js"></script>
 	<!-- scrollUp JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/jquery.scrollUp.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/jquery.scrollUp.min.js"></script>
 	<!-- mCustomScrollbar JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/scrollbar/mCustomScrollbar-active.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/scrollbar/mCustomScrollbar-active.js"></script>
 	<!-- metisMenu JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/metisMenu/metisMenu.min.js"></script>
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/metisMenu/metisMenu-active.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/metisMenu/metisMenu.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/metisMenu/metisMenu-active.js"></script>
 	<!-- morrisjs JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/sparkline/jquery.sparkline.min.js"></script>
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/sparkline/jquery.charts-sparkline.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/sparkline/jquery.sparkline.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/sparkline/jquery.charts-sparkline.js"></script>
 	<!-- calendar JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/calendar/moment.min.js"></script>
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/calendar/fullcalendar.min.js"></script>
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/calendar/fullcalendar-active.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/calendar/moment.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/calendar/fullcalendar.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/calendar/fullcalendar-active.js"></script>
 	<!-- tab JS
 		============================================ -->
 	<script src="${pageContext.request.contextPath}/WebMaintain/js/tab.js"></script>
 	<!-- plugins JS
 		============================================ -->
-	<script src="${pageContext.request.contextPath}/WebMaintain/js/plugins.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/WebMaintain/js/plugins.js"></script>
 	<!-- main JS
 		============================================ -->
 	<script src="${pageContext.request.contextPath}/WebMaintain/js/main.js"></script>

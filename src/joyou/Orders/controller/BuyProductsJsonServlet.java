@@ -45,6 +45,7 @@ public class BuyProductsJsonServlet  extends HttpServlet{
 
 
 	private void processAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -111,10 +112,9 @@ public class BuyProductsJsonServlet  extends HttpServlet{
 		
 		Gson gson = new Gson();
 		out.println(gson.toJson(map));
+	
+	
 		out.close();
-		
-		
-		
 		
 	}
 }

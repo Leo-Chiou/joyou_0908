@@ -196,7 +196,6 @@
 									</label>
 								</div>
 								<input type="hidden" name="amountTotal" value="${subtotal}">
-								<input type="hidden" name="date" value="${today}">
 								<button type="submit" class="site-btn" onclick="">送出訂單</button>
 							</div>
 						</div>

@@ -26,8 +26,14 @@ import joyou.util.HibernateUtil;
 public class ProcessOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processAction(request,response);
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processAction(request,response);	
+		
+	}
+	private void processAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -35,18 +41,18 @@ public class ProcessOrderServlet extends HttpServlet {
 		session.beginTransaction();
 		
 		
-//		String responseCode=request.getParameter("ResponseCode");
-		
-//		if(!responseCode.equals("00")) {
-//			response.sendRedirect(response.encodeRedirectURL ("ShoppingPage.jsp"));
-//		}
-		
 		ShoppingCart sc = (ShoppingCart) request.getSession().getAttribute("ShoppingCart");
-		Integer total = sc.getSubtotal();
 		
-			
+		if (sc == null) {
+			response.sendRedirect(getServletContext().getContextPath() + "/ShoppingPage.jsp"  );
+			return;
+		}
+		
+		Integer total = sc.getSubtotal();
+				
 		
 		int mId=(int) request.getSession().getAttribute("memberID");
+		
 		String recievename = (String) request.getSession().getAttribute("receivername");
 		String recievephone = (String) request.getSession().getAttribute("receiverphone");
 		String address = (String) request.getSession().getAttribute("address");
@@ -82,12 +88,12 @@ public class ProcessOrderServlet extends HttpServlet {
 		
 		List<OrdersBean> allOrder = oDao.selectAll();
 		request.getSession().setAttribute("OrderNum", allOrder.get(allOrder.size()-1).getOrderId());
+
 		
 		session.getTransaction().commit();
 		
 		request.getSession().removeAttribute("ShoppingCart");
 		response.sendRedirect(response.encodeRedirectURL ("OrderFinish.jsp"));
-		
 		
 	}
 

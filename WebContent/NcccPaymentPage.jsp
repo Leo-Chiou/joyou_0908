@@ -14,6 +14,7 @@ if(request.getSession().getAttribute("discode")!=null){
 	amount_final = Integer.parseInt(amountTotal);
 }
 
+request.getSession().setAttribute("amountTotal", amount_final);
 request.getSession().setAttribute("discode", request.getSession().getAttribute("discode"));
 request.getSession().setAttribute("receivername", request.getParameter("receivername"));
 request.getSession().setAttribute("receiverphone", request.getParameter("receiverphone"));

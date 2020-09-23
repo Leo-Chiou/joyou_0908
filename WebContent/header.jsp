@@ -112,11 +112,11 @@
 									class="fa fa-twitter"></i></a> <a href="login.jsp"><i
 									class="fa fa-linkedin"></i></a> <a href="login.jsp"><i
 									class="fa fa-pinterest-p"></i></a>
-						<!--  </div>
+							</div>
 							
 							<div class="header__top__right__auth">
-						-->			<a href="login.jsp"><i class="fa fa-user"></i> Login</a>
-								<a href="login.jsp"><i class="fa fa-user"></i> Login</a>
+								<a id="topRightLogin" href="login.jsp"><i class="fa fa-user"></i> Login</a>
+								<a id="topRightMember" href="<c:url value='/up_MemberLogoutServlet'/>"><i class="fa fa-user"></i> ${memberNickName} </a>
 							</div>
 						</div>
 					</div>
@@ -130,11 +130,13 @@
 						<a href="./index.jsp"><img src="img/logo.png" alt=""></a>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-7">
 					<nav class="header__menu">
                         <ul>
-                            <li><a href="login.jsp">會員專區</a></li>
-
+                        	
+                             <li id="memberManage"></li>
+                            
+								
                              <li><a href="ProductsGetServlet.do">揪遊商城</a>
                             </li>
                             <!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
@@ -145,7 +147,7 @@
                         </ul>
                     </nav>
 				</div>
-				<div class="col-lg-3">
+				<div class="col-lg-2">
 					<div class="header__cart">
 						<ul>
 							<li><a
@@ -226,7 +228,30 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 
+		<script>
+		<%
+			String userNickNameStr =(String) session.getAttribute("memberNickName");
+		%>
 
+		var userNickName="<%=userNickNameStr%>";
+		
+		console.log("userNickName=");
+		console.log(userNickName);
+
+		if(userNickName=="null"){
+			console.log("244 is null");
+			document.getElementById("topRightLogin").style.display="";
+			document.getElementById("topRightMember").style.display="none";	
+			document.getElementById("memberManage").innerHTML="<a id='memberLogin' href='login.jsp'>會員登入</a>";	
+			
+		}else{
+			console.log("248 not null");
+			document.getElementById("topRightLogin").style.display="none";
+			document.getElementById("topRightMember").style.display="";
+			document.getElementById("memberManage").innerHTML="<a href='member-profile.jsp'>會員資料</a>";
+			document.getElementById("memberManage").innerHTML+="<ul class='header__menu__dropdown'><li><a href=''>XXXX</a></li><li><a href=''>OOOO</a></li><li><a href='<c:url value="/up_MemberLogoutServlet"/>'>會員登出</a></li></ul>";			
+		}
+	</script>
 
 </body>
 </html>

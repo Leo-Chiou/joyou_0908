@@ -51,7 +51,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		if (cart == null) {
 			cart = new ShoppingCart();
-			request.getSession().setAttribute("ShoppingCart", cart);   
+			request.getSession(false).setAttribute("ShoppingCart", cart);   
 		}
 		
 		String productIdStr = request.getParameter("productId");
@@ -97,6 +97,8 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/ProductsGetServlet.do?pageNo=" + pageNo);
 		rd.forward(request, response);
+		
+		
 		
 	}
 }

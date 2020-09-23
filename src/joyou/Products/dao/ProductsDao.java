@@ -45,7 +45,7 @@ public class ProductsDao {
 
 	
 	public ProductsBean updatenoImg(Integer productId, String productName, // 依ID修改商品不含照片。
-			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,String suggestNum,String productColor,String paintingStyle,String productIntro) {
+			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,String suggestNum,String productColor,String paintingStyle,String sale,String productIntro) {
 		ProductsBean pBean = session.get(ProductsBean.class, productId);
 		if (pBean != null) {
 			pBean.setProductName(productName);
@@ -57,6 +57,7 @@ public class ProductsDao {
 			pBean.setSuggestNum(suggestNum);
 			pBean.setProductColor(productColor);
 			pBean.setPaintingStyle(paintingStyle);
+			pBean.setSale(sale);
 			pBean.setProductIntro(productIntro);
 
 		}
@@ -65,7 +66,7 @@ public class ProductsDao {
 
 	public ProductsBean update(Integer productId, String productName, // 依ID修改商品含照片。
 			Integer productStock, Integer productPrice, Integer gametypeId, String productAge, String productLang,
-			String imgName, Blob productImg,String suggestNum,String productColor,String paintingStyle,String productIntro) {
+			String imgName, Blob productImg,String suggestNum,String productColor,String paintingStyle,String sale,String productIntro) {
 
 		ProductsBean pBean = session.get(ProductsBean.class, productId);
 		if (pBean != null) {
@@ -80,6 +81,7 @@ public class ProductsDao {
 			pBean.setSuggestNum(suggestNum);
 			pBean.setProductColor(productColor);
 			pBean.setPaintingStyle(paintingStyle);
+			pBean.setSale(sale);
 			pBean.setProductIntro(productIntro);
 		}
 		return pBean;

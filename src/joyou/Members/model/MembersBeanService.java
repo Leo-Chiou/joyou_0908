@@ -1,5 +1,7 @@
 package joyou.Members.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 public class MembersBeanService {
@@ -55,6 +57,14 @@ public class MembersBeanService {
 			return bean;
 		}
 		return null;
+	}
+
+	public List<MembersBean> getAllMembers() {
+		return memberDao.getAllMembers();
+	}
+
+	public List<MembersBean> getMembersByPreferGameType(Integer gameTypeID) {
+		return memberDao.getMembersByPreferGameType(gameTypeID);
 	}
 
 	public boolean insert(MembersBean bean) {

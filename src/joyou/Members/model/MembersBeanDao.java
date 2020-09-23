@@ -36,7 +36,6 @@ public class MembersBeanDao {
 		query.setParameter("acc", account);
 		MembersBean resultAccount = query.uniqueResult();
 		return resultAccount;
-
 	}
 
 	public MembersBean getMemberByAccountPassword(String account, String password) {
@@ -54,14 +53,21 @@ public class MembersBeanDao {
 		query.setParameter("mailbox", mail);
 		MembersBean resultAccount = query.uniqueResult();
 		return resultAccount;
-
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<MembersBean> getAllMember() {
-		Session session = factory.getCurrentSession();
-		String hql = "FROM MembersBean";
-		List<MembersBean> list = session.createQuery(hql).getResultList();
+	public List<MembersBean> getAllMembers() {
+		String hqlStr = "FROM MembersBean";
+		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
+		List<MembersBean> list = query.getResultList();
+		return list;
+	}
+
+
+	public List<MembersBean> getMembersByPreferGameType(Integer gameTypeID) {
+		String hqlStr = "FROM MembersBean WHERE preferGameType=:gameType";
+		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
+		query.setParameter("gameType", gameTypeID);
+		List<MembersBean> list = query.getResultList();
 		return list;
 	}
 
@@ -72,11 +78,14 @@ public class MembersBeanDao {
 	public void updateMember(MembersBean mBean) {
 		MembersBean originBean = getMemberByAccount(mBean.getAccount());
 		if (mBean.getPassword() == null) {
+			System.out.println("getPassword == null");
 			originBean.setNickName(mBean.getNickName());
 			originBean.setTrueName(mBean.getTrueName());
 			originBean.setPhone(mBean.getPhone());
 			originBean.setGender(mBean.getGender());
+			originBean.setPreferGameType(mBean.getPreferGameType());
 		} else {
+			System.out.println("getPassword != null");
 			originBean.setPassword(mBean.getPassword());
 		}
 		session.save(originBean);

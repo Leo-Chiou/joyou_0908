@@ -7,8 +7,6 @@ public class ShoppingCart {
   
 	private Map<Integer, OrderItemBean> cart = new LinkedHashMap< >();
 	
-
-	
 	public ShoppingCart() {
 	}
 	
