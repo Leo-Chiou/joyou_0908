@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
@@ -49,6 +49,7 @@
                 document.getElementsByName("userPhone")[0].removeAttribute("disabled");
                 document.getElementsByName("userGender")[0].removeAttribute("disabled");
                 document.getElementsByName("userGender")[1].removeAttribute("disabled");
+                document.getElementsByName("userPreferGameType")[0].removeAttribute("disabled");
             }
 
             function UndoProfile() {
@@ -66,12 +67,14 @@
                     document.getElementsByName("userGender")[0].removeAttribute("checked");
                     document.getElementsByName("userGender")[1].setAttribute("checked","");
                 }
+                document.getElementsByName("userPreferGameType")[0].value= userPreferGameType;
 
                 document.getElementsByName("userNickName")[0].setAttribute("disabled", "");
                 document.getElementsByName("userTrueName")[0].setAttribute("disabled", "");
                 document.getElementsByName("userPhone")[0].setAttribute("disabled", "");
-                document.getElementsByName("userPhone")[0].setAttribute("disabled", "");
-                document.getElementsByName("userPhone")[1].setAttribute("disabled", "");
+                document.getElementsByName("userGender")[0].setAttribute("disabled", "");
+                document.getElementsByName("userGender")[1].setAttribute("disabled", "");
+                document.getElementsByName("userPreferGameType")[0].setAttribute("disabled", "disabled");
             }
     </script>
 </head>
@@ -178,6 +181,29 @@
                     </td>
                 </tr>
                 
+                <tr>
+                    <td align="right">
+                        <label for="meow5"><span class="SB_tableWstyle03">*</span>偏好</label><!---->
+                    </td>
+                    <td  class="SB_tableW220 SB_tablepaddingL10"> 
+                    <!--   --> 
+                   
+                        <select  name="userPreferGameType" >
+                            <option value="5001">PartyGames</option>
+                            <option value="5002">StrategyGames</option>
+                            <option value="5003">ThemeticGames</option>
+                            <option value="5004">WarGames</option>
+                            <option value="5005">AbstractGames</option>
+                            <option value="5006">CustomizableGames</option>
+                            <option value="5007">ChildrenGames</option>
+                            <option value="5008">FamilyGames</option>
+                        </select>
+                    </td>
+                    <td class="SB_tableWstyle05">
+                        
+                    </td>
+                </tr>
+                
                 <!---->
 
                 <!---->
@@ -213,7 +239,7 @@
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/mixitup.min.js"></script>
@@ -231,6 +257,7 @@
         String userTrueNameStr =(String) session.getAttribute("memberTrueName");
         String userPhoneStr =(String) session.getAttribute("memberPhone");
         String userGenderStr =(String) session.getAttribute("memberGender");
+        Integer userPreferGameTypeInt =(Integer) session.getAttribute("memberPreferGameType");
 
         %>
 
@@ -240,6 +267,7 @@
         var userTrueName="<%=userTrueNameStr%>";
         var userPhone="<%=userPhoneStr%>";
         var userGender="<%=userGenderStr%>";
+        var userPreferGameType="<%=userPreferGameTypeInt%>";
 
         document.getElementsByName("userAccount")[0].value= userAccount ;
         document.getElementsByName("userMail")[0].value= userMail ;
@@ -253,13 +281,19 @@
             document.getElementsByName("userGender")[0].removeAttribute("checked");
             document.getElementsByName("userGender")[1].setAttribute("checked","");
         }
+        document.getElementsByName("userPreferGameType")[0].value= userPreferGameType ;
      
         document.getElementsByName("userNickName")[0].setAttribute("disabled", "");
         document.getElementsByName("userTrueName")[0].setAttribute("disabled", "");
         document.getElementsByName("userPhone")[0].setAttribute("disabled", "");
         document.getElementsByName("userGender")[0].setAttribute("disabled", "");
         document.getElementsByName("userGender")[1].setAttribute("disabled", "");
+        document.getElementsByName("userPreferGameType")[0].setAttribute("disabled", "disabled");
 
+        document.getElementsByClassName("nice-select")[0].style.display="none";
+        document.getElementsByClassName("current")[0].style.display="none";
+        document.getElementsByClassName("list")[0].style.display="none";
+        document.getElementsByName("userPreferGameType")[0].removeAttribute("style");
 
     </script>
 

@@ -61,6 +61,7 @@ public class MemberRegisterServlet extends HttpServlet {
 		System.out.println("userAccount= " + userAccount);
 		System.out.println("userMail= " + userMail);
 		System.out.println("userGender= " + userGender);
+		System.out.println("userPreferGameType= " + userPreferGameType);
 
 
 		// imgName是空的就表示沒有存檔
@@ -92,12 +93,12 @@ public class MemberRegisterServlet extends HttpServlet {
 		tx.commit();
 		session.close();
 
-		String randInt = new TestMail().sendMail(userMail);
+		// String randInt = new TestMail().sendMail(userMail);
 
 		request.getSession().setAttribute("registerSuccess", "註冊成功請登入");
 		request.getSession().setAttribute("memberNickName", userNickName);
 		request.getSession().setAttribute("memberMail", userMail);
-		request.getSession().setAttribute("VerifiedCode", randInt);
+		// request.getSession().setAttribute("VerifiedCode", randInt);
 		// request.getRequestDispatcher("up_LoginPage.jsp").forward(request, response);
 		request.getRequestDispatcher("member-into-3.jsp").forward(request, response);
 

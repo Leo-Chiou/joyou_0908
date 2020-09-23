@@ -35,6 +35,7 @@ public class MemberEditProfileServlet extends HttpServlet {
 
 		System.out.println("account= " + userAccount);
 		System.out.println("nickname= " + userNickName);
+		System.out.println("userPreferGameType= " + userPreferGameType);
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -55,6 +56,7 @@ public class MemberEditProfileServlet extends HttpServlet {
 			request.getSession().setAttribute("memberTrueName", userTrueName);
 			request.getSession().setAttribute("memberNickName", userNickName);
 			request.getSession().setAttribute("memberGender", userGender);
+			request.getSession().setAttribute("memberPreferGameType", userPreferGameType);
 
 //			request.getRequestDispatcher("up_MemberProfilePage.jsp").forward(request, response);
 			request.getRequestDispatcher("member-profile.jsp").forward(request, response);

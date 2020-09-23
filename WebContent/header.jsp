@@ -230,15 +230,22 @@
 
 		<script>
 		<%
+			Integer userIDStr =(Integer) session.getAttribute("memberID");
 			String userNickNameStr =(String) session.getAttribute("memberNickName");
 		%>
 
+		var userID="<%=userIDStr%>";
 		var userNickName="<%=userNickNameStr%>";
+		
+
+		console.log("userID=");
+		console.log(userID);
 		
 		console.log("userNickName=");
 		console.log(userNickName);
 
-		if(userNickName=="null"){
+
+		if(userID=="null"){
 			console.log("244 is null");
 			document.getElementById("topRightLogin").style.display="";
 			document.getElementById("topRightMember").style.display="none";	
