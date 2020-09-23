@@ -11,25 +11,38 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="OrderItem")
 public class OrderItemBean {
 	@Id
 	@Column(name="orderitemid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
 	Integer orderitemId;
 //	Integer orderId;
+	@Expose
 	Integer productId;
+	@Expose
 	String productName;
+	@Expose
 	Integer productPrice;
+	@Expose
 	String productLang;
+	@Expose
 	Integer orderitemQty;
+	@Expose
 	Integer totalPrice;
 	
 
 	@ManyToOne
 	@JoinColumn(name = "orderId")
 	OrdersBean ordersBean;
+	
+	public OrderItemBean() {
+		
+	}
 	
 	public OrderItemBean(Integer productId,String productName,Integer productPrice,String productLang,
 	Integer orderitemQty,Integer totalPrice) {

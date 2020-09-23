@@ -3,9 +3,18 @@ package joyou;
 import java.io.Serializable;
 import java.util.StringTokenizer;
 
-public class StringTokService implements Serializable {
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import joyou.Members.model.MembersBeanDao;
+@Service
+public class StringTokContorller implements Serializable  {
 	private static int[] foot= new int [9];
 	private static int[] tree= new int [10];
+	@Autowired
+	static
+	MembersBeanDao memberDao;
 	
 	private int[] footff;
 	private int[] treee;
@@ -30,7 +39,7 @@ public class StringTokService implements Serializable {
 
 
 	public static void setTree(int[] tree) {
-		StringTokService.tree = tree;
+		StringTokContorller.tree = tree;
 	}
 
 
@@ -50,7 +59,7 @@ public class StringTokService implements Serializable {
 
 
 
-	public StringTokService(){}
+	public StringTokContorller(){}
 	
 	
 	
@@ -61,7 +70,7 @@ public class StringTokService implements Serializable {
 
 
 	public static void setFoot(int[] foot) {
-		StringTokService.foot = foot;
+		StringTokContorller.foot = foot;
 	}
 
 
@@ -78,10 +87,12 @@ public class StringTokService implements Serializable {
 
 
 	static {
-		//最後 select 所有使用者
-		//String s2 =findAllUserFeet();
+		//最後 select id=1000
+		
+//		String s1 =memberDao.selectUserFoot(1000);??????????????????????????????????????
 		String s1 ="123.124.125.12689.1268.126.127.125689.124689.12468";
-		StringTokService tok = new StringTokService();
+		System.out.println(s1);
+		StringTokContorller tok = new StringTokContorller();
 		
 		
 		
@@ -91,26 +102,11 @@ public class StringTokService implements Serializable {
 			
 			foot[i]=(foot[i]*100)/count;
 		}
-		System.out.println(tree[8]);
-		System.out.println(tree[9]);
+
 		
 		
 	}
-//	
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		String s1 ="123.14568.147.164289";
-//		StringTok tok = new StringTok();
-//		
-//		
-//		
-//		tok.tok(s1);
-//		for(int i =0;i<9;i++) {
-//			System.out.println(i+1+":"+foot[i]);
-//		}
-//		
-//		
-//	}
+
 
 
 
@@ -123,7 +119,7 @@ public class StringTokService implements Serializable {
 	public void tok(String s1) {
 		StringTokenizer st = new StringTokenizer(s1, ".");
 		while (st.hasMoreElements()) {
-//			System.out.println("Token:" + st.nextToken());
+
 			count++;
 			String s =st.nextToken();
 			

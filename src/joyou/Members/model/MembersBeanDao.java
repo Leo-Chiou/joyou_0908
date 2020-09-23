@@ -59,7 +59,7 @@ public class MembersBeanDao {
 
 	@SuppressWarnings("unchecked")
 	public List<MembersBean> getAllMember() {
-		Session session = factory.getCurrentSession();
+//		Session session = factory.getCurrentSession();
 		String hql = "FROM MembersBean";
 		List<MembersBean> list = session.createQuery(hql).getResultList();
 		return list;

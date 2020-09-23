@@ -1,5 +1,7 @@
 package joyou.Members.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 public class MembersBeanService {
@@ -55,6 +57,10 @@ public class MembersBeanService {
 			return bean;
 		}
 		return null;
+	}
+	
+	public List<MembersBean> getAllMember() {	
+		return memberDao.getAllMember();
 	}
 
 	public boolean insert(MembersBean bean) {
