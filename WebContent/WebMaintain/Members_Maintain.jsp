@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>糾遊 後台管理系統</title>
+<title>揪遊 JOYOU | BOARD GAMES 後台管理系統</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon"
@@ -41,7 +41,7 @@
 <!-- animate CSS
 		============================================ -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
+	href="${pageContext.request.contextPath}/WebMaintain/css/animate.css" />
 <!-- normalize CSS
 		============================================ -->
 <link rel="stylesheet"
@@ -87,21 +87,130 @@
 <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
 <script type="text/javascript">
-	function productDelete(pt) {
-		window.alert("商品刪除成功!!!");
+	window.onload = function() {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "<c:url value='/ProductsDeleteServlet.do' />"
-				+ "?productId=" + pt, true);
+		xhr.open("GET",
+				"<c:url value='/PageMembersJsonServlet.do?type=all'/>", true); //頁面預設商品
 		xhr.send();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					var responseData = xhr.responseText;
+					displayPageMembers(responseData);
+				} else {
+				}
+			}
+		}
+		function asynRequest(id) {
+			var xhr = new XMLHttpRequest();
+			var no = 0;
+			var queryString = "";
+			if (id == "first") {
+				no = 1;
+			} else if (id == "prev") {
+				no = pageNo - 1;
+			} else if (id == "next") {
+				no = pageNo + 1;
+			} else if (id == "last") {
+				no = totalPage;
+			}
+			queryString = "?pageNo=" + no + "&totalPage=" + totalPage
+			+ "&type=all";
+
+			xhr.open("GET", "<c:url value='/PageMembersJsonServlet.do'/>"
+					+ queryString, true);
+			xhr.send();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var responseData1 = xhr.responseText;
+					displayPageMembers(responseData1);
+				}
+			}
+		}
+		function displayPageMembers(responseData) {
+			var content = "<tr><td>會員ID</td><td>會員帳號</td><td>真實姓名</td><td>暱稱</td><td>信箱</td><td>電話</td><td>性別</td><td>遊戲偏好類型</td><td>操作</td></tr>";
+			var data = responseData.split("&&&");
+			var members = JSON.parse(data[0]); 
+			var mapData = JSON.parse(data[1]); 
+
+			for (var i = 0; i <  members.length; i++) {
+				content += "<tr><td width='120px'>"+ members[i].id+"</td>";
+				content += "<td>" +  members[i].account + "</td>";
+				content += "<td width='120px'>" +  members[i].truename + "</td>";
+				content += "<td>" +  members[i].nickname + "</td>";
+				content += "<td>" +  members[i].mail + "</td>";
+				content += "<td width='140px'>" +  members[i].phone + "</td>";
+				content += "<td width='80px'>" +  members[i].gender + "</td>";
+				content += "<td width='100px'>" +  members[i].preferGameType + "</td>";
+				content += "<td><a style='margin-left:8px' data-toggle='tooltip' class='pd-setting-ed' href='javascript: void(0)' onClick='memberDelete("+members[i].id+")'>";
+				content += "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+				content += "</button></td></tr>"
+
+			}
+			document.getElementById("pageProduct").innerHTML = content;
+			pageNo = mapData.currPage;
+			totalPage = mapData.totalPage;
+
+			var navContent = "<table><tr height='36'>";
+			if (pageNo != 1) {
+				navContent += "<td width='40' align='center'><input id='first' type='button' value='|<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
+				navContent += "<td width='40' align='center'><input id='prev' type='button' value='<<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
+			} else {
+				navContent += "<td width='40' align='center'>&nbsp;</td>";
+				navContent += "<td width='40' align='center'>&nbsp;</td>";
+			}
+			navContent += "<td width='100' align='center'>" + pageNo + " / "
+					+ totalPage + "頁</td>";
+			if (pageNo != totalPage) {
+				navContent += "<td width='40' align='center'><input id='next' type='button' value='>>' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
+				navContent += "<td width='40' align='center'><input id='last' type='button' value='>|' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
+			} else {
+				navContent += "<td width='40' align=scs'center'>&nbsp;</td>";
+				navContent += "<td width='40' align='center'>&nbsp;</td>";
+			}
+			document.getElementById("navigation").innerHTML = navContent;
+
+			var firstBtn = document.getElementById("first");
+			var prevBtn = document.getElementById("prev");
+			var nextBtn = document.getElementById("next");
+			var lastBtn = document.getElementById("last");
+			if (firstBtn != null) {
+				firstBtn.onclick = function() {
+					asynRequest(this.id);
+				}
+			}
+
+			if (prevBtn != null) {
+				prevBtn.onclick = function() {
+					asynRequest(this.id);
+				}
+			}
+
+			if (nextBtn != null) {
+				nextBtn.onclick = function() {
+					asynRequest(this.id);
+				}
+			}
+
+			if (lastBtn != null) {
+				lastBtn.onclick = function() {
+					asynRequest(this.id);
+				}
+			}
+
+		}
+
 	}
 
-	function productUpdate(pt){
-		window.alert(1);
+	function memberDelete(id) {
+		window.alert("會員刪除成功!!!");
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "<c:url value='/PrepareUpdateServlet.do' />"
-				+ "?producrId=" + pt.value, true);
+		xhr.open("GET", "<c:url value='/MemberDeleteServlet.do' />"
+				+ "?memberID=" + id, true);
 		xhr.send();
-		}
+		window.location.reload();
+	}
+
 </script>
 </head>
 
@@ -156,9 +265,8 @@
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 										<div class="header-right-info">
 											<ul class="nav navbar-nav mai-top-nav header-right-menu">
-												<li class="nav-item"><a href="login.html"> <i
-														class="fa fa-user"></i> <span class="admin-name">Logo
-															out</span>
+												<li class="nav-item"><a href="${pageContext.request.contextPath}/index.jsp"> <i
+														class="fa fa-user"></i> <span class="admin-name">登出</span>
 												</a></li>
 											</ul>
 										</div>
@@ -180,7 +288,7 @@
 										<div class="breadcomb-wp">
 											<div class="breadcomb-icon"></div>
 											<div class="breadcomb-ctn">
-												<h2>商品清單</h2>
+												<h2>會員清單</h2>
 											</div>
 										</div>
 									</div>
@@ -198,17 +306,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="product-status-wrap">
-							<h4></h4>
-							<div class="add-product">
-								<a href="Products_Add.jsp">新增商品</a>
-							</div>
-
-
-
+						<div class="product-status-wrap" style="">
 							<table id="pageProduct"></table>
-
-
 						</div>
 					</div>
 				</div>
@@ -271,123 +370,5 @@
 	<!-- main JS
 		============================================ -->
 	<script src="js/main.js"></script>
-	
-	<script type="text/javascript">
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET",
-			"<c:url value='/GetMemberListServlet'/>", true);
-	xhr.send();
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
-				var responseData = xhr.responseText;
-				<!--下面這行 改名稱  -->
-				displayPageMembers(responseData);
-			} else {
-			}
-		}
-	}
-	function asynRequest(id) {
-		var xhr = new XMLHttpRequest();
-		var no = 0;
-		var queryString = "";
-		if (id == "first") {
-			no = 1;
-		} else if (id == "prev") {
-			no = pageNo - 1;
-		} else if (id == "next") {
-			no = pageNo + 1;
-		} else if (id == "last") {
-			no = totalPage;
-		}
-		queryString = "?pageNo=" + no + "&totalPage=" + totalPage
-				+ "&type=all";
-		<!-- 下面這行 需要加上servlet  -->
-		xhr.open("GET", "<c:url value=''/>"
-				+ queryString, true);
-		xhr.send();
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && xhr.status == 200) {
-				var responseData1 = xhr.responseText;
-				displayPageMembers(responseData1);
-			}
-		}
-	}
-	function displayPageMembers(responseData) {
-		var content = "<tr><td>商品圖片</td><td>商品名稱</td><td>商品庫存</td><td>商品價格</td><td>建議年齡</td><td>建議人數</td><td>商品操作</td></tr>";
-		;
-		var data = responseData.split("&&&");
-		var products = JSON.parse(data[0]); // 陣列
-		var mapData = JSON.parse(data[1]); // JavaScript物件
-
-		for (var i = 0; i < products.length; i++) {
-			content += "<tr><td><img src='${pageContext.request.contextPath}/img/"+products[i].imgName+"'/></td>";
-			content += "<td>" + products[i].productName + "</td>";
-			content += "<td>" + products[i].productStock + "</td>";
-			content += "<td>" + products[i].productPrice + "</td>";
-			content += "<td>" + products[i].productAge + "</td>";
-			content += "<td>" + products[i].suggestNum + "</td>";
-			content += "<td><a style='margin-left:10px'data-toggle='tooltip' class='pd-setting-ed' href='${pageContext.request.contextPath}/PrepareUpdateServlet.do?";
-			content += "productId="+products[i].productId+"'>";
-			content += "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
-			content += "<a style='margin-left:15px' data-toggle='tooltip' class='pd-setting-ed' href='javascript: void(0)' onClick='productDelete("+products[i].productId+")'>";
-			content += "<i class='fa fa-trash-o' aria-hidden='true'></i>";
-			content += "</button></td></tr>"
-
-		}
-		document.getElementById("pageProduct").innerHTML = content;
-		pageNo = mapData.currPage;
-		totalPage = mapData.totalPage;
-
-		var navContent = "<table><tr height='36'>";
-		if (pageNo != 1) {
-			navContent += "<td width='40' align='center'><input id='first' type='button' value='|<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-			navContent += "<td width='40' align='center'><input id='prev' type='button' value='<<' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-		} else {
-			navContent += "<td width='40' align='center'>&nbsp;</td>";
-			navContent += "<td width='40' align='center'>&nbsp;</td>";
-		}
-		navContent += "<td width='100' align='center'>" + pageNo + " / "
-				+ totalPage + "頁</td>";
-		if (pageNo != totalPage) {
-			navContent += "<td width='40' align='center'><input id='next' type='button' value='>>' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-			navContent += "<td width='40' align='center'><input id='last' type='button' value='>|' style='font-weight:bold;width:30px;height:30px;border:none;background-color:#FFD306;'></td>";
-		} else {
-			navContent += "<td width='40' align=scs'center'>&nbsp;</td>";
-			navContent += "<td width='40' align='center'>&nbsp;</td>";
-		}
-		document.getElementById("navigation").innerHTML = navContent;
-
-		var firstBtn = document.getElementById("first");
-		var prevBtn = document.getElementById("prev");
-		var nextBtn = document.getElementById("next");
-		var lastBtn = document.getElementById("last");
-		if (firstBtn != null) {
-			firstBtn.onclick = function() {
-				asynRequest(this.id);
-			}
-		}
-
-		if (prevBtn != null) {
-			prevBtn.onclick = function() {
-				asynRequest(this.id);
-			}
-		}
-
-		if (nextBtn != null) {
-			nextBtn.onclick = function() {
-				asynRequest(this.id);
-			}
-		}
-
-		if (lastBtn != null) {
-			lastBtn.onclick = function() {
-				asynRequest(this.id);
-			}
-		}
-
-	}
-
-	</script>
 </body>
 </html>

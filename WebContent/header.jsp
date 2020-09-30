@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
-
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 </head>
 <body>
 	
@@ -133,17 +133,14 @@
 				<div class="col-lg-7">
 					<nav class="header__menu">
                         <ul>
-                        	
-                             <li id="memberManage"></li>
-                            
-								
-                             <li><a href="ProductsGetServlet.do">揪遊商城</a>
+                             <li id="memberManage"></li>						
+                             <li><a href="<c:url value='/SaleProductsGetServlet.do'/>">揪遊商城</a>
                             </li>
                             <!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
-                            <li><a href="ProductsGetServlet.do">討論區</a>
+                            <li><a href="./ForumListIndex.jsp">討論區</a>
                             </li>
-                            <li><a href="./blog.html">揪遊團</a></li>
-                            <li><a href="./contact.html">聯繫我們</a></li>
+                            <li><a href="./groups.jsp">揪遊團</a></li>
+                            <li><a href="">聯繫我們</a></li>
                         </ul>
                     </nav>
 				</div>
@@ -172,51 +169,47 @@
 	<!-- Hero Section Begin -->
 	<section class="hero hero-normal">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-						
+			<div class="col-lg-9">
+				<div class="row">
+					<nav id="nav-wrap">
 						<ul>
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
+							<li>
+								<div class="menu-icon-btn">
+									找什麼 <i class="fa fa-angle-down" aria-hidden="true"></i>
 								</div>
-								<input type="text" id="SearchInputTxt" name="SearchInputTxt"placeholder="What do yo u need?">
-								<button type="submit" class="site-btn">SEARCH</button>
-							</form>
+								<ul class="main-menu-container">
+									<li><a href="#">找文章</a></li>
+									<li><a href="<c:url value='/SaleProductsGetServlet.do'/>">找桌遊</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="search-container">
+							<div class="search-input">
+								<input type="search" class="search-bar" id="SearchInputTxt"
+									name="SearchInputTxt"
+									placeholder="                   請輸入搜尋字串....">
+							</div>
+							<div class="search-icon-btn">
+								<i class="fa fa-search"></i>
+							</div>
 						</div>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>02-28825252</h5>
-								<span>24Hr客服專線</span>
-							</div>
+
+					</nav>
+
+					<div class="hero__search__phone">
+						<div class="hero__search__phone__icon">
+							<i class="fa fa-phone"></i>
+						</div>
+						<div class="hero__search__phone__text">
+							<h5>02-28825252</h5>
+							<span>24Hr客服專線</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- Hero Section End --
+	<!-- Hero Section End -->
 
 	<!-- Js Plugins -->
 	<script src="js/jquery-3.3.1.min.js"></script>
@@ -227,6 +220,7 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+
 
 		<script>
 		<%
@@ -256,7 +250,7 @@
 			document.getElementById("topRightLogin").style.display="none";
 			document.getElementById("topRightMember").style.display="";
 			document.getElementById("memberManage").innerHTML="<a href='member-profile.jsp'>會員資料</a>";
-			document.getElementById("memberManage").innerHTML+="<ul class='header__menu__dropdown'><li><a href=''>XXXX</a></li><li><a href=''>OOOO</a></li><li><a href='<c:url value="/up_MemberLogoutServlet"/>'>會員登出</a></li></ul>";			
+			document.getElementById("memberManage").innerHTML+="<ul class='header__menu__dropdown'><li><a href='FriendPage.jsp'>好友專區</a></li><li><a href='<c:url value="MemberOrderList.jsp"/>'>訂單查詢</a></li><li><a href='<c:url value="/up_MemberLogoutServlet"/>'>會員登出</a></li></ul>";			
 		}
 	</script>
 

@@ -171,6 +171,24 @@ public class ProductsDao {
 		
 	}
 	
+	public boolean checkName(String productName){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where productName=:name", ProductsBean.class);
+		query.setParameter("name", productName);
+		if(query.list().isEmpty()) {
+			return false;
+		}return true;
+	}
+	
+	
+	
+	public List<ProductsBean> selectSuggest(int gametype){         
+		Query<ProductsBean> query = session.createQuery("from ProductsBean where gametypeId=:type", ProductsBean.class);
+		query.setParameter("type", gametype);
+		List<ProductsBean> list = query.list();
+		return list;
+		
+	}
+	
 	
 	public List<ProductsBean> selectColor(String color){         
 		Query<ProductsBean> query = session.createQuery("from ProductsBean where productColor=:type", ProductsBean.class);

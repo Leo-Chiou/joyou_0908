@@ -22,19 +22,29 @@ public class OrdersBean {
 	@Id
 	@Column(name="orderId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnoreProperties("leader")
+	@Expose
 	Integer orderId;
+	@Expose
 	Integer memberId;
+	@Expose
 	String receiver;
+	@Expose
 	String receiverPhone;
+	@Expose
 	String shippingAddress;
+	@Expose
 	Integer orderAmount;
+	@Expose
 	Date  orderDate;
+	@Expose
 	String payMethod;
+	@Expose
+	String remarks;
+	@Expose
+	Integer discount;
 	
 	@OneToMany(mappedBy="ordersBean", cascade=CascadeType.ALL)
 	Set<OrderItemBean> items = new LinkedHashSet<>();
-	String remarks;
 	
 	
 	public OrdersBean() {
@@ -42,7 +52,7 @@ public class OrdersBean {
 	}
 
 	public OrdersBean(Integer orderId, Integer memberId, String receiver, String receiverPhone,
-			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks,Set<OrderItemBean> items) {
+			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks,Integer discount,Set<OrderItemBean> items) {
 
 		this.orderId=orderId;
 		this.memberId=memberId;
@@ -54,11 +64,12 @@ public class OrdersBean {
 		this.payMethod=payMethod;
 		this.items=items;
 		this.remarks=remarks;
+		this.discount=discount;
 
 	}
 	
 	public OrdersBean(Integer memberId, String receiver, String receiverPhone,
-			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks) {
+			String shippingAddress,Integer orderAmount,Date  orderDate ,String payMethod, String remarks,Integer discount) {
 
 
 		this.memberId=memberId;
@@ -69,6 +80,7 @@ public class OrdersBean {
 		this.orderDate=orderDate;
 		this.payMethod=payMethod;
 		this.remarks=remarks;
+		this.discount=discount;
 
 	}
 	
@@ -160,6 +172,14 @@ public class OrdersBean {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
 	}
 
 

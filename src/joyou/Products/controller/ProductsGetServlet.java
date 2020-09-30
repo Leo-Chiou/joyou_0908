@@ -54,7 +54,6 @@ public class ProductsGetServlet extends HttpServlet {
 		}finally {
 			session.getTransaction().commit();
 		}
-		session.close();
 	}
 
 	

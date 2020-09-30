@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>糾遊 後台管理系統</title>
+<title>揪遊 JOYOU | BOARD GAMES 後台管理系統</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon"
@@ -41,7 +41,7 @@
 <!-- animate CSS
 		============================================ -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
+	href="${pageContext.request.contextPath}/WebMaintain/css/animate.css" />
 <!-- normalize CSS
 		============================================ -->
 <link rel="stylesheet"
@@ -142,9 +142,10 @@
 				content += "<td>" + products[i].productAge + "</td>";
 				content += "<td>" + products[i].suggestNum + "</td>";
 				content += "<td><a style='margin-left:10px'data-toggle='tooltip' class='pd-setting-ed' href='${pageContext.request.contextPath}/PrepareUpdateServlet.do?";
-				content += "productId="+products[i].productId+"'>";
+				content += "productId=" + products[i].productId + "'>";
 				content += "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
-				content += "<a style='margin-left:15px' data-toggle='tooltip' class='pd-setting-ed' href='javascript: void(0)' onClick='productDelete("+products[i].productId+")'>";
+				content += "<a style='margin-left:15px' data-toggle='tooltip' class='pd-setting-ed' href='javascript: void(0)' onClick='productDelete("
+						+ products[i].productId + ")'>";
 				content += "<i class='fa fa-trash-o' aria-hidden='true'></i>";
 				content += "</button></td></tr>"
 
@@ -210,15 +211,16 @@
 		xhr.open("GET", "<c:url value='/ProductsDeleteServlet.do' />"
 				+ "?productId=" + pt, true);
 		xhr.send();
+		window.location.reload();
 	}
 
-	function productUpdate(pt){
+	function productUpdate(pt) {
 		window.alert(1);
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "<c:url value='/PrepareUpdateServlet.do' />"
 				+ "?producrId=" + pt.value, true);
 		xhr.send();
-		}
+	}
 </script>
 </head>
 
@@ -273,9 +275,8 @@
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 										<div class="header-right-info">
 											<ul class="nav navbar-nav mai-top-nav header-right-menu">
-												<li class="nav-item"><a href="login.html"> <i
-														class="fa fa-user"></i> <span class="admin-name">Logo
-															out</span>
+												<li class="nav-item"><a href="${pageContext.request.contextPath}/index.jsp"> <i
+														class="fa fa-user"></i> <span class="admin-name">登出</span>
 												</a></li>
 											</ul>
 										</div>

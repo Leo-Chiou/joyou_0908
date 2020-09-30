@@ -100,10 +100,10 @@
 
             if (ObjVal.search(/\s/g) != -1) {
                 VerifyObj.innerHTML = "&nbsp; &nbsp; 不能有空白";
-            } else if (ObjValLen < 2 || ObjValLen > 15) {
-                VerifyObj.innerHTML = "&nbsp; &nbsp; 限制長度為6-15字";
+            } else if (ObjValLen < 5 || ObjValLen > 15) {
+                VerifyObj.innerHTML = "&nbsp; &nbsp; 限制長度為5-15字";
             } else {
-                if (/^[a-zA-z0-9]{2,15}$/.test(ObjVal)) {
+                if (/^[a-zA-z0-9]{5,15}$/.test(ObjVal)) {
                     VerifyObj.innerHTML = "&nbsp; &nbsp; 格式正確";
                 } else {
                     VerifyObj.innerHTML = "&nbsp; &nbsp; 必須全為字母數字";
@@ -124,10 +124,10 @@
 
             if (ObjVal.search(/\s/g) != -1) {
                 VerifyObj.innerHTML = "&nbsp; &nbsp; 不能有空白";
-            } else if (ObjValLen < 2 || ObjValLen > 15) {
-                VerifyObj.innerHTML = "&nbsp; &nbsp; 限制長度為6-15字";
+            } else if (ObjValLen < 5 || ObjValLen > 15) {
+                VerifyObj.innerHTML = "&nbsp; &nbsp; 限制長度為5-15字";
             } else {
-                if (/^[a-zA-z0-9]{2,15}$/.test(ObjVal)) {
+                if (/^[a-zA-z0-9]{5,15}$/.test(ObjVal)) {
                     VerifyObj.innerHTML = "&nbsp; &nbsp; 格式正確";
                 } else {
                     VerifyObj.innerHTML = "&nbsp; &nbsp; 必須全為字母數字";
@@ -210,15 +210,24 @@
         }
 
         function inputData(){
-            
+
+            <!--      
             document.getElementsByName("userMail")[0].value="acc"+randInt+"@gmail.com";
             document.getElementsByName("userAccount")[0].value="acc"+randInt;
-            document.getElementsByName("userPassword")[0].value="pwd";
-            document.getElementsByName("userPassword2")[0].value="pwd";
-            document.getElementsByName("userNickName")[0].value="邱"+randInt+"豪";
-            document.getElementsByName("userTrueName")[0].value="邱"+randInt+"豪";
+            document.getElementsByName("userPassword")[0].value="pwd"+randInt;
+            document.getElementsByName("userPassword2")[0].value="pwd"+randInt;
+            document.getElementsByName("userTrueName")[0].value="邱豪";
+            document.getElementsByName("userNickName")[0].value="暱稱"+randInt;
             document.getElementsByName("userPhone")[0].value="0912345678";
+            -->
 
+            document.getElementsByName("userMail")[0].value="eeit117G2@gmail.com";
+            document.getElementsByName("userAccount")[0].value="eeit117";
+            document.getElementsByName("userPassword")[0].value="password";
+            document.getElementsByName("userPassword2")[0].value="password";
+            document.getElementsByName("userTrueName")[0].value="張君雅";
+            document.getElementsByName("userNickName")[0].value="阿雅";
+            document.getElementsByName("userPhone")[0].value="0912345678";
 
             document.getElementsByName("userMail")[0].onchange();
             document.getElementsByName("userAccount")[0].onchange();
@@ -229,6 +238,18 @@
             document.getElementsByName("userPhone")[0].onchange();
             
         }
+
+        function readURL(input){
+      		if(input.files && input.files[0]){
+      	    	var imageTagID = input.getAttribute("targetID");
+      	    	var reader = new FileReader();
+      	    	reader.onload = function (e) {
+          			var img = document.getElementById(imageTagID);
+          	    	img.setAttribute("src", e.target.result)
+          	    }
+      	    	reader.readAsDataURL(input.files[0]);
+      	  	}
+      	}
     </script>
 </head>
 
@@ -282,7 +303,7 @@
                         <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" onChange="checkAccount()" required>
                     </td>
                     <td class="SB_tableWstyle05" id="checkAccount">
-                        &nbsp; &nbsp;請輸入 6 碼以上英數字
+                        &nbsp; &nbsp;請輸入 5 碼以上英數字
                     </td>
                 </tr>
                 <tr>
@@ -293,7 +314,7 @@
                         <input name="userPassword" id="mem_password" type="password" class="SB_tableInput01" value=""  onChange="checkPassword()" required>
                     </td>
                     <td class="SB_tableWstyle05" id="checkPassword">
-                        &nbsp; &nbsp;請輸入 6 碼以上英數字
+                        &nbsp; &nbsp;請輸入 5 碼以上英數字
                     </td>
                 </tr>
                 <!---->
@@ -348,19 +369,9 @@
                     </td>
                 </tr>
                 
-                 <tr>
-                    <td align="right">
-                        <label for="meow4"><span class="SB_tableWstyle03">*</span>頭像</label><!---->
-                    </td>
-                    <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userPicture" id="meow4" type="file" class="SB_tableInput01" value="" onChange="" >
-                    </td>
-                    <td class="SB_tableWstyle05" id="">
-                        &nbsp; &nbsp;<!---->
-                    </td>
-                </tr>
+                 
                 
-                   <tr>
+                <tr>
                     <td align="right">
                         <label for="meow5"><span class="SB_tableWstyle03">*</span>偏好遊戲類型</label><!---->
                     </td>
@@ -378,6 +389,18 @@
                     </td>
                     <td class="SB_tableWstyle05" id="">
                         &nbsp; &nbsp;<!---->
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td align="right">
+                        <label for="imgInp"><span class="SB_tableWstyle03">*</span>頭像</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                        <input name="userPicture" id="imgInp" type="file" class="SB_tableInput01" value="" onchange="readURL(this)" targetID="preview_progressbarTW_img" accept="image/gif, image/jpeg, image/png" >
+                    </td>
+                    <td class="SB_tableWstyle05" >
+                        <img id="preview_progressbarTW_img" height="100px" src="" />
                     </td>
                 </tr>
                 

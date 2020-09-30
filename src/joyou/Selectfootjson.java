@@ -165,7 +165,7 @@ public class Selectfootjson extends HttpServlet{
 				      result[tree.length + i] = foot[i]; //注意左边开始的位置在插入a阵列之后。
 				    }
 				    
-				    
+				    request.getSession().setAttribute("footlist",result);
 				  //桑基圖+轉換漏斗
 					String categoriesJson = new Gson().toJson(result); 
 		            out.write(categoriesJson);

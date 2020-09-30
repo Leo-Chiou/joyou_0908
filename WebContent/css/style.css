@@ -701,6 +701,7 @@ ol {
 	border-radius: 50%;
 	float: left;
 	margin-right: 20px;
+	margin-left: 48px;
 }
 
 .hero__search__phone__text {
@@ -1122,13 +1123,13 @@ ol {
 	top: 13px;
 	height: 1px;
 	width: 5px;
-	background: #dd2222;
+	background: #e60000;
 	content: "";
 }
 
 .price-range-wrap .range-slider .price-input input {
 	font-size: 16px;
-	color: #dd2222;
+	color: #e60000;
 	font-weight: 700;
 	max-width: 20%;
 	border: none;
@@ -1158,12 +1159,12 @@ ol {
 }
 
 .price-range-wrap .price-range .ui-slider-range {
-	background: #dd2222;
+	background: #f8d307;
 	border-radius: 0;
 }
 
 .price-range-wrap .price-range .ui-slider-range.ui-corner-all.ui-widget-header:last-child {
-	background: #dd2222;
+	background: #f8d307;
 }
 
 .sidebar__item__color {
@@ -1181,7 +1182,7 @@ ol {
 }
 
 .sidebar__item__color.sidebar__item__color--red label:after {
-	background: #D62D2D;
+	background: #ce0000;
 }
 
 .sidebar__item__color.sidebar__item__color--black label:after {

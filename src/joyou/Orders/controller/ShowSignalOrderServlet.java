@@ -71,6 +71,7 @@ public class ShowSignalOrderServlet extends HttpServlet {
 			map.put("membername", mBean.getTrueName());
 			map.put("memberphone", mBean.getPhone());
 			map.put("address", oBean.getShippingAddress());
+			map.put("discode", Integer.toString(oBean.getDiscount()));
 			
 			
 			Gson gson = new Gson();

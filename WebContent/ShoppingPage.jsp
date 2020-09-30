@@ -60,6 +60,23 @@
 	font-weight: bold;
 	cursor: pointer;
 }
+
+.item2 {
+	text-align: center;
+	background-color: #fff;
+	width: 200px;
+	height: 350px;
+}
+
+.items2 {
+	display: block;
+	font-weight: bold;
+}
+
+.sh4 {
+	margin: 0px;
+	font-weight: bold;
+}
 </style>
 
 <script type="text/javascript">
@@ -74,30 +91,16 @@
 		var type = gametype.getElementsByTagName('li');
 		var xhr = new XMLHttpRequest();
 		var xhr2 = new XMLHttpRequest();
-		var xhr3 = new XMLHttpRequest();
 		var searchxhr = new XMLHttpRequest();
 		xhr.open("GET",
 				"<c:url value='/PageProductsJsonServlet.do?type=all'/>", true); //頁面預設商品
 		xhr.send();
-
-		xhr3.open("GET", "<c:url value='/SaleProductsJsonServlet.do'/>", true); //特價商品
-		xhr3.send();
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
 					var responseData1 = xhr.responseText;
 					displayPageProducts(responseData1);
-				} else {
-				}
-			}
-		}
-
-		xhr3.onreadystatechange = function() {
-			if (xhr3.readyState == 4) {
-				if (xhr3.status == 200) {
-					var responseData2 = xhr3.responseText;
-					displaySaleProducts(responseData2)
 				} else {
 				}
 			}
@@ -154,53 +157,6 @@
 			}
 		}
 
-		function displaySaleProducts(responseData2) {
-
-			var content = "<div></div>";
-			var data = responseData2.split("&&&");
-			var products = JSON.parse(data[0]); // 陣列
-			var mapData = JSON.parse(data[1]); // JavaScript物件
-
-			for (var i = 0; i < products.length; i++) {
-
-				content += "<div class='items'>";
-				content += "<div class='item'>";
-				content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-						+ "imgName="
-						+ products[i].imgName
-						+ "&productId="
-						+ products[i].productId
-						+ "&productName="
-						+ products[i].productName
-						+ "&productPrice="
-						+ products[i].productPrice
-						+ "&productIntro="
-						+ products[i].productIntro
-						+ "&gameType="
-						+ products[i].gametypeId
-						+ "&productAge="
-						+ products[i].productAge
-						+ "&suggestNum="
-						+ products[i].suggestNum
-						+ "&productLang="
-						+ products[i].productLang
-						+ "&productStock="
-						+ products[i].productStock + "'>"
-				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
-				content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
-						+ products[i].productName + "</p>";
-				content += "<p style='margin:0 0 10px 0;color:red;font-weight:bold;'> 庫存"
-						+ products[i].productStock
-						+ " 　特價$"
-						+ products[i].productPrice + "</p>";
-				content += "<a class='primary-btn' href='javascript:addtoCart("
-						+ products[i].productId + ")'" + ">ADD TO CARD</a>";
-				content += "</div></div>";
-
-			}
-			document.getElementById("saleProduct").innerHTML = content;
-		}
-
 		function displayPageProducts(responseData1) {
 			var content = "<div class='wrapper'><div class='clear'></div>";
 			var data = responseData1.split("&&&");
@@ -208,43 +164,54 @@
 			var mapData = JSON.parse(data[1]); // JavaScript物件
 
 			for (var i = 0; i < products.length; i++) {
-
+				let x=new Boolean(parseInt(products[i].productStock));
 				content += "<div class='items'>";
 				content += "<div class='item'>";
-				content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-						+ "imgName="
-						+ products[i].imgName
-						+ "&productId="
-						+ products[i].productId
-						+ "&productName="
-						+ products[i].productName
-						+ "&productPrice="
-						+ products[i].productPrice
-						+ "&productIntro="
-						+ products[i].productIntro
-						+ "&gameType="
-						+ products[i].gametypeId
-						+ "&productAge="
-						+ products[i].productAge
-						+ "&suggestNum="
-						+ products[i].suggestNum
-						+ "&imgName="
-						+ products[i].imgName
-						+ "&productLang="
-						+ products[i].productLang
-						+ "&productStock="
-						+ products[i].productStock + "'>"
-				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+				if(x==false){
+					content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+					}else{
+						content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+							+ "imgName="
+							+ products[i].imgName
+							+ "&productId="
+							+ products[i].productId
+							+ "&productName="
+							+ products[i].productName
+							+ "&productPrice="
+							+ products[i].productPrice
+							+ "&productIntro="
+							+ products[i].productIntro
+							+ "&gameType="
+							+ products[i].gametypeId
+							+ "&productAge="
+							+ products[i].productAge
+							+ "&suggestNum="
+							+ products[i].suggestNum
+							+ "&imgName="
+							+ products[i].imgName
+							+ "&productLang="
+							+ products[i].productLang
+							+ "&productStock="
+							+ products[i].productStock + "'>";
+						content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+						}
+				
+				
 				content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
 						+ products[i].productName + "</p>";
 				content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
 						+ products[i].productStock
 						+ " 　售價$"
-						+ products[i].productPrice + "</p>";
-				content += "<a class='primary-btn' href='javascript:addtoCart("
+						+ products[i].productPrice + "</p>";	
+				if(x==false){
+					content += "<a class='primary-btn'>已售完補貨中</a>";
+				}else{
+					content += "<a class='primary-btn' href='javascript:addtoCart("
 						+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+					}
+				
 				content += "</div></div>";
-
+				
 			}
 			document.getElementById("pageProduct").innerHTML = content;
 			pageNo = mapData.currPage;
@@ -378,39 +345,49 @@
 		var mapData = JSON.parse(data[1]);
 
 		for (var i = 0; i < products.length; i++) {
-
+			let x=new Boolean(parseInt(products[i].productStock));
 			content += "<div class='items'>";
 			content += "<div class='item'>";
-			content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-					+ "imgName="
-					+ products[i].imgName
-					+ "&productId="
-					+ products[i].productId
-					+ "&productName="
-					+ products[i].productName
-					+ "&productPrice="
-					+ products[i].productPrice
-					+ "&productIntro="
-					+ products[i].productIntro
-					+ "&gameType="
-					+ products[i].gametypeId
-					+ "&productAge="
-					+ products[i].productAge
-					+ "&suggestNum="
-					+ products[i].suggestNum
-					+ "&productLang="
-					+ products[i].productLang
-					+ "&productStock="
-					+ products[i].productStock + "'>"
-			content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+			if(x==false){
+				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+				}else{
+					content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+						+ "imgName="
+						+ products[i].imgName
+						+ "&productId="
+						+ products[i].productId
+						+ "&productName="
+						+ products[i].productName
+						+ "&productPrice="
+						+ products[i].productPrice
+						+ "&productIntro="
+						+ products[i].productIntro
+						+ "&gameType="
+						+ products[i].gametypeId
+						+ "&productAge="
+						+ products[i].productAge
+						+ "&suggestNum="
+						+ products[i].suggestNum
+						+ "&imgName="
+						+ products[i].imgName
+						+ "&productLang="
+						+ products[i].productLang
+						+ "&productStock="
+						+ products[i].productStock + "'>";
+					content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+					}
 			content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
 					+ products[i].productName + "</p>";
 			content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
 					+ products[i].productStock
 					+ " 　售價$"
-					+ products[i].productPrice + "</p>";
-			content += "<a class='primary-btn' href='javascript:addtoCart("
+					+ products[i].productPrice + "</p>";	
+			if(x==false){
+				content += "<a class='primary-btn'>已售完補貨中</a>";
+			}else{
+				content += "<a class='primary-btn' href='javascript:addtoCart("
 					+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+				}
 			content += "</div></div>";
 
 		}
@@ -424,54 +401,56 @@
 	}
 
 	function displaySearchProducts(searchresponseData) {
-		console.log(searchresponseData);
 		var content = "<div class='wrapper'><div class='clear'></div>";
 		var otherContent = "";
 		var data = searchresponseData.split("&&&");
 		var products = JSON.parse(data[0]); 
 
 		for (var i = 0; i < products.length; i++) {
-
+			let x=new Boolean(parseInt(products[i].productStock));
 			content += "<div class='items'>";
 			content += "<div class='item'>";
-			content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
-					+ "imgName="
-					+ products[i].imgName
-					+ "&productId="
-					+ products[i].productId
-					+ "&productName="
-					+ products[i].productName
-					+ "&productPrice="
-					+ products[i].productPrice
-					+ "&productIntro="
-					+ products[i].productIntro
-					+ "&gameType="
-					+ products[i].gametypeId
-					+ "&productAge="
-					+ products[i].productAge
-					+ "&suggestNum="
-					+ products[i].suggestNum
-					+ "&productLang="
-					+ products[i].productLang
-					+ "&productStock="
-					+ products[i].productStock + "'>"
-			content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+			if(x==false){
+				content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+				}else{
+					content += "<a href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?"
+						+ "imgName="
+						+ products[i].imgName
+						+ "&productId="
+						+ products[i].productId
+						+ "&productName="
+						+ products[i].productName
+						+ "&productPrice="
+						+ products[i].productPrice
+						+ "&productIntro="
+						+ products[i].productIntro
+						+ "&gameType="
+						+ products[i].gametypeId
+						+ "&productAge="
+						+ products[i].productAge
+						+ "&suggestNum="
+						+ products[i].suggestNum
+						+ "&imgName="
+						+ products[i].imgName
+						+ "&productLang="
+						+ products[i].productLang
+						+ "&productStock="
+						+ products[i].productStock + "'>";
+					content += "<img src='img\\" + products[i].imgName +"' width='300' /></a>";
+					}
 			content += "<p style='margin:0;color:black;font-weight:bold;'> 商品名稱："
 					+ products[i].productName + "</p>";
 			content += "<p style='margin:0 0 10px 0;color:black;font-weight:bold;'> 庫存"
 					+ products[i].productStock
 					+ " 　售價$"
-					+ products[i].productPrice + "</p>";
-			content += "<a class='add-to-cart' href='${pageContext.request.contextPath}/BuyProductsServlet.do?pageNo="
-					+ pageNo
-					+ "&productId="
-					+ products[i].productId
-					+ "&productName="
-					+ products[i].productName
-					+ "&productPrice="
-					+ products[i].productPrice
-					+ "&counts=1' class='primary-btn'>ADD TO CART</a>";
-			content += "</div>";
+					+ products[i].productPrice + "</p>";	
+			if(x==false){
+				content += "<a class='primary-btn'>已售完補貨中</a>";
+			}else{
+				content += "<a class='primary-btn' href='javascript:addtoCart("
+					+ products[i].productId + ")'" + ">ADD TO CARD</a>";
+				}
+			content += "</div></div>";
 
 		}
 		document.getElementById("pageProduct").innerHTML = content;
@@ -494,6 +473,7 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 
 </head>
 <body>
@@ -559,14 +539,17 @@
 					<div class="col-lg-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-									class="fa fa-twitter"></i></a> <a href="#"><i
-									class="fa fa-linkedin"></i></a> <a href="#"><i
+								<a href="login.jsp"><i class="fa fa-facebook"></i></a> <a
+									href="#"><i class="fa fa-twitter"></i></a> <a href="login.jsp"><i
+									class="fa fa-linkedin"></i></a> <a href="login.jsp"><i
 									class="fa fa-pinterest-p"></i></a>
 							</div>
 
 							<div class="header__top__right__auth">
-								<a href="#"><i class="fa fa-user"></i> Login</a>
+								<a id="topRightLogin" href="login.jsp"><i class="fa fa-user"></i>
+									Login</a> <a id="topRightMember"
+									href="<c:url value='/up_MemberLogoutServlet'/>"><i
+									class="fa fa-user"></i> ${memberNickName} </a>
 							</div>
 						</div>
 					</div>
@@ -580,26 +563,24 @@
 						<a href="./index.jsp"><img src="img/logo.png" alt=""></a>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-7">
 					<nav class="header__menu">
 						<ul>
-							<li><a href="login.jsp">會員專區</a></li>
-
-							<li><a href="ProductsGetServlet.do">揪遊商城</a></li>
+							<li id="memberManage"></li>
+							<li><a href="SaleProductsGetServlet.do">揪遊商城</a></li>
 							<!--  <li><a href="ProductsGetServlet.do">揪遊商城</a> -->
 							<li><a href="ProductsGetServlet.do">討論區</a></li>
-							<li><a href="./blog.html">揪遊團</a></li>
-							<li><a href="./contact.html">聯繫我們</a></li>
+							<li><a href="./groups.jsp">揪遊團</a></li>
+							<li><a href="">聯繫我們</a></li>
 						</ul>
 					</nav>
 				</div>
-				<div class="col-lg-3">
+				<div class="col-lg-2">
 					<div class="header__cart">
 						<ul>
 							<li><a
-								href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp">
-									<i class="fa fa-shopping-bag"></i> <span id="bagcounts">${ShoppingCart.itemNumber}</span>
-							</a></li>
+								href="http://localhost:8080/JoYouProject/ShopingCartPage.jsp"><i
+									class="fa fa-shopping-bag"></i><span id="bagcounts">${ShoppingCart.itemNumber}</span></a></li>
 						</ul>
 						<div class="header__cart__price">
 
@@ -619,45 +600,40 @@
 	<!-- Hero Section Begin -->
 	<section class="hero hero-normal">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-
+			<div class="col-lg-9">
+				<div class="row">
+					<nav id="nav-wrap">
 						<ul>
-							<li><a href="#">Fresh Meat</a></li>
-							<li><a href="#">Vegetables</a></li>
-							<li><a href="#">Fruit & Nut Gifts</a></li>
-							<li><a href="#">Fresh Berries</a></li>
-							<li><a href="#">Ocean Foods</a></li>
-							<li><a href="#">Butter & Eggs</a></li>
-							<li><a href="#">Fastfood</a></li>
-							<li><a href="#">Fresh Onion</a></li>
-							<li><a href="#">Papayaya & Crisps</a></li>
-							<li><a href="#">Oatmeal</a></li>
-							<li><a href="#">Fresh Bananas</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
+							<li>
+								<div class="menu-icon-btn">
+									找什麼 <i class="fa fa-angle-down" aria-hidden="true"></i>
 								</div>
-								<input type="text" id="SearchInputTxt" name="SearchInputTxt"
-									placeholder="What do yo u need?">
-								<button type="submit" class="site-btn">SEARCH</button>
-							</form>
+								<ul class="main-menu-container">
+									<li><a href="#">找文章</a></li>
+									<li><a href="<c:url value='/SaleProductsGetServlet.do'/>">找桌遊</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="search-container">
+							<div class="search-input">
+								<input type="search" class="search-bar" id="SearchInputTxt"
+									name="SearchInputTxt"
+									placeholder="                   請輸入搜尋字串....">
+							</div>
+							<div class="search-icon-btn">
+								<i class="fa fa-search"></i>
+							</div>
 						</div>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>02-28825252</h5>
-								<span>24Hr客服專線</span>
-							</div>
+
+					</nav>
+
+					<div class="hero__search__phone">
+						<div class="hero__search__phone__icon">
+							<i class="fa fa-phone"></i>
+						</div>
+						<div class="hero__search__phone__text">
+							<h5>02-28825252</h5>
+							<span>24Hr客服專線</span>
 						</div>
 					</div>
 				</div>
@@ -690,6 +666,69 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-5">
 					<div class="sidebar">
+						<div class="sidebar__item">
+							<div class="latest-product__text">
+								<div style="margin-bottom: 20px"
+									class="section-title product__discount__title">
+									<h2>推薦商品</h2>
+								</div>
+								<div class="latest-product__slider owl-carousel">
+
+									<c:forEach varStatus="stVar" var="ProductBean"
+										items="${products_Suggest}">
+										<div class="latest-prdouct__slider__item">
+											<div class="col-lg-4">
+												<div class="product__discount__item">
+													<div class='items2'>
+														<div class='item2'>
+															<c:choose>
+																<c:when test="${ProductBean.productStock>0}">
+																	<a
+																		href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?imgName=${ProductBean.imgName}
+						 &productId=${ProductBean.productId}&productName=${ProductBean.productName}
+						 &productPrice=${ProductBean.productPrice}&productIntro=${ProductBean.productIntro}
+						 &gameType=${ProductBean.gametypeId}&productAge=${ProductBean.productAge}
+						 &suggestNum=${ProductBean.suggestNum}&productLang=${ProductBean.productLang}
+						 &productStock=${ProductBean.productStock}'>
+																		<img
+																		src="<%=request.getContextPath()%>/img/${ProductBean.imgName}"
+																		width='300' />
+																	</a>
+																</c:when>
+																<c:otherwise>
+																	<img
+																		src="<%=request.getContextPath()%>/img/${ProductBean.imgName}"
+																		width='300' />
+																</c:otherwise>
+															</c:choose>
+															<p
+																style='margin: 0 0 10px 0　; color: black; font-weight: bold;'>
+																商品名稱：${ProductBean.productName}</p>
+															<p
+																style='margin: 0 0 10px 0; color: black; font-weight: bold;'>
+																庫存 ${ProductBean.productStock} 售價$
+																${ProductBean.productPrice}</p>
+															<c:choose>
+																<c:when test="${ProductBean.productStock>0}">
+																	<a class='primary-btn'
+																		href='javascript:addtoCart(${ProductBean.productId})'>ADD
+																		TO CARD</a>
+																</c:when>
+																<c:otherwise>
+																	<a class='primary-btn'>已售完補貨中</a>
+																</c:otherwise>
+															</c:choose>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</c:forEach>
+								</div>
+
+							</div>
+						</div>
 						<div class="sidebar__item">
 							<h4>桌遊類型</h4>
 							<ul id="gametype">
@@ -800,10 +839,58 @@
 						<div class="section-title product__discount__title">
 							<h2>ON SALE</h2>
 						</div>
-
-						<div id='saleProduct'></div>
-						<!-- 特價區 -->
-
+						<div class="row">
+							<div class="product__discount__slider owl-carousel">
+								<c:forEach varStatus="stVar" var="ProductBean"
+									items="${products_Sale}">
+									<div class="col-lg-4">
+										<div class="product__discount__item">
+											<div class='items'>
+												<div class='item'>
+													<c:choose>
+														<c:when test="${ProductBean.productStock>0}">
+															<a
+																href='${pageContext.request.contextPath}/ShowSingalProductServlet.do?imgName=${ProductBean.imgName}
+						 &productId=${ProductBean.productId}&productName=${ProductBean.productName}
+						 &productPrice=${ProductBean.productPrice}&productIntro=${ProductBean.productIntro}
+						 &gameType=${ProductBean.gametypeId}&productAge=${ProductBean.productAge}
+						 &suggestNum=${ProductBean.suggestNum}&productLang=${ProductBean.productLang}
+						 &productStock=${ProductBean.productStock}'>
+																<img
+																src="<%=request.getContextPath()%>/img/${ProductBean.imgName}"
+																width='300' />
+															</a>
+														</c:when>
+														<c:otherwise>
+															<img
+																src="<%=request.getContextPath()%>/img/${ProductBean.imgName}"
+																width='300' />
+														</c:otherwise>
+													</c:choose>
+													<p style='margin: 0; color: black; font-weight: bold;'>
+														商品名稱： ${ProductBean.productName}</p>
+													<p
+														style='margin: 0 0 10px 0; color: red; font-weight: bold;'>
+														庫存 ${ProductBean.productStock} 特價$
+														${ProductBean.productPrice}</p>
+													<c:choose>
+														<c:when test="${ProductBean.productStock>0}">
+															<a class='primary-btn'
+																href='javascript:addtoCart(${ProductBean.productId})'>ADD
+																TO CARD</a>
+														</c:when>
+														<c:otherwise>
+															<a class='primary-btn'>已售完補貨中</a>
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+								<!-- 特價區 -->
+							</div>
+						</div>
 					</div>
 					<div class="filter__item">
 						<div class="row">
@@ -902,8 +989,33 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		<%Integer userIDStr = (Integer) session.getAttribute("memberID");
+String userNickNameStr = (String) session.getAttribute("memberNickName");%>
 
+		var userID="<%=userIDStr%>";
+		var userNickName="<%=userNickNameStr%>";
 
+		console.log("userID=");
+		console.log(userID);
+
+		console.log("userNickName=");
+		console.log(userNickName);
+
+		if (userID == "null") {
+			console.log("244 is null");
+			document.getElementById("topRightLogin").style.display = "";
+			document.getElementById("topRightMember").style.display = "none";
+			document.getElementById("memberManage").innerHTML = "<a id='memberLogin' href='login.jsp'>會員登入</a>";
+
+		} else {
+			console.log("248 not null");
+			document.getElementById("topRightLogin").style.display = "none";
+			document.getElementById("topRightMember").style.display = "";
+			document.getElementById("memberManage").innerHTML = "<a href='member-profile.jsp'>會員資料</a>";
+			document.getElementById("memberManage").innerHTML += "<ul class='header__menu__dropdown'><li><a href='FriendPage.jsp'>好友專區</a></li><li><a href='<c:url value="MemberOrderList.jsp"/>'>訂單查詢</a></li><li><a href='<c:url value="/up_MemberLogoutServlet"/>'>會員登出</a></li></ul>";
+		}
+	</script>
 
 </body>
 </html>

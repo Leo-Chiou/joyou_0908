@@ -31,14 +31,16 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 
 
 <script>
+	
 </script>
 </head>
 
 <body>
-<jsp:include page="header.jsp" />	
+	<jsp:include page="header.jsp" />
 
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
@@ -73,32 +75,26 @@
 						<div class="product__details__price">NT.${productPrice}</div>
 						<p>庫存數量：${productStock}</p>
 						<p>${productIntro}</p>
-						<FORM name="form1" action="<c:url value='BuyProductsServlet.do' />" method="POST">
-							 
+						<FORM name="form1"
+							action="<c:url value='BuyProductsServlet.do' />" method="POST">
 							<select name='counts'>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select>
-							<Input type='hidden' name='productId' value='${productId}'>
+								<c:forEach var="i" begin="1" end="${productStock}">
+									<option <c:out value="${i}" />>${i}</option>
+								</c:forEach>
+							</select> <Input type='hidden' name='productId' value='${productId}'>
 							<Input type='hidden' name='productName' value='${productName}'>
 							<Input type='hidden' name='productPrice' value='${productPrice}'>
-							<Input type='hidden' name='productLang'  value='${productLang}'> 
-							<Input type='hidden' name='imgName'  value='${imgName}'> 
-							<Input type='hidden' name='counts' value='${counts}'>
-							<Input type='hidden' name='pageNo' value='1'>
-							<a style="margin-left: 30px" href="javascript:document.form1.submit();" class="primary-btn">ADD TO CARD</a>
+							<Input type='hidden' name='productLang' value='${productLang}'>
+							<Input type='hidden' name='imgName' value='${imgName}'> <Input
+								type='hidden' name='counts' value='${counts}'> <Input
+								type='hidden' name='pageNo' value='1'> <a
+								style="margin-left: 30px"
+								href="javascript:document.form1.submit();" class="primary-btn">ADD
+								TO CARD</a>
 						</FORM>
 
 
-						
+
 						<ul>
 							<li><b>遊戲類型</b> <span>${typeName}</span></li>
 							<li><b>遊戲適齡</b> <span>${productAge}</span></li>
@@ -112,7 +108,7 @@
 	</section>
 	<!-- Related Product Section End -->
 
-<jsp:include page="footer.jsp" />	
+	<jsp:include page="footer.jsp" />
 
 	<!-- Js Plugins -->
 	<script src="js/jquery-3.3.1.min.js"></script>

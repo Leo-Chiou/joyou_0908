@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   <jsp:useBean id="qwer" class="joyou.StringTokContorller" scope="page"/>
+   <jsp:useBean id="qwer" class="joyou.StringTokService" scope="page"/>
 
    
 <!DOCTYPE html>

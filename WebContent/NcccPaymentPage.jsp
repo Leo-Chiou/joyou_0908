@@ -14,7 +14,6 @@ if(request.getSession().getAttribute("discode")!=null){
 	amount_final = Integer.parseInt(amountTotal);
 }
 
-request.getSession().setAttribute("amountTotal", amount_final);
 request.getSession().setAttribute("discode", request.getSession().getAttribute("discode"));
 request.getSession().setAttribute("receivername", request.getParameter("receivername"));
 request.getSession().setAttribute("receiverphone", request.getParameter("receiverphone"));
@@ -41,9 +40,10 @@ request.getSession().setAttribute("remarks", request.getParameter("remarks"));
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/slideshow.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 
 
-<SCRIPT language=JavaScript src="js/sha256.js"></SCRIPT>
+<script language=JavaScript src="js/sha256.js"></script>
 <script language="javascript">
 
 function setConf(){
@@ -106,6 +106,7 @@ function setConf(){
 <input type="hidden" name="NotifyURL"  id="NotifyURL" value="http://localhost:8080/JoYouProject/NcccResponsePage.jsp">
 <input type="hidden" name="Signature"  id="Signature" value="">
 <iframe name="HPPFrame" id="mainFrame" height="600" width="800" Frameborder="0"/>
+</form>
 </div>
 </body>
 </html>

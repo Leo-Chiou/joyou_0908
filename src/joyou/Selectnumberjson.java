@@ -45,14 +45,13 @@ public class Selectnumberjson extends HttpServlet{
 
 					 
 					 int  gender[] = new int[3];
-					 
+					 int gametype[]= new int [9];
 					 
 				 for(int i=0;i<mbean.size();i++) {
 					 	
-					 	
-					 	
 					 	String g =mbean.get(i).getGender();
-						
+
+					 	
 						gender[2]++;
 						
 						if(g.equals("M")) {
@@ -61,14 +60,49 @@ public class Selectnumberjson extends HttpServlet{
 							gender[1]++;
 						}
 					}
-					
-				
 				 
+				 for(int i=0;i<mbean.size();i++) {
+					 int type =mbean.get(i).getPreferGameType();
+					 	if(type==5001) {
+					 		gametype[0]++;
+					 	}
+					 	if(type==5002) {
+					 		gametype[1]++;
+					 	}
+					 	if(type==5003) {
+					 		gametype[2]++;
+					 	}
+					 	if(type==5004) {
+					 		gametype[3]++;
+					 	}
+					 	if(type==5005) {
+					 		gametype[4]++;
+					 	}
+					 	if(type==5006) {
+					 		gametype[5]++;
+					 	}
+					 	if(type==5007) {
+					 		gametype[6]++;
+					 	}
+					 	if(type==5008) {
+					 		gametype[7]++;
+					 	}
+					 	
+				 }
+				 
+
+				 	int max=0;
+				 	for(int j=0;j<8;j++) {
+				 		if(gametype[j]>max) {
+				 			max=gametype[j];
+				 		}
+				 	}
+				 	gametype[8]=max;
 				 	
 				 
 				
 				 request.getSession().setAttribute("countnumber", gender[2]);
-				
+				 request.getSession().setAttribute("gametype", gametype);
 					String categoriesJson = new Gson().toJson(gender); 
 		            out.write(categoriesJson);
 			} finally{

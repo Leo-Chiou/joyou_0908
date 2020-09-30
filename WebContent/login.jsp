@@ -56,16 +56,6 @@
                   <li><input autocomplete="off" class="AF_Member_Input100" id="login_password" name="userPassword" placeholder=" &nbsp; 會員密碼" tabindex="2" type="password">
                   </li>
 
-                  <li class="AF_attest_number">
-                    <input class="AF_Member_Input90" id="login_authimg_str" name="login_authimg_str" placeholder=" &nbsp; 認證碼" tabindex="3" type="text">
-                    &nbsp; 
-                    <img align="absmiddle" alt="確認代碼" border="0" id="login_authimg_img" src="img/91923.png" title="確認代碼">
-                    <a href="javascript:void(0)" onclick="_reloadAuthimgImg(&#39;login_authimg_img&#39;);"> 換另一張</a>
-                  </li>
-
-                  <li><label><input id="ck_remember" name="ck_remember" onchange="SaveAcc();" type="checkbox"> 記住我</label>
-                  </li>
-
                 </ul>
 
                 <div class="AF_Member_Login_R_left jooshop_btn_login jooshop_btn_color">
@@ -75,9 +65,6 @@
 
                 <div class="AF_Member_Login_bt">
                   <ul>
-                    <li>
-                      <a href="＃">忘記密碼</a>
-                    </li>
                     <li>
                       <a href="member-into-1.jsp">我要註冊</a>
                     </li>

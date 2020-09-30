@@ -38,8 +38,11 @@ public class MemberLoginServlet extends HttpServlet {
 		MembersBean mBean = new MembersBeanService(session).getMemberByAccountPassword(loginAccount, loginPassword);
 
 		tx.commit();
+		if(loginAccount.equals("admin")&&loginPassword.equals("admin")) {
+			
+			request.getRequestDispatcher("/WebMaintain/Index_Maintain.jsp").forward(request, response);
 
-		if (mBean != null) {
+		}else if (mBean != null) {
 
 			request.getSession().setAttribute("loginSuccess", "登入成功");
 			request.getSession().setAttribute("memberID", mBean.getId());
@@ -50,10 +53,11 @@ public class MemberLoginServlet extends HttpServlet {
 			request.getSession().setAttribute("memberNickName", mBean.getNickName());
 			request.getSession().setAttribute("memberGender", mBean.getGender());
 			request.getSession().setAttribute("memberPreferGameType", mBean.getPreferGameType());
+			request.getSession().setAttribute("memberImageFileName", mBean.getImageFileName());
 
 //			request.getRequestDispatcher("up_MemberProfilePage.jsp").forward(request,response);
-			request.getRequestDispatcher("member-profile.jsp").forward(request, response);
-
+//			request.getRequestDispatcher("member-profile.jsp").forward(request, response);
+			response.sendRedirect("member-profile.jsp");
 		} else {
 
 			request.getSession().setAttribute("loginSuccess", "帳號或密碼錯誤");

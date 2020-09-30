@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 
 
 <script>
@@ -47,6 +48,15 @@
 			}
 		}
 	}
+
+	function dataAuoto(){
+		 document.getElementsByName("receivername")[0].value="黃小明";
+		 document.getElementsByName("receiverphone")[0].value="0910222313";
+		 document.getElementsByName("address")[0].value="台北市中正區中正路1號";
+		 document.getElementsByName("mail")[0].value="Milk10225@gmail.com";
+		 document.getElementsByName("remarks")[0].value="盡速送達！";
+		}
+	
 </script>
 </head>
 <body>
@@ -88,6 +98,7 @@
 			<div class="checkout__form">
 				<h4>訂單資料</h4>
 				<form action="NcccPaymentPage.jsp" method="POST">
+				<button type="button" onclick="dataAuoto()">✎ </button>
 					<div class="row">
 						<div class="col-lg-8 col-md-6">
 							<div class="row">
@@ -152,6 +163,7 @@
 									style="color: red; font-weight: blod; font-size: 14px"></p>
 							</div>
 						</div>
+						
 						<div class="col-lg-4 col-md-6">
 							<div class="checkout__order">
 								<h4>購物清單</h4>

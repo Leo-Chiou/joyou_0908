@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style2.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 <!-- login Begin-->
 
 <!-- login End-->

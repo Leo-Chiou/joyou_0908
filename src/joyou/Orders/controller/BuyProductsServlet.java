@@ -1,6 +1,7 @@
 package joyou.Orders.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -95,7 +96,7 @@ public class BuyProductsServlet  extends HttpServlet{
 		
 		session.getTransaction().commit();
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/ProductsGetServlet.do?pageNo=" + pageNo);
+		RequestDispatcher rd = request.getRequestDispatcher("/SaleProductsGetServlet.do");
 		rd.forward(request, response);
 		
 		

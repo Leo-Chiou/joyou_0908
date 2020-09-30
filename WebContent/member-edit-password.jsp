@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ page import="java.util.*"%>
 
 <!DOCTYPE html>
@@ -63,7 +63,7 @@
 
                
                 let xhr = new XMLHttpRequest();
-                xhr.open("POST", "c:url value='/SendVerifiedMailServlet'", true);
+                xhr.open("POST", "<c:url value='/SendVerifiedMailServlet'/>", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.send("mail=" + Obj.value);
                 xhr.onreadystatechange = function () {
@@ -73,7 +73,7 @@
                         let message = "驗證信已寄出";
                         VerifyObj.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
                     }
-                };
+                }
             }
 
             function checkConsistency() {
@@ -140,7 +140,7 @@
          <div class="SB_MemberContent_login">
               <span>Edit Password</span>&nbsp; 修改密碼
             </div><!-- -->            
-<div class="SB_MemberContent">
+	<div class="SB_MemberContent">
     <!-- 步驟 -->
 
     <form action="<c:url value='/up_MemberEditPasswordServlet'/>" method="POST">
@@ -159,7 +159,7 @@
                         <label for="meow"><span class="SB_tableWstyle03">*</span>帳號</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" >
+                        <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" style="background-color: darkgray" >
                     </td>
                     <td class="SB_tableWstyle05" id="checkAccount">
                         &nbsp; &nbsp;
@@ -172,7 +172,7 @@
                         <label for="mem_email"><span class="SB_tableWstyle03" id="mem_email_necessary_abbr">*</span>會員 E-mail</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userMail" id="mem_email" type="text" class="SB_tableInput01" value=""  >
+                        <input name="userMail" id="mem_email" type="text" class="SB_tableInput01" value="" style="background-color: darkgray" >
                     </td>
                     <td class="SB_tableWstyle05" >
                         &nbsp; &nbsp;<!---->
@@ -234,20 +234,6 @@
     </form>
 </div>      
 </div>
-<!---->
-<!---->
-
-</div>            <!---->
-        </div>
-        </div>
-            <!-- member-into End--> 
-
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
 
 
    <jsp:include page="footer.jsp" />

@@ -55,7 +55,6 @@ public java.sql.Connection _getDBConnetion(String dn) throws Exception {
 %>
 
 <% 
-
 request.setCharacterEncoding("big5");
 response.setCharacterEncoding("UTF-8");
 String MerchantID = request.getParameter("MerchantID");

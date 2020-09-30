@@ -11,7 +11,7 @@
 
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>糾遊 後台管理系統</title>
+<title>揪遊 JOYOU | BOARD GAMES 後台管理系統</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- favicon
@@ -46,7 +46,7 @@
 <!-- animate CSS
 		============================================ -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
+	href="${pageContext.request.contextPath}/WebMaintain/css/animate.css" />
 <!-- normalize CSS
 		============================================ -->
 <link rel="stylesheet"
@@ -91,6 +91,9 @@
 		============================================ -->
 <script
 	src="${pageContext.request.contextPath}/WebMaintain/js/vendor/modernizr-2.8.3.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -153,9 +156,9 @@
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 										<div class="header-right-info">
 											<ul class="nav navbar-nav mai-top-nav header-right-menu">
-												<li class="nav-item"><a href="login.html"> <i
-														class="fa fa-user"></i> <span class="admin-name">Logo
-															out</span>
+												<li class="nav-item"><a
+													href="${pageContext.request.contextPath}/index.jsp"> <i
+														class="fa fa-user"></i> <span class="admin-name">登出</span>
 												</a></li>
 											</ul>
 										</div>
@@ -204,26 +207,35 @@
 										id="description">
 										<div class="row">
 											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+												<p style="margin-left: 50px">圖片預覽：</p>
+												<div
+													style="margin-left: 50px; width: 400px; height: 400px; border: 2px solid #F0F0F0">
+													<img src="${pageContext.request.contextPath}/img/${imgName}"
+														id="imgpreview" alt="請選擇圖片"
+														style="width: 100%; height: 100%; width: 600px" />
+												</div>
+												</div>
+											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 												<div class="review-content-section">
-													<form action="ProductsUpdateServlet.do" method="post"
-														enctype="multipart/form-data">
+													<form action="<c:url value='/ProductsUpdateServlet.do'/>"
+														method="post" enctype="multipart/form-data">
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品名稱：</span> <input type="text" name="name"
-																class="form-control" placeholder="${upName}" />
+																class="form-control" value="${upName}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品庫存：</span> <input type="text" name="stock"
-																class="form-control" placeholder="${upStock}" />
+																class="form-control" value="${upStock}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品價格：</span> <input type="text" name="price"
-																class="form-control" placeholder="${upPrice}" />
+																class="form-control" value="${upPrice}" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span>是否特價：</span><br /> <select class="select"
 																name="sale">
-																<option value="1">是</option>
 																<option value="0">否</option>
+																<option value="1">是</option>
 															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
@@ -287,13 +299,13 @@
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span>商品圖片： </span> <input style="background: #FFFFFF"
-																class='InputClass' type="file" name="uploadFile"
-																size="40" />
+																class='InputClass' type="file" id="upload_img"
+																name="uploadFile" size="40" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品介紹：</span><br />
-															<textarea name="productintro" placeholder="${upIntro}"
-																style="width: 300px; height: 100px;"></textarea>
+															<textarea name="productintro"
+																style="width: 300px; height: 100px;">${upIntro}</textarea>
 														</div>
 														<br /> <br />
 														<div class="row">
@@ -396,5 +408,21 @@
 	<!-- main JS
 		============================================ -->
 	<script src="${pageContext.request.contextPath}/WebMaintain/js/main.js"></script>
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#imgpreview').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#upload_img").change(function() {
+			readURL(this);
+		});
+	</script>
 </body>
 </html>

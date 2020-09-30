@@ -20,7 +20,9 @@
 		<mapping class="joyou.Orders.model.OrderItemBean"/>
 		<mapping class="joyou.GameTypes.model.GameTypesBean"/>
 		<mapping class="joyou.Discounts.model.DiscountsBean"/>
-
+		<mapping class="joyou.Group.model.Groups"/>
+		<mapping class="joyou.forum.model.ForumBean"/>
+		<mapping class="joyou.forum.model.ReplyBean"/>
 		
     </session-factory>
 </hibernate-configuration>

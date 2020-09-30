@@ -26,6 +26,14 @@
     <!-- login Begin-->
 
     <!-- login End-->
+    
+    <script>
+		function checkConsistency(){
+			if(document.getElementsByName("verified")[0].value=="${VerifiedCode}"){
+				document.getElementById("checkMailCode").innerHTML="驗證碼正確";
+			}
+		}
+    </script>
 </head>
 
 <body>

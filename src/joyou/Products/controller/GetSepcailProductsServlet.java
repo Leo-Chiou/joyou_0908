@@ -77,7 +77,7 @@ public class GetSepcailProductsServlet extends HttpServlet {
 				totalPage++;
 			}
 		}
-
+		
 		System.out.println("totalPage:"+totalPage);
 		PrintWriter out = response.getWriter();
 

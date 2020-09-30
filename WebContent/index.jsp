@@ -28,39 +28,45 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style2.css" type="text/css">
-    <link rel="stylesheet" href="css/slideshow.css" type="text/css">
+<link rel="stylesheet" href="css/slideshowedit.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 </head>
 
 <body>
-<jsp:include page="header.jsp" />	
+	<jsp:include page="header.jsp" />
 
-					<br/>
-					<!--  輪播位置-->
-					 <!-- Slideshow Start -->
-                    <div class="slider">
-                        <div class="slide_viewer">
-                            <div class="slide_group">
-                                <div class="slide">
-                                <img src="img/index1.jpg"></div>
-                                <div class="slide">
-                                </div>
-                                <div class="slide">
-                                </div>
-                                <div class="slide">
-                                </div>
-                                <!-- 新增slide -->
-                            </div>
-                        </div>
-                    </div><!-- End // .slider -->
+	<br />
+	<!--  輪播位置-->
+	<!-- Slideshow Start -->
+	<div class="slider">
+		<div class="slide_viewer">
+			<div class="slide_group">
+				<div class="slide">
+					<img src="${pageContext.request.contextPath}/img/index1.jpg"
+						style="width: 100%; height: 100%; width: 900px; height: 350px">
+				</div>
+				<div class="slide">
+					<img src="${pageContext.request.contextPath}/img/index2.jpg">
+				</div>
+				<div class="slide">
+					<img src="${pageContext.request.contextPath}/img/index3.jpg">
+				</div>
+				<div class="slide">
+					<img src="${pageContext.request.contextPath}/img/index4.jpg">
+				</div>
+				<!-- 新增slide -->
+			</div>
+		</div>
+	</div>
+	<!-- End // .slider -->
 
-                    <div class="slide_buttons">
-                    </div>
-                    <br/>
-                    <br/>
+	<div class="slide_buttons"></div>
+	<br />
+	<br />
 
 	<!-- Blog Section End -->
 
-	<jsp:include page="footer.jsp" />	
+	<jsp:include page="footer.jsp" />
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -72,38 +78,48 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-	<script src="js/slideshow.js"></script>
+	<script src="js/slideeditshow.js"></script>
 
 
-<script>
-var xhr = new XMLHttpRequest();
+	<script type="text/javascript">
+	var xhr = new XMLHttpRequest();
 
-xhr.open("GET", "<c:url value='/orderlist.json'/>",
-		true);
-xhr.send();
-xhr.onreadystatechange = function() {
-	if (xhr.readyState == 4 && xhr.status == 200) {
+	xhr.open("GET", "<c:url value='/orderlist.json'/>", true);
+	xhr.send();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
 
-		eight = JSON.parse(xhr.responseText);
+			eight = JSON.parse(xhr.responseText);
 
-	}
-}
-
-var xhr1 = new XMLHttpRequest();
-
-xhr1.open("GET",
-		"<c:url value='/memberlist.json'/>", true);
-xhr1.send();
-xhr1.onreadystatechange = function() {
-	if (xhr1.readyState == 4 && xhr1.status == 200) {
-
-		gender = JSON.parse(xhr1.responseText);
-		
+		}
 	}
 
+	var xhr1 = new XMLHttpRequest();
 
-}
-</script>
+	xhr1.open("GET", "<c:url value='/memberlist.json'/>", true);
+	xhr1.send();
+	xhr1.onreadystatechange = function() {
+		if (xhr1.readyState == 4 && xhr1.status == 200) {
+
+			gender = JSON.parse(xhr1.responseText);
+
+		}
+
+	}
+	
+	var xhr2 = new XMLHttpRequest();
+
+	xhr2.open("GET", "<c:url value='/footlist.json'/>", true);
+	xhr2.send();
+	xhr2.onreadystatechange = function() {
+		if (xhr2.readyState == 4 && xhr2.status == 200) {
+
+			foot = JSON.parse(xhr2.responseText);
+
+		}
+
+	}
+	</script>
 </body>
 
 </html>

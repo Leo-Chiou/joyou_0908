@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import joyou.Products.model.ProductsBean;
+
 @Repository("myDiscountsDao")
 public class DiscountsDao {
 
@@ -18,6 +20,15 @@ public class DiscountsDao {
 
 	}
 
+	public DiscountsBean update(Integer discountId,String code,String amount,String condition) {
+		DiscountsBean dBean = session.get(DiscountsBean.class, discountId);
+		if(dBean!=null) {
+			dBean.setCode(code);
+			dBean.setCondition(condition);
+			dBean.setAmount(amount);
+		}
+		return dBean;
+	}
 	public DiscountsBean insert(DiscountsBean dBean) { // 新增折扣代碼
 		if (dBean != null) {
 			session.save(dBean);
@@ -65,5 +76,6 @@ public class DiscountsDao {
 		}return false;
 
 	}
+	
 
 }

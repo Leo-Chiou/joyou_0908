@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ page import="java.util.*"%>
+<%@ page import="java.lang.Math.*"%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -50,6 +51,7 @@
                 document.getElementsByName("userGender")[0].removeAttribute("disabled");
                 document.getElementsByName("userGender")[1].removeAttribute("disabled");
                 document.getElementsByName("userPreferGameType")[0].removeAttribute("disabled");
+                document.getElementsByName("userPicture")[0].removeAttribute("disabled");
             }
 
             function UndoProfile() {
@@ -68,14 +70,31 @@
                     document.getElementsByName("userGender")[1].setAttribute("checked","");
                 }
                 document.getElementsByName("userPreferGameType")[0].value= userPreferGameType;
+                document.getElementsByName("userPicture")[0].value="";
+                document.getElementById("previewPicture").src="up_NoUsed/${memberImageFileName}";
 
                 document.getElementsByName("userNickName")[0].setAttribute("disabled", "");
                 document.getElementsByName("userTrueName")[0].setAttribute("disabled", "");
                 document.getElementsByName("userPhone")[0].setAttribute("disabled", "");
                 document.getElementsByName("userGender")[0].setAttribute("disabled", "");
                 document.getElementsByName("userGender")[1].setAttribute("disabled", "");
-                document.getElementsByName("userPreferGameType")[0].setAttribute("disabled", "disabled");
+                document.getElementsByName("userPreferGameType")[0].setAttribute("disabled","disabled");
+                document.getElementsByName("userPicture")[0].setAttribute("disabled","disabled");
+
+
             }
+
+            function readURL(input){
+          		if(input.files && input.files[0]){
+          	    	var imageTagID = input.getAttribute("targetID");
+          	    	var reader = new FileReader();
+          	    	reader.onload = function (e) {
+	          			var img = document.getElementById(imageTagID);
+	          	    	img.setAttribute("src", e.target.result);
+	          	    }
+          	    	reader.readAsDataURL(input.files[0]);
+          	  	}
+          	}
     </script>
 </head>
 
@@ -91,7 +110,7 @@
 <div class="SB_MemberContent">
     <!-- 步驟 -->
    
-    <form action="<c:url value='/up_MemberEditProfileServlet'/>" method="POST">
+    <form action="<c:url value='/up_MemberEditProfileServlet'/>" method="POST"  enctype="multipart/form-data">
         <div class="SB_MemberData">
             <div class="SB_MemberClause_btn jooshop_btn_color">
                 <input name="btn_submit" id="btnEdit" value="修改會員資料" type="button" onclick="EditProfile()"><!---->
@@ -108,7 +127,7 @@
                         <label for="mem_email"><span class="SB_tableWstyle03" id="mem_email_necessary_abbr">*</span>會員 E-mail</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userMail" id="mem_email" type="text" class="SB_tableInput01" value="" readonly required >
+                        <input name="userMail" id="mem_email" type="text" class="SB_tableInput01" value="" style="background-color: darkgray" readonly required >
                     </td>
                     <td class="SB_tableWstyle05" >
                     </td>
@@ -121,10 +140,10 @@
                         <label for="meow"><span class="SB_tableWstyle03">*</span>帳號</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" readonly  required>
+                        <input name="userAccount" id="meow" type="text" class="SB_tableInput01" value="" style="background-color: darkgray" readonly  required>
                     </td>
                     <td class="SB_tableWstyle05" id="checkAccount">
-                        &nbsp; &nbsp;請輸入 6 碼以上英數字
+                        &nbsp; &nbsp;
                     </td>
                 </tr>
                 <tr>
@@ -149,7 +168,7 @@
                         <label for="mem_name"><span class="SB_tableWstyle03">*</span>中文全名</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input class="SB_tableInput01" name="userTrueName" id="mem_name" type="text" value="" onChange="checkTrueName()" >
+                        <input class="SB_tableInput01" name="userTrueName" id="mem_name" type="text" value="" onChange="" >
                     </td>
                     <td>
                         <label><input name="userGender" type="radio" value="F" checked="">小姐</label><!---->
@@ -162,7 +181,7 @@
                         <label for="meow2"><span class="SB_tableWstyle03">*</span>暱稱</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userNickName" id="meow2" type="text" class="SB_tableInput01" value="" onChange="checkNickName()" required>
+                        <input name="userNickName" id="meow2" type="text" class="SB_tableInput01" value="" onChange="" required>
                     </td>
                     <td class="SB_tableWstyle05" id="checkNickName">
                         
@@ -174,7 +193,7 @@
                         <label for="meow3"><span class="SB_tableWstyle03">*</span>手機</label><!---->
                     </td>
                     <td class="SB_tableW220 SB_tablepaddingL10">
-                        <input name="userPhone" id="meow3" type="text" class="SB_tableInput01" value="" onChange="checkPhone()" required>
+                        <input name="userPhone" id="meow3" type="text" class="SB_tableInput01" value="" onChange="" required>
                     </td>
                     <td class="SB_tableWstyle05" id="checkPhone">
                         
@@ -201,6 +220,21 @@
                     </td>
                     <td class="SB_tableWstyle05">
                         
+                    </td>
+                </tr>
+                
+                 <tr>
+                    <td align="right">
+                        <label for="imgInp"><span class="SB_tableWstyle03">*</span>頭像</label><!---->
+                    </td>
+                    <td class="SB_tableW220 SB_tablepaddingL10">
+                    	<input name="userPicture" id="imgInp" src="" type="file" class="SB_tableInput01" value="" onchange="readURL(this)" targetID="preview_progressbarTW_img" accept="image/gif, image/jpeg, image/png" >
+                    </td>
+                    <td class="SB_tableWstyle05" id="previewPicture">
+                    
+                        <img id="preview_progressbarTW_img" height="100px" src="" />
+                         
+                     <!-- <img id="preview_progressbarTW_img" height="100px" src="up_NoUsed/eeit117.jpg" /> -->
                     </td>
                 </tr>
                 
@@ -249,25 +283,18 @@
 
     <script>
 
-        <%
+		var rand= Math.random() ;
 
-        String userAccountStr =(String) session.getAttribute("memberAccount");
-        String userMailStr =(String) session.getAttribute("memberMail");
-        String userNickNameStr =(String) session.getAttribute("memberNickName");
-        String userTrueNameStr =(String) session.getAttribute("memberTrueName");
-        String userPhoneStr =(String) session.getAttribute("memberPhone");
-        String userGenderStr =(String) session.getAttribute("memberGender");
-        Integer userPreferGameTypeInt =(Integer) session.getAttribute("memberPreferGameType");
+		
+        var userAccount="${memberAccount}";
+        var userMail="${memberMail}";
+        var userNickName="${memberNickName}";
+        var userTrueName="${memberTrueName}";
+        var userPhone="${memberPhone}";
+        var userGender="${memberGender}";
+        var userPreferGameType=${memberPreferGameType};
+        var userImageFileName="${memberImageFileName}";
 
-        %>
-
-        var userAccount="<%=userAccountStr%>";
-        var userMail="<%=userMailStr%>";
-        var userNickName="<%=userNickNameStr%>";
-        var userTrueName="<%=userTrueNameStr%>";
-        var userPhone="<%=userPhoneStr%>";
-        var userGender="<%=userGenderStr%>";
-        var userPreferGameType="<%=userPreferGameTypeInt%>";
 
         document.getElementsByName("userAccount")[0].value= userAccount ;
         document.getElementsByName("userMail")[0].value= userMail ;
@@ -281,20 +308,18 @@
             document.getElementsByName("userGender")[0].removeAttribute("checked");
             document.getElementsByName("userGender")[1].setAttribute("checked","");
         }
-        document.getElementsByName("userPreferGameType")[0].value= userPreferGameType ;
+        document.getElementsByName("userPreferGameType")[0].value= userPreferGameType;
      
         document.getElementsByName("userNickName")[0].setAttribute("disabled", "");
         document.getElementsByName("userTrueName")[0].setAttribute("disabled", "");
         document.getElementsByName("userPhone")[0].setAttribute("disabled", "");
         document.getElementsByName("userGender")[0].setAttribute("disabled", "");
         document.getElementsByName("userGender")[1].setAttribute("disabled", "");
-        document.getElementsByName("userPreferGameType")[0].setAttribute("disabled", "disabled");
+        document.getElementsByName("userPreferGameType")[0].setAttribute("disabled", "");
+        document.getElementsByName("userPicture")[0].setAttribute("disabled", "");
 
-        document.getElementsByClassName("nice-select")[0].style.display="none";
-        document.getElementsByClassName("current")[0].style.display="none";
-        document.getElementsByClassName("list")[0].style.display="none";
-        document.getElementsByName("userPreferGameType")[0].removeAttribute("style");
-
+        document.getElementById("preview_progressbarTW_img").setAttribute("src","up_NoUsed/${memberImageFileName}?rand="+rand);
+        
     </script>
 
 </body>

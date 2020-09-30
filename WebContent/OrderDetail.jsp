@@ -27,7 +27,8 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="css/style3.css" type="text/css">
+<link rel="stylesheet" href="css/style4.css" type="text/css">
+<link rel="stylesheet" href="css/searchbar.css" type="text/css">
 
 
 <script type="text/javascript">
@@ -40,6 +41,7 @@ window.onload = function() {
 	var receivername = document.getElementById("receivername");
 	var receiverphone = document.getElementById("receiverphone");
 	var address = document.getElementById("address");
+	var discode = document.getElementById("discode");
 	var selectElement = document.getElementById('orderId');
 	var xhr = new XMLHttpRequest();
 	var xhr2 = new XMLHttpRequest();
@@ -61,6 +63,7 @@ window.onload = function() {
 			receivername.innerHTML = "<span>" + result.receivername + "</span>";
 			receiverphone.innerHTML = "<span>" + result.receiverphone + "</span>";
 			address.innerHTML = "<span>" + result.address + "</span>";
+			discode.innerHTML = "<span>" + result.discode + "</span>"
 		}
 	}
 
@@ -144,7 +147,7 @@ window.onload = function() {
 					<li id="receivername"></li>
 					<li id="receiverphone"></li>
 					<li id="address"></li>
-					<li ><span style="font-weight:bolder;" class="jooPC_price01 new_price">${discode}</span></li>
+					<li ><span style="font-weight:bolder;" class="jooPC_price01 new_price" id="discode"></span></li>
 					<li></li>
 				</ul>
 

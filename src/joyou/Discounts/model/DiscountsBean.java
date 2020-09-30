@@ -15,6 +15,19 @@ public class DiscountsBean {
 	String amount ;
 	String condition;
 	
+	
+	public DiscountsBean() {
+		
+	}
+	
+	public DiscountsBean(String code,String amount,String condition) {
+		this.code=code;
+		this.amount=amount;
+		this.condition=condition;
+	}
+	
+	
+	
 	@Id
 	@Column(name="discountid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

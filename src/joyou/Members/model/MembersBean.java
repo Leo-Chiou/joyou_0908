@@ -39,6 +39,9 @@ public class MembersBean {
 	@Column(name = "memberPreferGameType")
 	private Integer preferGameType;
 	
+	@Column(name = "memberImageFileName")
+	private String imageFileName;
+
 	@Column(name = "memberUserfoot")
 	private String userfoot;
 
@@ -51,9 +54,7 @@ public class MembersBean {
 	}
 
 	public MembersBean(String account, String password, String mail, String nickname, String truename, String phone,
-			String gender,
-			Integer gameType,
-			String userfoot) {
+			String gender, Integer gameType, String imageFileName, String userfoot) {
 		super();
 		this.account = account;
 		this.password = password;
@@ -63,6 +64,7 @@ public class MembersBean {
 		this.phone = phone;
 		this.gender = gender;
 		this.preferGameType = gameType;
+		this.imageFileName = imageFileName;
 
 		this.userfoot = userfoot;
 
@@ -151,7 +153,14 @@ public class MembersBean {
 		this.preferGameType = preferGameType;
 	}
 
-	
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
 	public String getUserfoot() {
 		return userfoot;
 	}

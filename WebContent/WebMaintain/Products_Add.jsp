@@ -11,7 +11,7 @@
 
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>糾遊 後台管理系統</title>
+<title>揪遊 JOYOU | BOARD GAMES 後台管理系統</title>
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- favicon
@@ -46,7 +46,7 @@
 <!-- animate CSS
 		============================================ -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/WebMaintain/ss/animate.css" />
+	href="${pageContext.request.contextPath}/WebMaintain/css/animate.css" />
 <!-- normalize CSS
 		============================================ -->
 <link rel="stylesheet"
@@ -89,8 +89,37 @@
 	href="${pageContext.request.contextPath}/WebMaintain/css/responsive.css" />
 <!-- modernizr JS
 		============================================ -->
-<script src="${pageContext.request.contextPath}/WebMaintain/js/vendor/modernizr-2.8.3.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/WebMaintain/js/vendor/modernizr-2.8.3.min.js"></script>
+<script>
+function checkName(){
+	let xhr = new XMLHttpRequest();
+	var selectElement = document.getElementById('ptName');
+	var Msg = document.getElementById('ptMsg');
+	xhr.open("POST", "<c:url value='/ProductsCheckServlet.do?' />", true);
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("productName=" + selectElement.value);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			let result = JSON.parse(xhr.responseText);
+			Msg.innerHTML = "<span>" + result.ptMsg + "</span>";
+		}
+	}
+	
+	
+}
 
+
+function dataAuoto(){
+	 document.getElementsByName("name")[0].value="狼人殺";
+	 document.getElementsByName("stock")[0].value="10";
+	 document.getElementsByName("price")[0].value="450";
+	 document.getElementsByName("productintro")[0].value="在一個看似平凡無奇的村莊，村民們樸實的生活著，某天一個月圓的夜晚，這村莊出現第一名受害者，伴隨著一聲慘叫，死在那利爪獠牙底下，早晨，在警長的決定下，開始每天投票放逐一名嫌疑犯，直到村莊回復和平，「狼人殺」為玩家們扮演村莊中的角色，與狼人勢力對抗，或者參與狼人勢力，企圖泯滅這個村莊，在不確定其他玩家的身分下，藉由發言以及局勢走向來驅逐狼人，平民協助神職，神職帶領平民。而狼人要做的就是趁夜晚，殺光村民或者神職。";
+	}
+
+
+
+</script>
 </head>
 
 <body>
@@ -146,9 +175,8 @@
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 										<div class="header-right-info">
 											<ul class="nav navbar-nav mai-top-nav header-right-menu">
-												<li class="nav-item"><a href="login.html"> <i
-														class="fa fa-user"></i> <span class="admin-name">Logo
-															out</span>
+												<li class="nav-item"><a href="${pageContext.request.contextPath}/index.jsp"> <i
+														class="fa fa-user"></i> <span class="admin-name">登出</span>
 												</a></li>
 											</ul>
 										</div>
@@ -197,12 +225,21 @@
 										id="description">
 										<div class="row">
 											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+												<p style="margin-left: 50px">圖片預覽：</p>
+												<div
+													style="margin-left: 50px; width: 400px; height: 400px; border: 2px solid #F0F0F0">
+													<img src="${pageContext.request.contextPath}/img/Preset.jpg"
+														id="imgpreview" alt="請選擇圖片"
+														style="width: 100%; height: 100%; width: 600px" />
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 												<div class="review-content-section">
-													<form action="../ProductsInsert.do" method="post"
+													<form action="<c:url value='/ProductsInsert.do'/>" method="post"
 														enctype="multipart/form-data">
-														<div class="input-group mg-b-pro-edt">
-															<span> 商品名稱：</span> <input type="text" name="name"
-																class="form-control" />
+														<div class="input-group mg-b-pro-edt" style="width: 255.5px">
+															<span> 商品名稱：</span> <input type="text" onchange="checkName()" id="ptName"name="name"
+																class="form-control" /><span style="margin-left:80px;color:red" id="ptMsg"></span>
 														</div>
 														<div class="input-group mg-b-pro-edt">
 															<span> 商品庫存：</span> <input type="text" name="stock"
@@ -215,8 +252,8 @@
 														<div class="input-group mg-b-pro-edt">
 															<span>是否特價：</span><br /> <select class="select"
 																name="sale">
-																<option value="1">是</option>
 																<option value="0">否</option>
+																<option value="1">是</option>
 															</select>
 														</div>
 														<div class="input-group mg-b-pro-edt">
@@ -281,11 +318,12 @@
 														<div class="input-group mg-b-pro-edt">
 															<span>商品圖片： </span> <input style="background: #FFFFFF"
 																class='InputClass' type="file" name="uploadFile"
-																size="40" />
+																id="upload_img" size="40" />
 														</div>
 														<div class="input-group mg-b-pro-edt">
-														<span> 商品介紹：</span><br/>
-														<textarea name="productintro" style="width:300px;height:100px;"></textarea>
+															<span> 商品介紹：</span><br />
+															<textarea name="productintro"
+																style="width: 300px; height: 100px;"></textarea>
 														</div>
 														<br /> <br />
 														<div class="row">
@@ -293,6 +331,7 @@
 																<div class="text-center custom-pro-edt-ds">
 																	<button type="submit" name="Submit"
 																		class="btn btn-ctl-bt waves-effect waves-light m-r-10">送出</button>
+																		<button type="button" onclick="dataAuoto()">✎ </button>
 																	<p>
 																		<span>${InsertMsg}</span>
 																	</p>
@@ -300,6 +339,7 @@
 															</div>
 														</div>
 													</form>
+													
 												</div>
 											</div>
 										</div>
@@ -388,5 +428,21 @@
 	<!-- main JS
 		============================================ -->
 	<script src="${pageContext.request.contextPath}/WebMaintain/js/main.js"></script>
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#imgpreview').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#upload_img").change(function() {
+			readURL(this);
+		});
+	</script>
 </body>
 </html>
